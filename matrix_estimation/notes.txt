@@ -1,0 +1,46 @@
+
+
+m the 'users'
+m regions
+
+n the 'items'
+n articles, themes???
+
+Steps:
+get n items from g news
+put regions as rows 
+put items as cols
+fill in
+make mask
+ALS
+test accuracy
+Improve, iterate
+
+
+
+
+useful filters:
+
+q	
+None	
+This is the purpose of your search. Articles returned are filtered by the given keywords.
+q = trump
+q = covid
+
+country	
+Any	
+Set the country of returned articles. See countries list.
+country=US
+country=MX
+
+max	
+number
+max=10, some number we can choose?
+
+
+n countries
+m items, topics, something else
+
+how to construct set of n?
+
+
