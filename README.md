@@ -1,6 +1,6 @@
 # Regulating Social Media
 
-matrix_factorization 
+## matrix_factorization 
 - ALS
 - GNews recommendation
 
