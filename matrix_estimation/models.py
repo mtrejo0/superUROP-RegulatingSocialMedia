@@ -16,9 +16,10 @@ class Country():
 
 class Item():
 
-    def __init__(self, country, content):
+    def __init__(self, country, content, rating):
         self.country = country
         self.content = content
+        self.rating = rating
 
     def __str__(self):
-        return "{} : {}".format(self.name, self.code)
+        return "{} : {} \n    {}".format(self.name, self.rating, self.content)
