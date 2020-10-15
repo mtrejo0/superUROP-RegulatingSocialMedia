@@ -1,3 +1,4 @@
+import numpy as np
 
 def ALS(A, mask, k, lam, epsilon=1e-3, max_iterations=100):
   # A - matrix
@@ -53,5 +54,5 @@ def ALS(A, mask, k, lam, epsilon=1e-3, max_iterations=100):
         break
     prev_X = X
 
-  return X, mse
+  return X
 

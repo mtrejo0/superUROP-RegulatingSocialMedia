@@ -1,19 +1,33 @@
-import requests
-import json
-from models import Country, Item
-import pprint
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import bernoulli
+from als import ALS
 
-with open('data.json') as f:
-  data = json.load(f)
+def plot_image(A):
+    plt.imshow(A.T)
+    plt.show()
 
-for article in data:
-    a = input('')
-    print(article['country'])
-    print(article['rating'])
-    print('----\n')
-    print(article['content']['title'])
-    print(article['content']['url'])
-    print(article['content']['image'])
-    print(article['content']['description'])
-    print('\n\n\n')
-    
+
+def bound(low, high, value):
+    return max(low, min(high, value))
+
+# generate noisy data
+
+
+"""
+movies a,b,c,d,e
+
+
+"""
+n = 10
+m = 10
+mask_prob = .5
+R = np.random.randint(5, size=(n,m))
+
+mask = 1 - bernoulli.rvs(p=mask_prob, size=(m, n))
+
+print(R)
+np.set_printoptions(precision=2)
+after = ALS(R,mask,2,.1)
+rounded = np.around(after, decimals=1)
+print(rounded)
