@@ -20,13 +20,10 @@ if you make one add it to the dictionary so we can cycle through :))
 
 """
 
-api_dictionary = {
-    'moi': '351aebe4d120c5c82ceb17236cef47f0',
-    'sarah': '',
-    'serafin': ''
-}
+with open('secrets.json') as f:
+  secrets = json.load(f)
 
-api_token = api_dictionary['moi']
+api_token = secrets['googleNews']['moises']
 
 
 
