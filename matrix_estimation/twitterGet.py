@@ -12,7 +12,7 @@ with open('secrets.json') as f:
 
 CONSUMER_KEY = secrets['twitter']['moises']['key']
 CONSUMER_SECRET = secrets['twitter']['moises']['secret']
-query = urllib.parse.quote("from:TwitterDev has:media")
+query = urllib.parse.quote("has:media")
 
 # url = f"https://api.twitter.com/labs/2/tweets/search?query={query}"
 
@@ -20,8 +20,9 @@ query = urllib.parse.quote("from:TwitterDev has:media")
 
 url = 'https://api.twitter.com/2/tweets/search/recent?query=from:TwitterDev&tweet.fields=created_at&expansions=author_id&user.fields=created_at'
 
+# url = 'https://stream.twitter.com/1.1/statuses/sample.json'
 # remove to send requests
-quit()
+# quit()
 
 headers = {
     "Accept-Encoding": "gzip"
@@ -53,7 +54,6 @@ class BearerTokenAuth(AuthBase):
         r.headers['User-Agent'] = 'LabsResearchSearchQuickStartPython'
         return r
 
-# Script starts here.
 
 #Create Bearer Token for authenticating with recent search.
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)

@@ -74,9 +74,7 @@ for item in items:
         "source"
     """
 
-import json
-
-with open('data.json', 'w') as fp:
+with open('news.json', 'w') as fp:
     json.dump(data, fp)
 
 print('fin')
