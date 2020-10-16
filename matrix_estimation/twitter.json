@@ -1,1 +1,55 @@
-{"data": [{"author_id": "2244994945", "id": "1316414628360933376", "created_at": "2020-10-14T16:24:39.000Z", "text": "Find out what's happening - listen for important public events in real-time using the v2 filtered and sampled stream endpoints available in the new #TwitterAPI\n\nhttps://t.co/lDqyMM4eWg"}, {"author_id": "2244994945", "id": "1316041457476620289", "created_at": "2020-10-13T15:41:48.000Z", "text": "Brand new from @wordpressdotcom: You can now turn your entire blog post into a Twitter thread with just two extra clicks. This latest feature, built on the #TwitterAPI, allows content creators easily to amplify their reach and engagement https://t.co/EZ887eFDDm"}, {"author_id": "2244994945", "id": "1315720318124650496", "created_at": "2020-10-12T18:25:43.000Z", "text": "As planned, the Labs v1 endpoints referenced below have now been retired. Please let us know in the forums if you have questions or need help with the Twitter API v2! https://t.co/bO7Y3HBk4P"}, {"author_id": "2244994945", "id": "1314636697842315265", "created_at": "2020-10-09T18:39:48.000Z", "text": "If you liked this stream, you\u2019re going to love what\u2019s to come. Our next big release will make it easier &amp; more accessible to study the public conversation with features designed to better support academic research.\n\ud83d\udc40 HINT https://t.co/CCj7tfCnj6"}, {"author_id": "2244994945", "id": "1314636696646942720", "created_at": "2020-10-09T18:39:47.000Z", "text": "If you plan to apply, here\u2019s what others have done &amp; tips for the application \ud83d\udc47 \nhttps://t.co/r2XXcAPjUq\n\nAs teams around the globe use this data to improve our understanding of &amp; response to the pandemic, we hope to feature their work here &amp; on https://t.co/6VyrlaC0li."}, {"author_id": "2244994945", "id": "1314636695585783808", "created_at": "2020-10-09T18:39:47.000Z", "text": "\ud83d\udc4b We want to let you know that the last day to apply for the COVID-19 stream is October 15 by 5pm PST. Qualified devs/researchers who wish to use this data for the public good are encouraged to apply. Access for approved developers will remain free and unchanged. https://t.co/acVQ1M0O9f"}], "includes": {"users": [{"username": "TwitterDev", "name": "Twitter Dev", "created_at": "2013-12-14T04:35:55.000Z", "id": "2244994945"}]}, "meta": {"newest_id": "1316414628360933376", "oldest_id": "1314636695585783808", "result_count": 6}}
+{
+    "data":[
+       {
+          "author_id":"2244994945",
+          "id":"1316414628360933376",
+          "created_at":"2020-10-14T16:24:39.000Z",
+          "text":"Find out what's happening - listen for important public events in real-time using the v2 filtered and sampled stream endpoints available in the new #TwitterAPI\n\nhttps://t.co/lDqyMM4eWg"
+       },
+       {
+          "author_id":"2244994945",
+          "id":"1316041457476620289",
+          "created_at":"2020-10-13T15:41:48.000Z",
+          "text":"Brand new from @wordpressdotcom: You can now turn your entire blog post into a Twitter thread with just two extra clicks. This latest feature, built on the #TwitterAPI, allows content creators easily to amplify their reach and engagement https://t.co/EZ887eFDDm"
+       },
+       {
+          "author_id":"2244994945",
+          "id":"1315720318124650496",
+          "created_at":"2020-10-12T18:25:43.000Z",
+          "text":"As planned, the Labs v1 endpoints referenced below have now been retired. Please let us know in the forums if you have questions or need help with the Twitter API v2! https://t.co/bO7Y3HBk4P"
+       },
+       {
+          "author_id":"2244994945",
+          "id":"1314636697842315265",
+          "created_at":"2020-10-09T18:39:48.000Z",
+          "text":"If you liked this stream, you\u2019re going to love what\u2019s to come. Our next big release will make it easier &amp; more accessible to study the public conversation with features designed to better support academic research.\n\ud83d\udc40 HINT https://t.co/CCj7tfCnj6"
+       },
+       {
+          "author_id":"2244994945",
+          "id":"1314636696646942720",
+          "created_at":"2020-10-09T18:39:47.000Z",
+          "text":"If you plan to apply, here\u2019s what others have done &amp; tips for the application \ud83d\udc47 \nhttps://t.co/r2XXcAPjUq\n\nAs teams around the globe use this data to improve our understanding of &amp; response to the pandemic, we hope to feature their work here &amp; on https://t.co/6VyrlaC0li."
+       },
+       {
+          "author_id":"2244994945",
+          "id":"1314636695585783808",
+          "created_at":"2020-10-09T18:39:47.000Z",
+          "text":"\ud83d\udc4b We want to let you know that the last day to apply for the COVID-19 stream is October 15 by 5pm PST. Qualified devs/researchers who wish to use this data for the public good are encouraged to apply. Access for approved developers will remain free and unchanged. https://t.co/acVQ1M0O9f"
+       }
+    ],
+    "includes":{
+       "users":[
+          {
+             "username":"TwitterDev",
+             "name":"Twitter Dev",
+             "created_at":"2013-12-14T04:35:55.000Z",
+             "id":"2244994945"
+          }
+       ]
+    },
+    "meta":{
+       "newest_id":"1316414628360933376",
+       "oldest_id":"1314636695585783808",
+       "result_count":6
+    }
+ }

@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import bernoulli
 from als import ALS
+from util import generate_mask, calc_unobserved_rmse
 
 def plot_image(A):
     plt.imshow(A.T)
@@ -11,23 +12,35 @@ def plot_image(A):
 def bound(low, high, value):
     return max(low, min(high, value))
 
-# generate noisy data
 
 
 """
-movies a,b,c,d,e
-
+users 
+movies 
 
 """
-n = 10
-m = 10
+
+n = 5
+m = 5
+
+
+k = 2
+
+U = np.random.rand(m, k)*5**.5
+V = np.random.rand(n, k)*5**.5
+
+sigma = .1
+R = np.random.rand(m, n) * sigma + np.dot(U, V.T)
+
 mask_prob = .5
-R = np.random.randint(5, size=(n,m))
-
-mask = 1 - bernoulli.rvs(p=mask_prob, size=(m, n))
+mask = generate_mask(mask_prob, m, n)
 
 print(R)
-np.set_printoptions(precision=2)
-after = ALS(R,mask,2,.1)
-rounded = np.around(after, decimals=1)
-print(rounded)
+print(mask)
+
+R_hat = ALS(R,mask,k,.1)
+
+print(R_hat)
+
+rmse = calc_unobserved_rmse(U,V,R_hat,mask)
+print(rmse)
