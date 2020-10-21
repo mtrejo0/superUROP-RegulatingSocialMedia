@@ -5,24 +5,13 @@ from requests.auth import AuthBase
 
 # Fill these in. Generate tokens at /content/developer-twitter/en/apps. 
 
-
-
 with open('secrets.json') as f:
   secrets = json.load(f)
 
 CONSUMER_KEY = secrets['twitter']['moises']['key']
 CONSUMER_SECRET = secrets['twitter']['moises']['secret']
 query = urllib.parse.quote("has:media")
-
-# url = f"https://api.twitter.com/labs/2/tweets/search?query={query}"
-
-# url = "https://api.twitter.com/2/tweets/20"
-
-url = 'https://api.twitter.com/2/tweets/search/recent?query=from:TwitterDev&tweet.fields=created_at&expansions=author_id&user.fields=created_at'
-
-# url = 'https://stream.twitter.com/1.1/statuses/sample.json'
-# remove to send requests
-# quit()
+ 
 
 headers = {
     "Accept-Encoding": "gzip"
@@ -59,19 +48,29 @@ class BearerTokenAuth(AuthBase):
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 
 
+queries = ['trump', 'soccer', 'covid', 'music', 'food']
+totalTweets = []
 
-#Make a GET request to the Labs recent search endpoint.
-response = requests.get(url, auth=bearer_token, headers = headers)
+for query in queries:
+    url = f'https://api.twitter.com/2/tweets/search/recent?query={query}'
 
-if response.status_code != 200:
-    raise Exception(f"Request reurned an error  %s : %s" % (response.status_code, response.text))
+    #Make a GET request to the Labs recent search endpoint.
+    response = requests.get(url, auth=bearer_token, headers = headers)
 
-#Display the returned Tweet JSON.
-parsed = json.loads(response.text)
-pretty_print = json.dumps(parsed, indent=2, sort_keys=True)
-print (pretty_print)
+    if response.status_code != 200:
+        raise Exception(f"Request reurned an error  %s : %s" % (response.status_code, response.text))
+
+    #Display the returned Tweet JSON.
+    parsed = json.loads(response.text)
+    data = parsed['data']
+
+    pretty_print = json.dumps(data, indent=2, sort_keys=True)
+
+    for tweet in data:
+        tweet['tag'] = query
+        totalTweets.append(tweet)
 
 with open('twitter.json', 'w') as f:
-    json.dump(parsed, f)
+    json.dump(totalTweets, f)
 
 print('fin')
