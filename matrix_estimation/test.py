@@ -5,29 +5,22 @@ from scipy.stats import bernoulli
 from als import ALS
 from util import generate_mask, calc_unobserved_rmse
 
-def plot_image(A):
-    plt.imshow(A.T)
-    plt.show()
-
-
-def bound(low, high, value):
-    return max(low, min(high, value))
-
 n = 50
 m = 8
 k = 8
     
-with open('test.json') as f:
+with open('twitter.json') as f:
   data = json.load(f)
 
-# item matrix from tweets
+# item matrix from tweets k x n
 V = []
 for tweet in data:
     one_hot = tweet['one_hot']
     V.append(one_hot)
 V = np.array(V).T
-print(np.shape(V))
+print('Item matrix: ', np.shape(V))
 
+# generate random user matrix m x k
 thing1 = np.identity(m)
 thing2 = np.random.rand(m, 1)
 s = np.multiply(thing1, thing2)
@@ -35,20 +28,18 @@ s = np.multiply(thing1, thing2)
 M = np.random.rand(m,m)
 a, b, c = np.linalg.svd(M)
 U = np.dot(a, np.dot(s, c.T))
-print(np.shape(U))
+print('User matrix: ', np.shape(U))
 
+# generate true rating matrix, with variance
 sigma = .1
 R = np.random.rand(m, n) * sigma + np.dot(U, V)
 
+# sample some values out
 mask_prob = .5
 mask = generate_mask(mask_prob, m, n)
 
-print(R)
-print(mask)
-
+# matrix factorization, guess actual values
 R_hat = ALS(R,mask,k,.1)
 
-print(R_hat)
-
 rmse = calc_unobserved_rmse(U,V,R_hat,mask)
-print(rmse)
+print('RMSE: ', rmse)
