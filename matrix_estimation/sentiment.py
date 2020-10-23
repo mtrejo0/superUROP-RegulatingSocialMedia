@@ -10,11 +10,6 @@ def sentiment_analysis(raw):
     #format is dict containing: {'neg': 0.072, 'neu': 0.859, 'pos': 0.069, 'compound': -0.8426}
     return scores
     
-# scores = sentan_scores('great movie all around, but it was really bad')
-# print(scores)
-
-
-
 with open('twitter.json') as f:
   data = json.load(f)
 for tweet in data:
