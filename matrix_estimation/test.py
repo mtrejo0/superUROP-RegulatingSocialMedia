@@ -13,7 +13,9 @@ def plot_image(A):
 def bound(low, high, value):
     return max(low, min(high, value))
 
-
+n = 50
+m = 8
+k = 8
     
 with open('test.json') as f:
   data = json.load(f)
@@ -24,27 +26,19 @@ for tweet in data:
     one_hot = tweet['one_hot']
     V.append(one_hot)
 V = np.array(V).T
-print(V)
+print(np.shape(V))
 
-quit()
+thing1 = np.identity(m)
+thing2 = np.random.rand(m, 1)
+s = np.multiply(thing1, thing2)
 
-"""
-users 
-movies 
-
-"""
-
-n = 5
-m = 5
-
-
-k = 2
-
-U = np.random.rand(m, k)*5**.5
-V = np.random.rand(n, k)*5**.5
+M = np.random.rand(m,m)
+a, b, c = np.linalg.svd(M)
+U = np.dot(a, np.dot(s, c.T))
+print(np.shape(U))
 
 sigma = .1
-R = np.random.rand(m, n) * sigma + np.dot(U, V.T)
+R = np.random.rand(m, n) * sigma + np.dot(U, V)
 
 mask_prob = .5
 mask = generate_mask(mask_prob, m, n)
