@@ -1,0 +1,402 @@
+[
+    {
+       "country":"Australia",
+       "rating":0,
+       "content":{
+          "title":"ASX to slip, Wall St drifts lower",
+          "description":"Australian shares were set to open down as global equities retreated on rising COVID-19 cases. $A drops.",
+          "content":"Market highlights\nASX futures down 7 points or 0.1% to 6192 near 5.15am AEDT\nAUD 1-% to 70.94 US cents (Overnight low 70.56)\nOn Wall St about 2.25pm: Dow -0.1% S & P 500 -0.3% Nasdaq -0.8%\nIn New York: BHP -0.2% Rio -0.5% Atlassian -2.7%\nIn Europe: S... [5968 chars]",
+          "url":"https://www.afr.com/markets/equity-markets/asx-to-slip-wall-st-drifts-lower-20201016-p565mm",
+          "image":"https://static.ffx.io/images/$zoom_0.1969%2C$multiply_0.7554%2C$ratio_1.776846%2C$width_1059%2C$x_0%2C$y_108/t_crop_custom/e_sharpen:25%2Cq_85%2Cf_auto/t_afr_no_label_no_age_social_wm/ba369e3f5d714371d058d0ada4df07e6da4f665f",
+          "publishedAt":"2020-10-15T18:40:53Z",
+          "source":{
+             "name":"The Australian Financial Review",
+             "url":"https://www.afr.com/"
+          }
+       }
+    },
+    {
+       "country":"Australia",
+       "rating":1,
+       "content":{
+          "title":"UCI announce further rounds of COVID-19 testing at Giro d'Italia",
+          "description":"Thursday and Friday tests come after teams and riders raise concerns about race 'bubble'",
+          "content":"The UCI has responded to concerns about the COVID-19 situation at the Giro d'Italia, stating that race organisers RCS Sport will carry out further rounds of testing on Thursday and Friday ahead of the already arranged round of testing set to take pla... [2971 chars]",
+          "url":"https://www.cyclingnews.com/news/uci-announce-further-rounds-of-covid-19-testing-at-giro-ditalia/",
+          "image":"https://cdn.mos.cms.futurecdn.net/5BGhkttJ6Yk388Ac4dCw8Y-1200-80.jpg",
+          "publishedAt":"2020-10-15T18:01:01Z",
+          "source":{
+             "name":"Cyclingnews.com",
+             "url":"https://www.cyclingnews.com/"
+          }
+       }
+    },
+    {
+       "country":"Australia",
+       "rating":2,
+       "content":{
+          "title":"Thousands of Australians struggling to pay power bills, as winter stay-at-home rules bite",
+          "description":"Kathy Flynn received her energy bill last month, only to find out it had gone up by $900. She is among thousands of people grappling with rising energy bills during the COVID-19 pandemic.",
+          "content":"Money is always tight for Hobart grandmother Kathy Flynn, but never before has a bill brought her to tears.\nKey points: The industry estimates residential energy consumption is up by between 15 and 20 per cent this winter\nThe industry estimates resid... [8565 chars]",
+          "url":"https://www.abc.net.au/news/2020-10-16/thousands-of-australians-asking-for-energy-bill-help/12754032",
+          "image":"https://www.abc.net.au/cm/rimage/12754148-16x9-large.jpg?v=2",
+          "publishedAt":"2020-10-15T17:53:00Z",
+          "source":{
+             "name":"ABC News",
+             "url":"https://www.abc.net.au/"
+          }
+       }
+    },
+    {
+       "country":"Australia",
+       "rating":3,
+       "content":{
+          "title":"France's second wave of coronavirus COVID-19 turns potentially deadly as hospitals struggle to keep up",
+          "description":"The French President has been determined not to introduce a second lockdown and damage the French economy further, but the virus has now forced his hand.",
+          "content":"Emmanuel Macron typifies leaders across Europe.\nKey points: Doctors are warning of hospital bed shortages across Paris as COVID-19 patients clog ICU wards\nDoctors are warning of hospital bed shortages across Paris as COVID-19 patients clog ICU wards ... [6192 chars]",
+          "url":"https://www.abc.net.au/news/2020-10-16/hospital-bed-shortages-in-paris-as-france-battles-coronavirus/12750328",
+          "image":"https://www.abc.net.au/cm/rimage/12770274-16x9-large.jpg?v=2",
+          "publishedAt":"2020-10-15T17:33:00Z",
+          "source":{
+             "name":"ABC News",
+             "url":"https://www.abc.net.au/"
+          }
+       }
+    },
+    {
+       "country":"Australia",
+       "rating":4,
+       "content":{
+          "title":"ACT election 2020: Coe ignores questions, Barr pivots to COVID-19 in dying days of campaign",
+          "description":"The parties pivoted back to their main campaign messages as election day drew closer.",
+          "content":"news, act-politics, act election, alistair coe, andrew barr\nChief Minister Andrew Barr has pivoted back to his government's handling of the coronavirus crisis in the dying days of the ACT election campaign, while the Liberals again used props and slo... [2624 chars]",
+          "url":"https://www.canberratimes.com.au/story/6970959/coe-ignores-questions-barr-pivots-to-covid-19-in-dying-days-of-campaign/",
+          "image":"https://nnimgt-a.akamaihd.net/transform/v1/crop/frm/fdcx/doc7crh71xk14w1280luhpn.jpg/r3_256_4998_3078_w1200_h678_fmax.jpg",
+          "publishedAt":"2020-10-15T17:30:00Z",
+          "source":{
+             "name":"The Canberra Times",
+             "url":"https://www.canberratimes.com.au/"
+          }
+       }
+    },
+    {
+       "country":"United Kingdom",
+       "rating":0,
+       "content":{
+          "title":"Cristiano Ronaldo may have broken coronavirus health protocols returning to Italy, says sports minister",
+          "description":"Ronaldo missed Portugal vs Sweden after testing positive for coronavirus; Juventus squad have gone into voluntary isolation after midfielder Weston McKennie tested positive for Covid-19",
+          "content":"Cristiano Ronaldo may have broken health rules when he returned to Italy after testing positive for Covid-19 in Portugal, Italy's sports minister said.\nThe Juventus forward flew back to Italy in a private jet on Wednesday to go into quarantine at hom... [1264 chars]",
+          "url":"https://www.skysports.com/football/news/12961/12105087/cristiano-ronaldo-may-have-broken-coronavirus-health-protocols-returning-to-italy-says-sports-minister",
+          "image":"https://e0.365dm.com/20/09/1600x900/skysports-cristiano-ronald_5089833.jpg?20200907165035",
+          "publishedAt":"2020-10-15T19:31:00Z",
+          "source":{
+             "name":"Sky Sports",
+             "url":"https://www.skysports.com/"
+          }
+       }
+    },
+    {
+       "country":"United Kingdom",
+       "rating":1,
+       "content":{
+          "title":"Scientists Want To Know Why Covid-19 Lockdown Saw A Drop In Premature Births",
+          "description":"Since the Covid-19 pandemic took hold, doctors in many parts of the world have noticed a dramatic reduction in the number of premature babies being born du",
+          "content":"Since the Covid-19 pandemic took hold, doctors in many parts of the world have noticed a dramatic reduction in the number of premature babies being born during the lockdown. The question is: what could explain this trend? Although much more research ... [3292 chars]",
+          "url":"https://www.iflscience.com/health-and-medicine/scientists-want-to-know-why-covid19-lockdown-saw-a-drop-in-premature-births/",
+          "image":"https://cdn.iflscience.com/images/9b8fbc00-50fa-5292-8f77-03bd9c4cd185/default-1602771521-cover-image.jpg",
+          "publishedAt":"2020-10-15T19:23:00Z",
+          "source":{
+             "name":"IFLScience",
+             "url":"https://www.iflscience.com/"
+          }
+       }
+    },
+    {
+       "country":"United Kingdom",
+       "rating":2,
+       "content":{
+          "title":"Five-person team get \u00a325k a day to work on Test and Trace system",
+          "description":"Amid claims that England's crucial COVID-19 contact tracing scheme has failed, Sky News can reveal that the government is paying a five-person team of management consultants \u00a325,000 a day to work on the system.",
+          "content":"Amid claims that England's crucial COVID-19 contact tracing scheme has failed, Sky News can reveal that the government is paying a five-person team of management consultants \u00a325,000 a day to work on the system.\nThe team from Boston Consulting Group a... [2390 chars]",
+          "url":"https://news.sky.com/story/five-person-team-get-25k-a-day-to-work-on-test-and-trace-system-12105042",
+          "image":"https://e3.365dm.com/20/09/1600x900/skynews-coronavirus-covid-19_5109956.png?20200926221502",
+          "publishedAt":"2020-10-15T18:10:00Z",
+          "source":{
+             "name":"Sky News",
+             "url":"https://news.sky.com/"
+          }
+       }
+    },
+    {
+       "country":"United Kingdom",
+       "rating":3,
+       "content":{
+          "title":"The areas in Tamworth with highest Covid 19 cases",
+          "description":"Tamworth has had a total of 608\npositive tests in Tamworth thus far",
+          "content":"The video will start in 8 Cancel\nLatest news straight to your inbox Subscribe Thank you for subscribing We have more newsletters Show me See our privacy notice Invalid Email\nCovid-19 cases are rising in Tamworth.\nThe latest data provided today (Octob... [2272 chars]",
+          "url":"https://www.birminghammail.co.uk/news/midlands-news/areas-tamworth-highest-covid-19-19107282",
+          "image":"https://i2-prod.birminghammail.co.uk/incoming/article18004838.ece/ALTERNATES/s1200/1_JS209597445.jpg",
+          "publishedAt":"2020-10-15T17:23:53Z",
+          "source":{
+             "name":"Birmingham Live",
+             "url":"https://www.birminghammail.co.uk/"
+          }
+       }
+    },
+    {
+       "country":"United Kingdom",
+       "rating":4,
+       "content":{
+          "title":"Here are the latest weekly Covid-19 rates for every local council area in England",
+          "description":"The rate in Manchester has fallen but Nottingham continues to have the highest rate in the country",
+          "content":"Want the best Nottingham news by 9am every day? Sign up to our newsletter! Subscribe Thank you for subscribing We have more newsletters Show me See our privacy notice Invalid Email\nHere is Thursday\u2019s update of the rolling seven-day rate of new cases ... [1792 chars]",
+          "url":"https://www.nottinghampost.com/news/uk-world-news/here-latest-weekly-covid-19-4611002",
+          "image":"https://i2-prod.somersetlive.co.uk/incoming/article4414026.ece/ALTERNATES/s1200/0_JS216764972.jpg",
+          "publishedAt":"2020-10-15T17:14:20Z",
+          "source":{
+             "name":"Nottinghamshire Live",
+             "url":"https://www.nottinghampost.com/"
+          }
+       }
+    },
+    {
+       "country":"United States",
+       "rating":0,
+       "content":{
+          "title":"Trump repeats inaccurate claim about masks, citing CDC study.",
+          "description":"Do masks prevent the spread of the coronavirus? President Donald Trump is again questioning the effectiveness of masks to protect against Covid-19.",
+          "content":"President Donald Trump is again questioning the effectiveness of masks in protecting against catching the coronavirus. On Thursday, he repeated an incorrect claim about masks, citing a recent report from the Centers for Disease Control and Prevention... [4179 chars]",
+          "url":"https://www.nbcnews.com/health/health-news/trump-repeats-inaccurate-claim-about-masks-citing-cdc-study-n1243562",
+          "image":"https://media1.s-nbcnews.com/j/newscms/2020_42/3420460/201016-mask-mn-1150_5949fb1f56f0187e6ca084318ad5f40d.nbcnews-fp-1200-630.jpg",
+          "publishedAt":"2020-10-15T19:44:53Z",
+          "source":{
+             "name":"NBC News",
+             "url":"https://www.nbcnews.com/"
+          }
+       }
+    },
+    {
+       "country":"United States",
+       "rating":1,
+       "content":{
+          "title":"Alabama officials trying to combat virus vaccine resistance",
+          "description":"MONTGOMERY, Ala. (AP) \u2014 With a possible vaccine for COVID-19 still more than two months away, Alabama health officials said Thursday that they already are working to combat the reluctance...",
+          "content":"Even with the expected reluctance among some to get vaccinated, initial supplies will be small and the first doses likely will go to older people, those with health problems that make them more susceptible to the disease and health care staff working... [39 chars]",
+          "url":"https://www.wrcbtv.com/story/42773017/alabama-officials-trying-to-combat-virus-vaccine-resistance",
+          "image":"https://ftpcontent.worldnow.com/professionalservices/clients/wrcb/WRCB_BrandImage.jpg",
+          "publishedAt":"2020-10-15T19:22:00Z",
+          "source":{
+             "name":"WRCB-TV",
+             "url":"https://www.wrcbtv.com/"
+          }
+       }
+    },
+    {
+       "country":"United States",
+       "rating":2,
+       "content":{
+          "title":"Town of Greater Napanee returns to a State of Emergency",
+          "description":"(Kingston, Ontario) Mayor Isbester has returned the Town of Greater Napanee to a State of Emergency in response to rising COVID-19 cases.",
+          "content":"The Town of Greater Napanee has returned to a State of Emergency, as of Wednesday, Oct. 14, 2020. Mayor Isbester reinstated the COVID-19 State of Emergency under Section 4(1) of the Emergency Management and Civil Protection Act, R.S.O. 1990, c. E.9.\n... [2621 chars]",
+          "url":"https://www.kingstonist.com/news/napanee-returns-to-state-of-emergency/",
+          "image":"https://www.kingstonist.com/wp-content/uploads/2020/10/Greater-Napanee.jpg",
+          "publishedAt":"2020-10-15T19:20:52Z",
+          "source":{
+             "name":"Kingstonist",
+             "url":"https://www.kingstonist.com/"
+          }
+       }
+    },
+    {
+       "country":"United States",
+       "rating":3,
+       "content":{
+          "title":"Chesterfield elementary student \u2018clinically diagnosed\u2019 with COVID-19",
+          "description":"A Chesterfield County Public Schools elementary student was \u201cclinically diagnosed\u201d with COVID-19, the school says.",
+          "content":"Coronavirus cases around the world have climbed to all-time highs of more than 330,000 per day as the scourge comes storming back across Europe and spreads with renewed speed in the U.S....",
+          "url":"https://www.nbc12.com/2020/10/15/chesterfield-elementary-student-clinically-diagnosed-with-covid-/",
+          "image":"https://www.nbc12.com/resizer/_96mbDHeCMobPb4OYg1xi4GQGTo=/1200x0/cloudfront-us-east-1.images.arcpublishing.com/raycom/GRFAGFBPYNDYZLNINB2M2HBIWA.PNG",
+          "publishedAt":"2020-10-15T19:19:03Z",
+          "source":{
+             "name":"WWBT NBC12 News",
+             "url":"https://www.nbc12.com/"
+          }
+       }
+    },
+    {
+       "country":"United States",
+       "rating":4,
+       "content":{
+          "title":"COVID-19 cases are spiking not only in Dallas County, but also in DeSoto",
+          "description":"Editor\u2019s note: This story will be updated periodically with case numbers and information about city services. Since the outbreak of the coronavirus earlier...",
+          "content":"Editor\u2019s note: This story will be updated periodically with case numbers and information about city services.\nSince the outbreak of the coronavirus earlier this year, the city of DeSoto has recorded a total of 1648 cases as of Thursday, Oct. 15.\nBase... [1878 chars]",
+          "url":"https://www.dallasnews.com/news/public-health/2020/08/26/heres-how-many-covid-19-cases-are-in-desoto-plus-whats-open-or-closed-and-where-to-get-tested/",
+          "image":"https://dmn-dallas-news-prod.cdn.arcpublishing.com/resizer/FKIB8hr_n0CM6iqEgD1Ld4D-uwI=/1200x630/smart/filters:no_upscale()/cloudfront-us-east-1.images.arcpublishing.com/dmn/Z3VFFDKBIZEERKQYYQ75PHE5VA.JPG",
+          "publishedAt":"2020-09-08T18:03:55Z",
+          "source":{
+             "name":"The Dallas Morning News",
+             "url":"https://www.dallasnews.com/"
+          }
+       }
+    },
+    {
+       "country":"Brazil",
+       "rating":0,
+       "content":{
+          "title":"Fiocruz: casos de covid na Petrobras devem ser registrados como CAT",
+          "description":"Parecer da Funda\u00e7\u00e3o Oswaldo Cruz (Fiocruz), \u00f3rg\u00e3o vinculado ao Minist\u00e9rio da Sa\u00fade, concluiu que a forte incid\u00eancia de casos de contamina\u00e7\u00e3o de covid-19",
+          "content":"Parecer da Funda\u00e7\u00e3o Oswaldo Cruz (Fiocruz), \u00f3rg\u00e3o vinculado ao Minist\u00e9rio da Sa\u00fade, concluiu que a forte incid\u00eancia de casos de contamina\u00e7\u00e3o de covid-19 na Petrobras deve ser registrada como Comunica\u00e7\u00e3o de Acidente de Trabalho (CAT). O registro teria... [5307 chars]",
+          "url":"https://www.mixvale.com.br/2020/10/15/fiocruz-casos-de-covid-na-petrobras-devem-ser-registrados-como-cat/",
+          "image":"https://gmzsf29nl4v47muwukfruijc-wpengine.netdna-ssl.com/wp-content/uploads/2019/11/faviconmixvale-1-1.png",
+          "publishedAt":"2020-10-15T19:17:00Z",
+          "source":{
+             "name":"Portal Mix Vale",
+             "url":"https://www.mixvale.com.br/"
+          }
+       }
+    },
+    {
+       "country":"Brazil",
+       "rating":1,
+       "content":{
+          "title":"Enquanto Trump minimizava pandemia, sua equipe econ\u00f4mica repassava informa\u00e7\u00f5es para beneficiar investidores",
+          "description":"E-mails e relat\u00f3rios entre governo e institui\u00e7\u00f5es financeiras mostram que Casa Branca sabia do impacto que a Covid-19 teria nos EUA e repassou informa\u00e7\u00f5es privilegiadas",
+          "content":"NOVA YORK \u2014 Em fevereiro, enquanto o presidente americano, Donald Trump, minimizava publicamente o coronav\u00edrus nos Estados Unidos, sua equipe econ\u00f4mica dizia o oposto a um grupo seleto de investidores do mercado financeiro e doadores do Partido Repub... [5650 chars]",
+          "url":"https://oglobo.globo.com/mundo/enquanto-trump-minimizava-pandemia-sua-equipe-economica-repassava-informacoes-para-beneficiar-investidores-24694227",
+          "image":"https://ogimg.infoglobo.com.br/in/24694238-2a4-d53/FT1086A/652/VIRUS-ECON-WARNINGS-1.jpg",
+          "publishedAt":"2020-10-15T19:17:00Z",
+          "source":{
+             "name":"O Globo",
+             "url":"https://oglobo.globo.com/"
+          }
+       }
+    },
+    {
+       "country":"Brazil",
+       "rating":2,
+       "content":{
+          "title":"Ministro das Comunica\u00e7\u00f5es testa positivo para covid-19",
+          "description":"Not\u00edcia foi dada um dia depois de Fabio Faria ter ido ao Pal\u00e1cio do Planalto entregar o projeto de lei que prop\u00f5e o fim do monop\u00f3lio postal dos Correios e ter dado entrevista sem utilizar m\u00e1scara de prote\u00e7\u00e3o",
+          "content":"Faria afirmou que estava monitorando a sa\u00fade desde a semana passada, quando esteve em um jantar em que participantes testaram positivo para a doen\u00e7a. O jantar em quest\u00e3o ocorreu na casa do ministro do Tribunal de Contas da Uni\u00e3o Bruno Dantas, e ficou... [127 chars]",
+          "url":"https://valor.globo.com/politica/noticia/2020/10/15/ministro-das-comunicacoes-testa-positivo-para-covid-19.ghtml",
+          "image":"https://s2.glbimg.com/ChSBmv18SLMcKYD5HTr_ljCtmrA=/1200x/smart/filters:cover():strip_icc()/i.s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/internal_photos/bs/2020/4/t/VPYB0rT3iYTzFgyJjHwA/foto15emp-101-correio-b8.jpg",
+          "publishedAt":"2020-10-15T19:14:20Z",
+          "source":{
+             "name":"Valor Econ\u00f4mico",
+             "url":"https://valor.globo.com/"
+          }
+       }
+    },
+    {
+       "country":"Brazil",
+       "rating":3,
+       "content":{
+          "title":"Carneiro e Gouveia: Lideran\u00e7a \u00e9tica e compliance na Covid-19",
+          "description":"Consultor Jur\u00eddico - Artigos, 15/10/2020 - Carneiro e Gouveia: Lideran\u00e7a \u00e9tica e compliance na Covid-19",
+          "content":"Por Cl\u00e1udia Carneiro e Israel Albuquerque Gouveia\nEm uma recente apresenta\u00e7\u00e3o, Daniel Kahn, vice-chefe s\u00eanior da Se\u00e7\u00e3o de Fraudes da Divis\u00e3o Criminal do DOJ, e Charles E. Cain, chefe da unidade do FCPA da SEC, observaram que, embora haja grandes esfo... [9335 chars]",
+          "url":"https://www.conjur.com.br/2020-out-15/carneiro-gouveia-lideranca-etica-compliance-covid-19",
+          "image":"https://s.conjur.com.br/img/b/selo-opiniao-artigos-dentro.png",
+          "publishedAt":"2020-10-15T19:12:00Z",
+          "source":{
+             "name":"Consultor Jur\u00eddico",
+             "url":"https://www.conjur.com.br/"
+          }
+       }
+    },
+    {
+       "country":"Brazil",
+       "rating":4,
+       "content":{
+          "title":"Kamala Harris suspende campanha presencial devido a Covid-19 de auxiliares",
+          "description":"Por Trevor Hunnicutt (Reuters) - A candidata democrata a vice-presidente dos Estados Unidos, Kamala Harris, cancelou planos de viagem at\u00e9 domingo por",
+          "content":"Por Trevor Hunnicutt\n(Reuters) \u2013 A candidata democrata a vice-presidente dos Estados Unidos, Kamala Harris, cancelou planos de viagem at\u00e9 domingo por precau\u00e7\u00e3o depois que uma integrante de sua equipe foi diagnosticada com Covid-19, informou a campanh... [1378 chars]",
+          "url":"https://www.mixvale.com.br/2020/10/15/kamala-harris-suspende-campanha-2/",
+          "image":"https://gmzsf29nl4v47muwukfruijc-wpengine.netdna-ssl.com/wp-content/uploads/2019/11/faviconmixvale-1-1.png",
+          "publishedAt":"2020-10-15T19:01:38Z",
+          "source":{
+             "name":"Portal Mix Vale",
+             "url":"https://www.mixvale.com.br/"
+          }
+       }
+    },
+    {
+       "country":"China",
+       "rating":0,
+       "content":{
+          "title":"\u5168\u7403\u903e3.2\u842c\u540d\u91ab\u7642\u5c08\u5bb6\u9023\u7f72 \u53cd\u5c0d\u5c01\u57ce\u9632\u75ab",
+          "description":"\u4f86\u81ea\u4e16\u754c\u5404\u5730\u8d85\u904e32,000\u540d\u91ab\u751f\u548c\u91ab\u7642\u5c08\u5bb6\u5df2\u7c3d\u7f72\u4e86\u4e00\u4efd\u8acb\u9858\u66f8\uff0c\u4ee5\u53cd\u5c0d\u9632\u6b62COVID-19\uff08\u4e2d\u5171\u75c5\u6bd2\uff0c\u6b66\u6f22\u80ba\u708e\uff09\u64f4\u6563\u7684\u5c01\u9396\u63aa\u65bd\uff0c\u4ed6\u5011\u6307\u9019\u4e9b\u63aa\u65bd\u9020\u6210\u4e86\u300c\u7121\u6cd5\u5f4c\u88dc\u7684\u640d\u5931\u300d\u3002",
+          "content":"\u5168\u7403\u903e3.2\u842c\u540d\u91ab\u7642\u5c08\u5bb6\u9023\u7f72 \u53cd\u5c0d\u5c01\u57ce\u9632\u75ab\n\u3010\u65b0\u5510\u4eba\u5317\u4eac\u6642\u95932020\u5e7410\u670816\u65e5\u8a0a\u3011\u4f86\u81ea\u4e16\u754c\u5404\u5730\u8d85\u904e32,000\u540d\u91ab\u751f\u548c\u91ab\u7642\u5c08\u5bb6\u5df2\u7c3d\u7f72\u4e86\u4e00\u4efd\u8acb\u9858\u66f8\uff0c\u4ee5\u53cd\u5c0d\u9632\u6b62COVID-19\uff08\u4e2d\u5171\u75c5\u6bd2\uff0c\u6b66\u6f22\u80ba\u708e\uff09\u64f4\u6563\u7684\u5c01\u9396\u63aa\u65bd\uff0c\u4ed6\u5011\u6307\u9019\u4e9b\u63aa\u65bd\u9020\u6210\u4e86\u300c\u7121\u6cd5\u5f4c\u88dc\u7684\u640d\u5931\u300d\u3002\n\u622a\u81f310\u670813\u65e5\uff0c\u5df2\u6709\u4e8c\u842c\u4e09\u5343\u591a\u540d\u57f7\u696d\u91ab\u751f\u3001\u4e5d\u5343\u591a\u540d\u91ab\u5b78\u548c\u516c\u885b\u5b78\u8005\u4ee5\u53ca\u8d85\u904e40\u842c\u540d\u95dc\u6ce8\u6b64\u4e8b\u7684\u516c\u773e\u4eba\u58eb\uff0c\u90fd\u7c3d\u7f72\u4e86\u9019\u4efd\u8acb\u9858\u66f8\u3002\n\u9019\u4efd\u8acb\u9858\u66f8\u662f\u7531\u4e09\u540d\u9802\u5c16\u5b78\u8005\u806f\u540d\u767c\u8d77\u7684\u3002\u5305\u62ec\u54c8\u4f5b\u5927\u5b78\u6559\u6388\u99ac\u4e01\u2027\u5eab\u723e\u591a\u592b\u592b\u535a\u58eb\uff08Martin Kulldorff\uff09\u3001\u725b\u6d25\u5927\u5b78... [2233 chars]",
+          "url":"https://www.ntdtv.com/b5/2020/10/15/a102964018.html",
+          "image":"https://i.ntdtv.com/assets/uploads/2020/10/GettyImages-1207936245-800x450.jpg",
+          "publishedAt":"2020-10-15T16:00:00Z",
+          "source":{
+             "name":"NTDTV",
+             "url":"https://www.ntdtv.com/"
+          }
+       }
+    },
+    {
+       "country":"China",
+       "rating":1,
+       "content":{
+          "title":"\u79e6\u5c31\u77f3\uff1a\u9752\u5cf6\u4e0d\u7720\u591c \u5927\u75ab\u524d\u7684\u81f4\u547d\u932f\u8aa4",
+          "description":"\u300c\u5341\u4e00\u300d\u525b\u525b\u904e\u5f8c\uff0c\u71b1\u9580\u65c5\u904a\u57ce\u5e02\u9752\u5cf6\u5c31\u56e0\u75ab\u60c5\u544a\u6025\uff0c\u5f9e10\u670811\u65e5\u958b\u59cb\u4e00\u9023\u5e7e\u5929\uff0c\u9752\u5cf6\u5e02\u6c11\u9023\u591c\u9032\u884c\u4e2d\u5171\u75c5\u6bd2(\u53c8\u7a31\u65b0\u51a0\u72c0\u75c5\u6bd2\uff0cCOVID-19)\u6aa2\u6e2c\u3002 \u9752\u5cf6900\u842c\u4eba\u5927\u6392\u67e5\uff0c\u5c0d\u5927\u9678\u6c11\u773e\u7522\u751f\u4e86\u76f8\u7576\u7684\u5fc3\u7406\u9707\u64bc\u3002\u9752\u5cf6\u5730\u8655\u5357\u5317\u4e4b\u9593\uff0c\u4e26\u975e\u662f\u4ec0\u9ebc\u504f\u9060\u7684\u908a\u5883\u57ce\u5e02...",
+          "content":"\u79e6\u5c31\u77f3\uff1a\u9752\u5cf6\u4e0d\u7720\u591c \u5927\u75ab\u524d\u7684\u81f4\u547d\u932f\u8aa4\n\u300c\u5341\u4e00\u300d\u525b\u525b\u904e\u5f8c\uff0c\u71b1\u9580\u65c5\u904a\u57ce\u5e02\u9752\u5cf6\u5c31\u56e0\u75ab\u60c5\u544a\u6025\uff0c\u5f9e10\u670811\u65e5\u958b\u59cb\u4e00\u9023\u5e7e\u5929\uff0c\u9752\u5cf6\u5e02\u6c11\u9023\u591c\u9032\u884c\u4e2d\u5171\u75c5\u6bd2(\u53c8\u7a31\u65b0\u51a0\u72c0\u75c5\u6bd2\uff0cCOVID-19)\u6aa2\u6e2c\u3002\n\u9752\u5cf6900\u842c\u4eba\u5927\u6392\u67e5\uff0c\u5c0d\u5927\u9678\u6c11\u773e\u7522\u751f\u4e86\u76f8\u7576\u7684\u5fc3\u7406\u9707\u64bc\u3002\u9752\u5cf6\u5730\u8655\u5357\u5317\u4e4b\u9593\uff0c\u4e26\u975e\u662f\u4ec0\u9ebc\u504f\u9060\u7684\u908a\u5883\u57ce\u5e02\u3002\u75c5\u6bd2\u51fa\u73fe\u5728\u9752\u5cf6\uff0c\u8b93\u5f88\u591a\u4eba\u7126\u616e\u4e0d\u5b89\uff0c\u4e00\u4e9b\u4e2d\u570b\u4eba\u6b64\u524d\u56e0\u7576\u5c40\u300c\u5f62\u52e2\u4e00\u7247\u5927\u597d\u300d\u7684\u5ba3\u50b3\uff0c\u800c\u7522\u751f\u51fa\u7684\u4e00\u9ede\u5b89\u5168\u611f\u4e5f\u88ab\u6253\u7834\u4e86\uff0c\u56e0\u70ba\u9019\u8868\u660e\u75c5\u6bd2\u96a8\u6642\u4e5f\u53ef\u80fd\u6703\u51fa\u73fe\u65bc\u81ea\u5df1\u6240\u5728\u57ce\u5e02\u3002\n\u5c31\u5728\u4e00\u500b\u6708\u524d\u76849\u67088\u65e5\uff0c\u7576\u5c40\u525b\u525b\u8209\u884c\u4e86\u300c\u5168\u570b\u6297\u64ca\u65b0\u51a0\u80ba\u708e\u75ab\u60c5\u8868... [839 chars]",
+          "url":"https://www.ntdtv.com/b5/2020/10/14/a102963292.html",
+          "image":"https://i.ntdtv.com/assets/uploads/2020/10/GettyImages-1229041373-800x450.jpg",
+          "publishedAt":"2020-10-14T16:00:00Z",
+          "source":{
+             "name":"NTDTV",
+             "url":"https://www.ntdtv.com/"
+          }
+       }
+    },
+    {
+       "country":"China",
+       "rating":2,
+       "content":{
+          "title":"\u5c0f\u5fc3\u8b39\u614e\u70ba\u597d \u79ae\u4f86\u7e7c\u5b0c\u751f\u5f8c\u66ab\u505c\u6297\u9ad4\u85e5\u7269\u8a66\u9a57",
+          "description":"\u7f8e\u570b\u85e5\u5ee0\u79ae\u4f86\u91dd\u5c0d\u4e00\u8d77\u4e0d\u660e\u4e8b\u4ef6\uff0c\u4e2d\u6b62\u6700\u5f8c\u968e\u6bb5\u7684\u4e2d\u5171\u75c5\u6bd2\u75be\u75c5\uff08COVID-19\uff09\u81e8\u5e8a\u8a66\u9a57\u3002\u9019\u662f\u7e7c\u5b0c\u751f\u96c6\u5718\u4e4b\u5f8c\uff0c24\u5c0f\u6642\u5167\uff0c\u518d\u6709\u4e00\u5bb6\u85e5\u5ee0\u5c0d\u8a66\u9a57\u558a\u5361\uff0c\u79d1\u5b78\u5bb6\u96d6\u7136\u8868\u793a\u9a5a\u8a1d\uff0c\u4f46\u7a31\u300c\u5c0f\u5fc3\u8b39\u614e\u7e3d\u662f\u597d\u7684\u3002\u300d \u5b0c\u751f\u516c\u53f8\uff08Johnson & Johnson\uff09\u91dd\u5c0d...",
+          "content":"\u5c0f\u5fc3\u8b39\u614e\u70ba\u597d \u79ae\u4f86\u7e7c\u5b0c\u751f\u5f8c\u66ab\u505c\u6297\u9ad4\u85e5\u7269\u8a66\u9a57\n\u3010\u65b0\u5510\u4eba\u5317\u4eac\u6642\u95932020\u5e7410\u670814\u65e5\u8a0a\u3011\u7f8e\u570b\u85e5\u5ee0\u79ae\u4f86\u91dd\u5c0d\u4e00\u8d77\u4e0d\u660e\u4e8b\u4ef6\uff0c\u4e2d\u6b62\u6700\u5f8c\u968e\u6bb5\u7684\u4e2d\u5171\u75c5\u6bd2\u75be\u75c5\uff08COVID-19\uff09\u81e8\u5e8a\u8a66\u9a57\u3002\u9019\u662f\u7e7c\u5b0c\u751f\u96c6\u5718\u4e4b\u5f8c\uff0c24\u5c0f\u6642\u5167\uff0c\u518d\u6709\u4e00\u5bb6\u85e5\u5ee0\u5c0d\u8a66\u9a57\u558a\u5361\uff0c\u79d1\u5b78\u5bb6\u96d6\u7136\u8868\u793a\u9a5a\u8a1d\uff0c\u4f46\u7a31\u300c\u5c0f\u5fc3\u8b39\u614e\u7e3d\u662f\u597d\u7684\u3002\u300d\n\u5b0c\u751f\u516c\u53f8\uff08Johnson & Johnson\uff09\u91dd\u5c0d\u5168\u74036\u842c\u540d\u5fd7\u9858\u8005\u63a5\u7a2eAd26.COV2.S\u75ab\u82d7\uff0c\u56e0\u67091\u540d\u5fd7\u9858\u53d7\u8a66\u8005\u51fa\u73fe\u4e0d\u660e\u539f\u56e0\u75be\u75c5\uff0c12\u65e5\u5ba3\u5e03\u66ab\u505c\u9032\u884c\u7b2c3\u968e\u6bb5\u81e8\u5e8a\u8a66\u9a57\u3002\n\u5b0c\u751f\u7814\u7a76\u9818\u5c0e\u4eba\u746a\u66fc\uff08Mathai Mammen\uff09\u4eca\u5929... [685 chars]",
+          "url":"https://www.ntdtv.com/b5/2020/10/14/a102962828.html",
+          "image":"https://i.ntdtv.com/assets/uploads/2020/10/GettyImages-492437684-800x450.jpg",
+          "publishedAt":"2020-10-13T16:00:00Z",
+          "source":{
+             "name":"NTDTV",
+             "url":"https://www.ntdtv.com/"
+          }
+       }
+    },
+    {
+       "country":"China",
+       "rating":3,
+       "content":{
+          "title":"\u520a\u53f0\u7063\u570b\u6176\u5ee3\u544a \u4e2d\u5171\u4f7f\u9928\u8b66\u544a\u5370\u5ea6\u5a92\u9ad4\u906d\u56de\u55c6",
+          "description":"\u4e2d\u83ef\u6c11\u570b(\u53f0\u7063)\u5373\u5c07\u8209\u884c\u96d9\u5341\u570b\u6176\u6176\u795d\u6d3b\u52d5\uff0c\u5370\u5ea6\u5169\u5bb6\u4e3b\u6d41\u5831\u7ae07\u65e5\u520a\u767b\u96d9\u5341\u570b\u6176\u5ee3\u544a\uff0c\u96fb\u8996\u53f0\u4e5f\u64ad\u51fa\u53f0\u7063\u5c08\u984c\u5831\u5c0e\uff0c\u4f46\u906d\u4e2d\u5171\u99d0\u5370\u5ea6\u5927\u4f7f\u9928\u767c\u51fd\u8b66\u544a\uff0c\u4e0d\u904e\u96a8\u5373\u906d\u5370\u5ea6\u5a92\u9ad4\u4eba\u548c\u7db2\u53cb\u56de\u55c6\uff0c\u8981\u4e2d\u5171\u5225\u5a01\u8105\u5370\u5ea6\u5a92\u9ad4\u300c\u6efe\uff01\u300d\u3002 \u53d7\u5230\u4e2d\u5171\u75c5\u6bd2\u75be\u75c5\uff08COVID-19\uff0c\u6b66\u6f22...",
+          "content":"\u520a\u53f0\u7063\u570b\u6176\u5ee3\u544a \u4e2d\u5171\u4f7f\u9928\u8b66\u544a\u5370\u5ea6\u5a92\u9ad4\u906d\u56de\u55c6\n\u3010\u65b0\u5510\u4eba\u5317\u4eac\u6642\u95932020\u5e7410\u670808\u65e5\u8a0a\u3011\u4e2d\u83ef\u6c11\u570b(\u53f0\u7063)\u5373\u5c07\u8209\u884c\u96d9\u5341\u570b\u6176\u6176\u795d\u6d3b\u52d5\uff0c\u5370\u5ea6\u5169\u5bb6\u4e3b\u6d41\u5831\u7ae07\u65e5\u520a\u767b\u96d9\u5341\u570b\u6176\u5ee3\u544a\uff0c\u96fb\u8996\u53f0\u4e5f\u64ad\u51fa\u53f0\u7063\u5c08\u984c\u5831\u5c0e\uff0c\u4f46\u906d\u4e2d\u5171\u99d0\u5370\u5ea6\u5927\u4f7f\u9928\u767c\u51fd\u8b66\u544a\uff0c\u4e0d\u904e\u96a8\u5373\u906d\u5370\u5ea6\u5a92\u9ad4\u4eba\u548c\u7db2\u53cb\u56de\u55c6\uff0c\u8981\u4e2d\u5171\u5225\u5a01\u8105\u5370\u5ea6\u5a92\u9ad4\u300c\u6efe\uff01\u300d\u3002\n\u53d7\u5230\u4e2d\u5171\u75c5\u6bd2\u75be\u75c5\uff08COVID-19\uff0c\u6b66\u6f22\u80ba\u708e\uff09\u5f71\u97ff\uff0c\u5f9e1995\u5e74\u8a2d\u7acb\u8fc4\u4eca\u7684\u99d0\u5370\u5ea6\u4ee3\u8868\u8655\uff0c\u6539\u8b8a\u6bcf\u5e74\u570b\u6176\u524d\u5915\u8209\u8fa6\u570b\u6176\u9152\u6703\u7b49\u5be6\u9ad4\u6176\u795d\u6d3b\u52d5\u65b9\u5f0f\uff0c\u4eca\u5e74\u6539\u7528\u520a\u767b\u5831\u7ae0\u5ee3\u544a\uff0c\u4e26\u8207\u5370\u5ea6Zee News\u96fb\u8996\u53f0\u65d7\u4e0b\u570b\u969b\u983b\u9053\u300c\u4e16\u754c\u65b0\u805e\u4e00\u624b... [1427 chars]",
+          "url":"https://www.ntdtv.com/b5/2020/10/08/a102958433.html",
+          "image":"https://i.ntdtv.com/assets/uploads/2020/10/1-70-800x450.jpg",
+          "publishedAt":"2020-10-07T16:00:00Z",
+          "source":{
+             "name":"NTDTV",
+             "url":"https://www.ntdtv.com/"
+          }
+       }
+    },
+    {
+       "country":"China",
+       "rating":4,
+       "content":{
+          "title":"\u7f8e\u526f\u7e3d\u7d71\u8faf\u8ad6\u5169\u5019\u9078\u4eba\u4e0a\u53f0\u4e0d\u63e1\u624b \u5750\u8457\u8faf\u8ad6",
+          "description":"\u7f8e\u570b2020\u5e74\u7e3d\u7d71\u5927\u9078\u552f\u4e00\u4e00\u5834\u526f\u7e3d\u7d71\u5019\u9078\u4eba\u8faf\u8ad67\u65e5\u665a\u5728\u7336\u4ed6\u5dde\u9e7d\u6e56\u57ce\u767b\u5834\uff0c\u73fe\u4efb\u526f\u7e3d\u7d71\u5f6d\u65af\u8207\u6c11\u4e3b\u9ee8\u5019\u9078\u4eba\u8cc0\u9326\u9e97\u5728\u63a5\u53d7\u4e2d\u5171\u75c5\u6bd2\u63a1\u6aa2\u5f8c\u4e0a\u53f0\uff0c\u5169\u4eba\u4e0d\u63e1\u624b\uff0c\u5750\u8457\u8faf\u8ad6\u3002\u4e3b\u6301\u4eba\u4e00\u958b\u5834\u5c31\u8981\u6c42\u5169\u4eba\u8981\u6ce8\u610f\u79ae\u8c8c\u3002 \u5728\u7f8e\u570b\u7e3d\u7d71\u5ddd\u666e\u7be9\u6aa2\u4e2d\u5171\u75c5\u6bd2\u75be\u75c5\uff08COVID-19\uff09...",
+          "content":"\u7f8e\u526f\u7e3d\u7d71\u8faf\u8ad6\u5169\u5019\u9078\u4eba\u4e0a\u53f0\u4e0d\u63e1\u624b \u5750\u8457\u8faf\u8ad6\n\u3010\u65b0\u5510\u4eba\u5317\u4eac\u6642\u95932020\u5e7410\u670808\u65e5\u8a0a\u3011\u7f8e\u570b2020\u5e74\u7e3d\u7d71\u5927\u9078\u552f\u4e00\u4e00\u5834\u526f\u7e3d\u7d71\u5019\u9078\u4eba\u8faf\u8ad67\u65e5\u665a\u5728\u7336\u4ed6\u5dde\u9e7d\u6e56\u57ce\u767b\u5834\uff0c\u73fe\u4efb\u526f\u7e3d\u7d71\u5f6d\u65af\u8207\u6c11\u4e3b\u9ee8\u5019\u9078\u4eba\u8cc0\u9326\u9e97\u5728\u63a5\u53d7\u4e2d\u5171\u75c5\u6bd2\u63a1\u6aa2\u5f8c\u4e0a\u53f0\uff0c\u5169\u4eba\u4e0d\u63e1\u624b\uff0c\u5750\u8457\u8faf\u8ad6\u3002\u4e3b\u6301\u4eba\u4e00\u958b\u5834\u5c31\u8981\u6c42\u5169\u4eba\u8981\u6ce8\u610f\u79ae\u8c8c\u3002\n\u5728\u7f8e\u570b\u7e3d\u7d71\u5ddd\u666e\u7be9\u6aa2\u4e2d\u5171\u75c5\u6bd2\u75be\u75c5\uff08COVID-19\uff09\u5448\u967d\u6027\u5f8c\uff0c\u7e3d\u7d71\u8faf\u8ad6\u59d4\u54e1\u6703\uff08Commission of Presidential Debates\uff09\u5ba3\u5e03\uff0c\u8faf\u8ad6\u671f\u9593\u5c07\u63a1\u53d6\u984d\u5916\u7684\u885b\u751f\u8207\u5b89\u5168\u9810\u9632\u63aa\u65bd\uff0c\u5305\u62ec\u67b6\u8a2d\u5851\u81a0\u73bb\u7483\u677f\u3002\n\u7e3d\u7d71\u8faf\u8ad6\u59d4\u54e1... [602 chars]",
+          "url":"https://www.ntdtv.com/b5/2020/10/08/a102958408.html",
+          "image":"https://i.ntdtv.com/assets/uploads/2020/10/GettyImages-1228948697-800x450.jpg",
+          "publishedAt":"2020-10-07T16:00:00Z",
+          "source":{
+             "name":"NTDTV",
+             "url":"https://www.ntdtv.com/"
+          }
+       }
+    }
+ ]

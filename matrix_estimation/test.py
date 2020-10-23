@@ -1,4 +1,5 @@
 import numpy as np
+import json
 import matplotlib.pyplot as plt
 from scipy.stats import bernoulli
 from als import ALS
@@ -13,6 +14,19 @@ def bound(low, high, value):
     return max(low, min(high, value))
 
 
+    
+with open('test.json') as f:
+  data = json.load(f)
+
+# item matrix from tweets
+V = []
+for tweet in data:
+    one_hot = tweet['one_hot']
+    V.append(one_hot)
+V = np.array(V).T
+print(V)
+
+quit()
 
 """
 users 
