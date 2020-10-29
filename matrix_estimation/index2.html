@@ -26,7 +26,6 @@
 
 <body>
   <div id="app"> 
-     <p>Paste compare.json in here</p>
     <input v-model="message" placeholder="json"></input>
     <button v-on:click="show">Show</button>
     <div v-for="(rec, index) in json">
@@ -59,7 +58,7 @@
       el: '#app',
       data: {
          message: '',
-         json: []
+         json: [ {user: 'Moises',truth:[{text:'yerr'}], rec:[{text:'yerr'}]}]
       },
       methods: {
          show () {
