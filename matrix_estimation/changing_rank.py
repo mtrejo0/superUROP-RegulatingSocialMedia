@@ -5,6 +5,7 @@ from scipy.stats import bernoulli
 from als import ALS
 from util import generate_mask, calc_unobserved_rmse
 
+
 n = 50
 m = 8
 k = 8
