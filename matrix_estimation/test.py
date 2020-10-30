@@ -36,11 +36,11 @@ R = np.random.rand(m, n) * sigma + np.dot(U, V)
 print(R)
 
 # sample some values out
-mask_prob = .5
+mask_prob = .1
 mask = generate_mask(mask_prob, m, n)
 
 # matrix factorization, guess actual values
-lamba = .1
+lamba = .5
 R_hat = ALS(R, mask, k, lamba)
 
 print(R_hat)
@@ -61,7 +61,7 @@ for i in range(m):
   rec = {}
   rec['user'] = list(U[i])
   rec['truth'] =  getTweets(data,R[i])
-  rec['rec'] =  getTweets(data,R[i])
+  rec['rec'] =  getTweets(data,R_hat[i])
   recs.append(rec)
 
 with open('compare.json', 'w') as f:
