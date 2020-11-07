@@ -1,1052 +1,627 @@
 [
    {
-      "id":"1319007392466653185",
-      "text":"RT @ElijahSchaffer: Biden failed to condemn Antifa\n\nConservatives assaulted in the streets\n\nCold blood killings of Trump supporters\n\nA youn\u2026",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.45,
-         "neu":0.456,
-         "pos":0.094,
-         "compound":-0.8979
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.094,
-         0.456,
-         0.45
-      ]
+      "id":"1324863177130192897",
+      "text":"RT @TrumpWarRoom: Michigan county flips back to Trump, following repair of voting software glitch  https://t.co/ZSGy1iSmyo",
+      "tag":"Politics"
    },
    {
-      "id":"1319007392357584897",
-      "text":"RT @JoeBiden: Hay muchos asuntos que son complicados, pero algunas cosas son visiblemente claras. Las familias deben permanecer unidas. htt\u2026",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863176245121025",
+      "text":"@link12213 @KyleClark @AllbrightNFL Politics have always been dirty regardless sides. To think otherwise is naive &amp; turning a blind eye.",
+      "tag":"Politics"
    },
    {
-      "id":"1319007392319852544",
-      "text":"@wvufanagent999 This is awesome trump landslide red wave https://t.co/EvwVWKaeNA",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.661,
-         "pos":0.339,
-         "compound":0.6249
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.339,
-         0.661,
-         0.0
-      ]
+      "id":"1324863176022892544",
+      "text":"RT @5Agenda21: #Trump   \nWhen an elite globalist, Trilateral Commission Member can become the leader of Europe's largest Democratic Sociali\u2026",
+      "tag":"Politics"
    },
    {
-      "id":"1319007392298901510",
-      "text":"@realDonaldTrump Is there a purpose in Trump posting pictures with no captions? Did Stahl so unnerve him that he is still speechlessly pouting?",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.109,
-         "neu":0.891,
-         "pos":0.0,
-         "compound":-0.3736
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.0,
-         0.891,
-         0.109
-      ]
+      "id":"1324863175980879873",
+      "text":"RT @JolyonMaugham: Hardly a surprise from a man whose contempt for democracy - even Trump never tried to suspend Congress - arguably exceed\u2026",
+      "tag":"Politics"
    },
    {
-      "id":"1319007392240119808",
-      "text":"RT @Luce_52: Since Twitter won\u2019t let us just retweet, here is my comment: President Donald J Trump is the best President ever, and I pray h\u2026",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.772,
-         "pos":0.228,
-         "compound":0.7579
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.228,
-         0.772,
-         0.0
-      ]
+      "id":"1324863175829938176",
+      "text":"I don\u2019t know what it\u2019s like to have a civil relationship with Republicans. In my life it\u2019s been Trump vs. the Democrats. I can read about it, but it\u2019s weird for me to imagine a time where people dated without political affiliation being a factor. I live and breathe politics. \ud83e\udd7a",
+      "tag":"Politics"
    },
    {
-      "id":"1319007392202305537",
-      "text":"RT @PatrickNova6: @realDonaldTrump NEWS: Judge to hear DOJ request to represent Trump in rape defamation lawsuit.\n\nOur tax dodger Puppet pe\u2026",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.258,
-         "neu":0.742,
-         "pos":0.0,
-         "compound":-0.765
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.0,
-         0.742,
-         0.258
-      ]
+      "id":"1324863181882339330",
+      "text":"@mrjamesob Yep. And on Wednesday and Thursday when BoJo, Raab and others refused to call out Trump for his obvious anti democratic behaviour.",
+      "tag":"Trump"
    },
    {
-      "id":"1319007392030429184",
-      "text":"RT @Jennyjen010: I don\u2019t want Trump just to win. I want him to be re-elected by a huge margin. This victory must be so large that we can ov\u2026",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.717,
-         "pos":0.283,
-         "compound":0.7717
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.283,
-         0.717,
-         0.0
-      ]
+      "id":"1324863181861351424",
+      "text":"RT @itsJeffTiedrich: I am so here for Trump publicly melting straight the fuck down on twitter. pass the popcorn",
+      "tag":"Trump"
    },
    {
-      "id":"1319007391925587968",
-      "text":"Why won\u2019t the news cover Ivanka Trump corruptions since her dad became presidont! Why NO press? CREW has proven time after time! @donlemon @CNN @cnnbrk",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.128,
-         "neu":0.872,
-         "pos":0.0,
-         "compound":-0.5449
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.0,
-         0.872,
-         0.128
-      ]
+      "id":"1324863181852913664",
+      "text":"RT @ronnieverruto: Breaking: Democrat's used a software program designed by NSA Whistleblower Dennis Montgomery called THE HAMMER &amp; SCORECA\u2026",
+      "tag":"Trump"
    },
    {
-      "id":"1319007391921352711",
-      "text":"RT @catturd2: President Trump should skip the rigged debate tomorrow and have a huge rally instead.",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.14,
-         "neu":0.73,
-         "pos":0.129,
-         "compound":-0.0516
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.129,
-         0.73,
-         0.14
-      ]
+      "id":"1324863181848768512",
+      "text":"RT @Sassy_Jeanie: Kiel openly stated, \"Time to come clean. I work for Wayne County, MI and I threw out every Trump ballot I saw. Tens of th\u2026",
+      "tag":"Trump"
    },
    {
-      "id":"1319007391808065536",
-      "text":"RT @RyanAFournier: Since Trump beat COVID,\n\nHe\u2019s had 13 Trump rallies.\n\n- 167,000 people total attended.\n- 25% were new voters.\n- 30% were\u2026",
-      "tag":"trump",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         1,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863181844598787",
+      "text":"RT @FINALLEVEL: I can\u2019t believe people are comparing Trump to Satan.\u00a0\u00a0Yes, he\u2019s evil, but he\u2019s certainly not as evil as Trump.",
+      "tag":"Trump"
    },
    {
-      "id":"1319007392387026944",
-      "text":"RT @sdkdele: Heartless people they are watching soccer \ud83d\ude2d",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.314,
-         "neu":0.686,
-         "pos":0.0,
-         "compound":-0.4939
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.0,
-         0.686,
-         0.314
-      ]
+      "id":"1324863181903204354",
+      "text":"RT @realDonaldTrump: I had such a big lead in all of these states late into election night, only to see the leads miraculously disappear as\u2026",
+      "tag":"Election"
    },
    {
-      "id":"1319007388997947395",
-      "text":"[UEFA\u30c1\u30e3\u30f3\u30d4\u30aa\u30f3\u30ba\u30ea\u30fc\u30b0 \u30b0\u30eb\u30fc\u30d7\u30b9\u30c6\u30fc\u30b8 2020-21] FC\u30ec\u30c3\u30c9\u30d6\u30eb\u30fb\u30b6\u30eb\u30c4\u30d6\u30eb\u30af vs FC\u30ed\u30b3\u30e2\u30c6\u30a3\u30d5\u30fb\u30e2\u30b9\u30af\u30ef / https://t.co/22vFgxJq4G\nhttps://t.co/f1XrqN3iGy",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863181878071298",
+      "text":"@realDonaldTrump Because your folks voted in person and in a pandemic others did by mail. And your folks forced pa to wait til Election Day to count votes.",
+      "tag":"Election"
    },
    {
-      "id":"1319007386007425025",
-      "text":"RT @NBCSportsSoccer: \ud83d\udd34\ud83d\udd35 Manchester United v Chelsea. Saturday. 12:30pm ET. @NBC. Here's how to watch, prediction, start time, team news, od\u2026",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.872,
-         "pos":0.128,
-         "compound":0.4215
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.128,
-         0.872,
-         0.0
-      ]
+      "id":"1324863181856989184",
+      "text":"RT @realDonaldTrump: I had such a big lead in all of these states late into election night, only to see the leads miraculously disappear as\u2026",
+      "tag":"Election"
    },
    {
-      "id":"1319007369448177664",
-      "text":"RT @SoccerKingJP: \ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\u30b3\u30e1\u30f3\u30c8\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f\n\u30ad\u30e3\u30e9\u30ac\u30fc\u6c0f\u3001V\u30fb\u30c0\u30a4\u30af\u96e2\u8131\u3092\u5f37\u3044\u3089\u308c\u305f\u53e4\u5de3\u306b\u63d0\u8a00\u300c\u30a6\u30d1\u30e1\u30ab\u30ce\u3092\u7372\u5f97\u3059\u3079\u304d\u300d\nhttps://t.co/Idh2EBVUMw\n\n\ud83d\udde3\u7de8\u96c6\u90e8\u3088\u308a\n\u300c#\u30d5\u30a3\u30eb\u30b8\u30eb\u30fb\u30d5\u30a1\u30f3\u30fb\u30c0\u30a4\u30af \u306e\u8ca0\u50b7\u4ea4\u4ee3\u3092\u5f37\u3044\u3089\u308c\u305f #\u30ea\u30f4\u2026",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863181613903872",
+      "text":"@WATL_news @aidan_smx And Kara Eastman's DEMOCRAT primary opponent went on to endorse her REPUBLICAN opponent in the general election.\n\nBet you didn't hear a word of that from experts like @chrislhayes or any of his far more odious colleagues on the supposedly \"most left\" flavor of U.S. legacy media.",
+      "tag":"Election"
    },
    {
-      "id":"1319007367577493504",
-      "text":"RT @Phildecynic: Gvt grants $10m to Foxtel for broadcasting under represented  sports, including women\u2019s soccer on pay tv.\n\nABC then purcha\u2026",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.063,
-         "neu":0.852,
-         "pos":0.085,
-         "compound":0.128
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.085,
-         0.852,
-         0.063
-      ]
+      "id":"1324863181580361731",
+      "text":"RT @thecjpearson: I\u2019m not giving up our country without a fight. This election will not be stolen. \n\nBelieve that. https://t.co/rI5WgIwtsf",
+      "tag":"Election"
    },
    {
-      "id":"1319007359855960068",
-      "text":"RT @AllAnimeVibe: This the best soccer anime I ever seen \ud83d\ude02\u203c\ufe0f https://t.co/tcl4AIfYrL",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.704,
-         "pos":0.296,
-         "compound":0.6369
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.296,
-         0.704,
-         0.0
-      ]
+      "id":"1324863186063994880",
+      "text":"RT @PatriziaRametta: IMBROGLI SU IMBROGLI.... IL COVID E' SERVITO A RECLUDERE LE PERSONE PER POTERLE ABITUARE ALLA PRIVAZIONE DELLA LIBERTA\u2026",
+      "tag":"Covid"
    },
    {
-      "id":"1319007353262440451",
-      "text":"Covid: happens\nEuropean soccer team fans: fk u, me want ze sphere to go woosh",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.915,
-         "pos":0.085,
-         "compound":0.0772
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.085,
-         0.915,
-         0.0
-      ]
+      "id":"1324863186022096897",
+      "text":"RT @Qofficiel: COVID-19 : 1 million de Fran\u00e7ais ont d\u00e9j\u00e0 bascul\u00e9 dans la pauvret\u00e9 depuis le d\u00e9but de la crise.\n\u00c0 Montfort-sur-Meur, \u00e0 la co\u2026",
+      "tag":"Covid"
    },
    {
-      "id":"1319007337995173890",
-      "text":"@MervynNutley @gavreilly Where does it say gym specifically? Those cases could have been from athletics club, GAA, soccer,hockey are anything in between",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863186017767424",
+      "text":"RT @AliVelshi: BREAKING: NBC News confirms at least 122,365 new COVID cases have been reported in the U.S. today, eclipsing yesterday's pre\u2026",
+      "tag":"Covid"
    },
    {
-      "id":"1319007332869664768",
-      "text":"RT @AlexClassicTips: \u26bd\ufe0f#SerieA Round 5: Two-Team Parlay at 2.88 \n\nRTs appreciated \ud83d\ude4f\ud83c\udffc\n\nhttps://t.co/hwpKGjNdCS",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.784,
-         "pos":0.216,
-         "compound":0.5106
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.216,
-         0.784,
-         0.0
-      ]
+      "id":"1324863185841774594",
+      "text":"RT @CBSNews: Supplies of N95 masks running low as COVID-19 surges across the U.S. https://t.co/kINEJSzHa1",
+      "tag":"Covid"
    },
    {
-      "id":"1319007321499013123",
-      "text":"@Aqvd94 @sharknoises @ElizaEatonStern @SteadyRiot I'd say absolutely not, honestly. There will be some snobs who call it football, but call it soccer if you want. We won't judge.",
-      "tag":"soccer",
-      "sentiment":{
-         "neg":0.119,
-         "neu":0.833,
-         "pos":0.048,
-         "compound":-0.2799
-      },
-      "one_hot":[
-         0,
-         1,
-         0,
-         0,
-         0,
-         0.048,
-         0.833,
-         0.119
-      ]
+      "id":"1324863185531269123",
+      "text":"@CGriwkowsky Huge numbers of COVID cases aren\u2019t going to be good for those businesses either. This doesn\u2019t even make sense.",
+      "tag":"Covid"
    },
    {
-      "id":"1319007392055656449",
-      "text":"RT @JessicaMcknzi: \u00c7a sert \u00e0 rien de me corriger quand je dis \u00ab\u00a0LE covid\u00a0\u00bb pour moi \u00ab\u00a0LA covid\u00a0\u00bb c\u2019est vilain \u00e0 dire",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.136,
-         "neu":0.864,
-         "pos":0.0,
-         "compound":-0.4588
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         0.864,
-         0.136
-      ]
+      "id":"1324863186114383879",
+      "text":"RT @Crank_the_crank: Where are the Biden voters?",
+      "tag":"Biden"
    },
    {
-      "id":"1319007391820746755",
-      "text":"High Court Orders Action Against Kamal Nath, Union Minister Over\u00a0Covid https://t.co/VfDzBhDnog",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863186085044226",
+      "text":"RT @poquithomas: Biden - 264\nTrump- 214\nJG Wentworth - 877 CASH NOW",
+      "tag":"Biden"
    },
    {
-      "id":"1319007391808065536",
-      "text":"RT @RyanAFournier: Since Trump beat COVID,\n\nHe\u2019s had 13 Trump rallies.\n\n- 167,000 people total attended.\n- 25% were new voters.\n- 30% were\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863186072375296",
+      "text":"Aguardando pronunciamento de Joe Biden sobre sua vit\u00f3ria. Ser\u00e1? https://t.co/RtBcyr7hCs",
+      "tag":"Biden"
    },
    {
-      "id":"1319007391363616779",
-      "text":"RT @BBCLookNorth: New police team set up in South Yorkshire to catch those breaking Covid restrictions: https://t.co/HcT0WGQaxY https://t.c\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863186013614080",
+      "text":"RT @realDonaldTrump: Joe Biden should not wrongfully claim the office of the President. I could make that claim also. Legal proceedings are\u2026",
+      "tag":"Biden"
    },
    {
-      "id":"1319007391183142915",
-      "text":"RT @SenRickScott: .@SenateDems literally blocked a COVID relief bill less than 2 hours ago that would have helped workers and small busines\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.091,
-         "neu":0.776,
-         "pos":0.134,
-         "compound":0.25
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.134,
-         0.776,
-         0.091
-      ]
+      "id":"1324863185908883459",
+      "text":"Biden is #NotMyPresident. https://t.co/HdzKfqkt9A",
+      "tag":"Biden"
    },
    {
-      "id":"1319007390747004934",
-      "text":"RT @Win2020Red: These 2 clowns \ud83e\udd21 say they don\u2019t trust the vaccines that are coming out &amp; will do their own review\n\nWhy? To continue to keep\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.879,
-         "pos":0.121,
-         "compound":0.5106
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.121,
-         0.879,
-         0.0
-      ]
+      "id":"1324863183144833024",
+      "text":"RT @RealMattCouch: So I'm getting wind that the Trump Campaign would like Patriots to be at all 50 Capitols for rallies at noon on Saturday\u2026",
+      "tag":"Patriots"
    },
    {
-      "id":"1319007390700896256",
-      "text":"COVID-19 symptoms appear in a specific order, study finds https://t.co/zoiUZfN2Ll",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863182922510336",
+      "text":"RT @tracybeanz: A message from \u2066@replouiegohmert\u2069 - courtesy of \u2066@fftarorg\u2069. God bless the Patriots. https://t.co/JikXGVhYmP",
+      "tag":"Patriots"
    },
    {
-      "id":"1319007390566526976",
-      "text":"RT @LACaldwellDC: NEW: @senatemajldr McConnell told his members in a closed door lunch that he told the White House not to agree to a COVID\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.088,
-         "neu":0.912,
-         "pos":0.0,
-         "compound":-0.2755
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         0.912,
-         0.088
-      ]
+      "id":"1324863182150594562",
+      "text":"RT @queenalmamarie: WE ARE BEING Told By  Good SOURCES That All The #Legal Ballots Were PreMarked With A Secret Code &amp; All Others Will Be T\u2026",
+      "tag":"Patriots"
    },
    {
-      "id":"1319007390302412802",
-      "text":"RT @Mippcivzla: #NotiMippCI \ud83d\udcf0\ud83d\uddde| Venezuela registr\u00f3 483 contagios por COVID-19 en las \u00faltimas 24 horas. Lea m\u00e1s \u23e9 https://t.co/7RVs99TObc #S\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863182075146241",
+      "text":"RT @RealMattCouch: BREAKING: Joe Biden says he will be speaking at 8pm... \n\nI'm hearing he is going to declare victory in the election..\n\nT\u2026",
+      "tag":"Patriots"
    },
    {
-      "id":"1319007390239498242",
-      "text":"RT @_infoLibre: Guantes del 8M, inseguridad, okupas, \"datos falsos\" del covid, las \"residencias de Iglesias\"... los 24 bulos de Vox en su m\u2026",
-      "tag":"covid",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         1,
-         0,
-         0,
-         0,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863181790060545",
+      "text":"@MaddenNFLDirect brady's flashback takes away his TOTW card art....only two options now..both patriots! Need that bucs card art back plz",
+      "tag":"Patriots"
    },
    {
-      "id":"1319007396669292545",
-      "text":"@heathermitts Music, creativity, writing. That's my medicine.",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.698,
-         "pos":0.302,
-         "compound":0.3818
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.302,
-         0.698,
-         0.0
-      ]
+      "id":"1324863178505924608",
+      "text":"RT @tedlieu: Dear @HerschelWalker: Remember when the Dallas Cowboys lost to the Pittsburgh Steelers by more than one score and the Cowboys\u2026",
+      "tag":"Cowboys"
    },
    {
-      "id":"1319007396551925760",
-      "text":"RT @ARMYBogotaCol: #NuevaFotoDePerfil\n\n#ARMY pre-salva 'BE' en apple Music y Spotify: https://t.co/OCunOWAznD\n\nSi quieres participar del ma\u2026",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863177948098561",
+      "text":"RT @tedlieu: Dear @HerschelWalker: Remember when the Dallas Cowboys lost to the Pittsburgh Steelers by more than one score and the Cowboys\u2026",
+      "tag":"Cowboys"
    },
    {
-      "id":"1319007396488974342",
-      "text":"\u2665\ufe0f https://t.co/3yBKCFwENQ",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863173850230786",
+      "text":"RT @JoshShapiroPA: Counselor, as you may recall from your days practicing law, in court we deal with facts and evidence \u2014 you have none.\u2026",
+      "tag":"Cowboys"
    },
    {
-      "id":"1319007395478179840",
-      "text":"RT @chartsblackpink: .@BLACKPINK\u2019s \u2018THE ALBUM\u2019 extends its record as the longest-running #1 album by a K-Pop act and female group on Worldw\u2026",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.93,
-         "pos":0.07,
-         "compound":0.128
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.07,
-         0.93,
-         0.0
-      ]
+      "id":"1324863159362965510",
+      "text":"RT @tedlieu: Dear @HerschelWalker: Remember when the Dallas Cowboys lost to the Pittsburgh Steelers by more than one score and the Cowboys\u2026",
+      "tag":"Cowboys"
    },
    {
-      "id":"1319007394492379136",
-      "text":"RT @nana_Sandalphon: \u5171\u9cf4\u4e16\u754c\u306e\u5b58\u5728\u8ad6 / \ud83d\udd8c\ufe0f\u7e54\u7530 \u5149\nby \u30b5\u30f3\u30c0\u30eb\u30d5\u30a9\u30f3\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3010\u516c\u5f0f\u3011\n#nanamusic\nhttps://t.co/sOJnZhVdpw\n\u30b5\u30f3\u30d7\u30ed\u30ad\u30e3\u30e9\u7d39\u4ecb\n\u7e54\u7530 \u5149\n\u30d0\u30ab\u3063\u307d\u3044\u767a\u8a00\u304c\u76ee\u7acb\u3064\u304c\u5b9f\u306f\u8ce2\u3044\u5b50\u3002\u66f8\u9053\u5bb6\u3068\u3057\u3066\u306e\u9854\u3082\u6301\u3063\u2026",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863110360936448",
+      "text":"RT @tedlieu: Dear @HerschelWalker: Remember when the Dallas Cowboys lost to the Pittsburgh Steelers by more than one score and the Cowboys\u2026",
+      "tag":"Cowboys"
    },
    {
-      "id":"1319007394136006660",
-      "text":"RT @DAMIKNOWSBEST: It\u2019s okay to take time for yourself in the midst of all this chaos. Mentally, emotionally and physically this is a lot t\u2026",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.155,
-         "neu":0.778,
-         "pos":0.067,
-         "compound":-0.5385
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.067,
-         0.778,
-         0.155
-      ]
+      "id":"1324863189520179201",
+      "text":"@CaseyStoney Agreed. Why shouldn't girl's football academies be seen as elite. They lead to top club's and International teams.",
+      "tag":"Football"
    },
    {
-      "id":"1319007394060509188",
-      "text":"RT @fanbase_kids: \ud83d\udcbf| .@Stray_Kids songs with #1 on Line Music Chart in 2020:\n\n- Double Knot -Japanese Ver.-\n- My Pace -Japanese Ver.-\n- Lev\u2026",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863189113188353",
+      "text":"North Laurel vs Trinity Today HS Football [LIVESTREAM]\nWatch Live Here \u27a1\ufe0f https://t.co/osDtDie600\nThe Trinity (Louisville, KY) varsity football team has a home non-conference game vs. North Laurel (London, KY) on Friday, November 6 @ 7p.\nGame Details: Trinity High School For Boys",
+      "tag":"Football"
    },
    {
-      "id":"1319007393838190597",
-      "text":"@InfinixKenya #Infinixnote8ultraspeed am fascinated with\n1.dual engine for charging which  enhanced battery to last fo 142 hours while listening to music and watch video\n2.super stable video with vidhance that execute execellent captions\n3.slow motion caption\n4.ultra night mode 2.0",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.878,
-         "pos":0.122,
-         "compound":0.6486
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.122,
-         0.878,
-         0.0
-      ]
+      "id":"1324863189058785291",
+      "text":"Ryan Giggs arr\u00eat\u00e9 par la police pour une agression sur sa compagne  https://t.co/MuqL8eeVpK",
+      "tag":"Football"
    },
    {
-      "id":"1319007393712377856",
-      "text":"RT @dulcedenance: I miss walking around campus in my little outfit listening to my music like I was in a fucking tv show",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.072,
-         "neu":0.814,
-         "pos":0.113,
-         "compound":0.2263
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.113,
-         0.814,
-         0.072
-      ]
+      "id":"1324863188744110081",
+      "text":"\ud83c\udfc8Varsity Football: Penn-Trafford vs Pine-Richland\n\nPenn-Trafford Warriors vs Pine-Richland Rams\n\nON AIR\nclick here\u27a1\ufe0f https://t.co/vk2WDWMNQ8\n-------------------------------------------\n[Wpial Class 5A][Semifinal] https://t.co/Sf2FKKCPcI",
+      "tag":"Football"
    },
    {
-      "id":"1319007393209044997",
-      "text":"RT @noshbaess: @Infonuworld Now United is a global pop group made up of 16 members from 16 different countries. They aim to bring love, pos\u2026",
-      "tag":"music",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.759,
-         "pos":0.241,
-         "compound":0.7906
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         1,
-         0,
-         0.241,
-         0.759,
-         0.0
-      ]
+      "id":"1324863187766964225",
+      "text":"RT @haddad_cj: Here at Mariner High School where the Tritons are set to take on Palm Bay in a Class 5A Region 3 &amp; 4 FHSAA state playoff pla\u2026",
+      "tag":"Football"
    },
    {
-      "id":"1319007396358914048",
-      "text":"The fascinating thing about dating yourself if indulging in food and drinks using a knife and fork around a table of four by yourself !",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.847,
-         "pos":0.153,
-         "compound":0.5848
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.153,
-         0.847,
-         0.0
-      ]
+      "id":"1324863180661813252",
+      "text":"RT @jiminoldpics: baby jimin playing basketball \ud83c\udfc0\ud83e\udd7a https://t.co/jwiodEFHar",
+      "tag":"Basketball"
    },
    {
-      "id":"1319007394945445890",
-      "text":"eating all the food https://t.co/IVfPXaFigM",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863176106766337",
+      "text":"Latest EEA guidelines open door for high school basketball, hockey to play this winter https://t.co/Ex9ntLObZF",
+      "tag":"Basketball"
    },
    {
-      "id":"1319007394194690050",
-      "text":"RT @davidschneider: Today the govt has\n\n\u25fe\ufe0f Deprived starving kids of food\n\u25fe\ufe0f Stopped South Yorks topping up Covid pay of those on minimum w\u2026",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.305,
-         "neu":0.695,
-         "pos":0.0,
-         "compound":-0.802
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.0,
-         0.695,
-         0.305
-      ]
+      "id":"1324863165906243588",
+      "text":"RT @SLAMRewind: The Spurs used to play basketball like it was soccer. https://t.co/mgalLErE8H",
+      "tag":"Basketball"
    },
    {
-      "id":"1319007392626057217",
-      "text":"RT @AnthemInc: Food insecurity is a crisis in America. In a new op-ed, Claire Babineaux-Fontenot, CEO @FeedingAmerica and Anthem CEO Gail B\u2026",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.277,
-         "neu":0.723,
-         "pos":0.0,
-         "compound":-0.7845
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.0,
-         0.723,
-         0.277
-      ]
+      "id":"1324863158406803457",
+      "text":"RT @GrindHouseBB: \ud83c\udfc0PLAYERS:\nYou have \u270b\ud83c\udffe fouls in basketball for a reason. Don\u2019t let people tell you basketball isn\u2019t a contact sport. It\u2019s\u2026",
+      "tag":"Basketball"
    },
    {
-      "id":"1319007392298913794",
-      "text":"@lalonyx @KonekoKittenYT @greendevman Popeyes is so greasy imo. It\u2019s nice to have sometimes but i just can\u2019t eat it at least 3 times in a month. And chick fil a\u2019s food is organic, so at least nothing weird is going on in their kitchens.",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.0,
-         "neu":0.914,
-         "pos":0.086,
-         "compound":0.3973
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.086,
-         0.914,
-         0.0
-      ]
+      "id":"1324863153193226242",
+      "text":"RT @Thekstatefan: 19 Days until K-State Basketball\n\nTop 25 K-State players of the last 20 years-\n#19 DJ Johnson\n\nRanks 1st at KSU in Career\u2026",
+      "tag":"Basketball"
    },
    {
-      "id":"1319007392042921984",
-      "text":"RT @Ohun_Ashe: STL Black Owned Food Spots\n\n1. Gourmet Soul Restaurant and Catering\nLocation: 1620 Delmar Blvd., St. Louis MO 63103\n\n2. Kitc\u2026",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863190031716352",
+      "text":"RT @FrankieBorrelli: I want a brand new house on an episode of Cribs and a bathroom I can play baseball in.",
+      "tag":"Baseball"
    },
    {
-      "id":"1319007391711694851",
-      "text":"RT @j_m_dray: My fianc\u00e9 is usually an opera singer but since that is currently illegal, he created @indieeats_uk as an ethical alternative\u2026",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.159,
-         "neu":0.616,
-         "pos":0.225,
-         "compound":0.2617
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.225,
-         0.616,
-         0.159
-      ]
+      "id":"1324863182263873537",
+      "text":"RT @news_tigers: \u962a\u795e\u30fb\u8fd1\u672c\u3001\u6311\u3080\u5927\u53f0\uff13\u5272\u300c\u3042\u3068\uff13\u8a66\u5408\u300d\nhttps://t.co/xzHlm36SO4\n#\u962a\u795e\u30bf\u30a4\u30ac\u30fc\u30b9",
+      "tag":"Baseball"
    },
    {
-      "id":"1319007390897942531",
-      "text":"RT @fkabudu: As in we were all talking too much about jaiye jaiye and plenty food how many days ago. Now this. Wild",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.0,
-         "neu":1.0,
-         "pos":0.0,
-         "compound":0.0
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.0,
-         1.0,
-         0.0
-      ]
+      "id":"1324863175326461954",
+      "text":"RT @fukudasun: \u6226\u529b\u5916\u306e\u30ed\u30c3\u30c6\u5185\u304c\u73fe\u5f79\u7d9a\u884c\u5e0c\u671b\u3000\u30c8\u30e9\u30a4\u30a2\u30a6\u30c8\u3078 https://t.co/3dCaC4nTcT",
+      "tag":"Baseball"
    },
    {
-      "id":"1319007389752938498",
-      "text":"RT @Olga_CIWF: Following yesterday's disastrous vote, all eyes are on Friday's vote as the final chance to undo a deal that would hurt anim\u2026",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.249,
-         "neu":0.683,
-         "pos":0.068,
-         "compound":-0.743
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.068,
-         0.683,
-         0.249
-      ]
+      "id":"1324863161799831552",
+      "text":"RT @news_tigers: \u962a\u795e\uff24\uff11\u4f4d\u6307\u540d\u306e\u8fd1\u5927\u30fb\u4f50\u85e4\u8f1d\u660e\u3001\uff14\u756a\u306e\u5668\u6253\uff01\u3053\u3053\u305e\u3067\u30c8\u30c9\u30e1\uff12\u70b9\u4e09\u5841\u6253\nhttps://t.co/hUvBjMvc4N\n#\u962a\u795e\u30bf\u30a4\u30ac\u30fc\u30b9",
+      "tag":"Baseball"
    },
    {
-      "id":"1319007388217782274",
-      "text":"RT @BernieSanders: Pathetic. Mitch McConnell is prepared to leave millions of working class Americans without income or food. A new Democra\u2026",
-      "tag":"food",
-      "sentiment":{
-         "neg":0.206,
-         "neu":0.714,
-         "pos":0.08,
-         "compound":-0.4588
-      },
-      "one_hot":[
-         0,
-         0,
-         0,
-         0,
-         1,
-         0.08,
-         0.714,
-         0.206
-      ]
+      "id":"1324863160214380546",
+      "text":"@karuma_baseball \u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3057\u305f\ud83d\ude2d\n\u30c8\u30ec\u30a4\u30f3\u3055\u3093\u304c\u6700\u521d\u304b\u3089\u6765\u3066\u304f\u308c\u305f\u306e\u3067\u52a9\u304b\u308a\u307e\u3057\u305f\uff01",
+      "tag":"Baseball"
+   },
+   {
+      "id":"1324863190338056192",
+      "text":"Soooooooo annoyed. I wish I could be  a grinch that LOVES Christmas. \ud83d\ude11\ud83d\ude44",
+      "tag":"Christmas"
+   },
+   {
+      "id":"1324863189645987842",
+      "text":"RT @DamienFahey: \u201cWe\u2019ll now begin pre-boarding for small children wearing all of the clothes grandma got them for Christmas at once.\u201d https\u2026",
+      "tag":"Christmas"
+   },
+   {
+      "id":"1324863188777766912",
+      "text":"@TheHashtag0nist you can get it for christmas? \ud83d\ude43",
+      "tag":"Christmas"
+   },
+   {
+      "id":"1324863188245090308",
+      "text":"Vintage Christmas Postcard, Santa Smoking Pipe, Elf, Sweethear by lotsofpostcards https://t.co/rkgTwSRSdV via @Etsy",
+      "tag":"Christmas"
+   },
+   {
+      "id":"1324863187829870592",
+      "text":"@benoistbway Yes as soon as Halloween ends, Christmas starts \ud83d\ude0c",
+      "tag":"Christmas"
+   },
+   {
+      "id":"1324863190837030913",
+      "text":"Got a Barbie Dreamhouse last year.  I ask my daughter this year what she wants and apparently there is a \u201cSmart\u201d dreamhouse that is \u201c999.9999999\u201d that Santa is bringing. Come on man can\u2019t they come out with a new one every 5 years like game systems? She would outgrow it by then.",
+      "tag":"New Years"
+   },
+   {
+      "id":"1324863189767528448",
+      "text":"You can\u2019t be surprised that the party or the #dossier, #FISA abuse, #obstruction lie, phone call whistleblower that never was, #SCOTUS teenage gang rape accusers, have defrauded the election. 4 years of no new was simply too much for these People #democratfilth",
+      "tag":"New Years"
+   },
+   {
+      "id":"1324863187511091203",
+      "text":"Like Nissa said in the podcast,,,,the King Boo battle at the end of Luigi\u2019s Mansion is REALLY hard! Here\u2019s a picture of her final health (and her New Mansion) from when she first beat the game two years ago! #Nintendo #LuigisMansion #podcast https://t.co/HGMj8BQZmV",
+      "tag":"New Years"
+   },
+   {
+      "id":"1324863183379701765",
+      "text":"RT @JamesOKeefeIII: Veritas has been providing undeniable video proof of voter fraud for years. \n\nThis is nothing new. \n\nVoter fraud is ver\u2026",
+      "tag":"New Years"
+   },
+   {
+      "id":"1324863182092054532",
+      "text":"RT @SteveKerr: 2 years ago, @staceyabrams lost a controversial race for Gov. of Georgia in which voter rolls were purged and thousands of p\u2026",
+      "tag":"New Years"
+   },
+   {
+      "id":"1324863197497577472",
+      "text":"@dcsdk12 Y\u2019all might wanna tell Facebook that. Everyone on there says you\u2019re closing after Thanksgiving break. Here\u2019s one of the many posts I saw https://t.co/fHjDZdfaKS",
+      "tag":"Thanksgiving"
+   },
+   {
+      "id":"1324863158146588675",
+      "text":"@mikefarb1 @joncoopertweets Maybe just keep an eye out for this guy on Thanksgiving? https://t.co/IdOSPiui7r",
+      "tag":"Thanksgiving"
+   },
+   {
+      "id":"1324863151125520385",
+      "text":"all of the christian ones, and thanksgiving https://t.co/E634brLp68",
+      "tag":"Thanksgiving"
+   },
+   {
+      "id":"1324863136541847552",
+      "text":"@marafish You can play by the rules that it starts at Thanksgiving this year, I won\u2019t tell",
+      "tag":"Thanksgiving"
+   },
+   {
+      "id":"1324863130489516039",
+      "text":"This Thanksgiving, leave the worrying to\u00a0us. https://t.co/10fhbZLVwH",
+      "tag":"Thanksgiving"
+   },
+   {
+      "id":"1324863198965719041",
+      "text":"christmas eve imma post up in the shed and wait for santa to land on somebody\u2019s roof and then i\u2019m going to knock him on his ass and steal his job",
+      "tag":"Santa"
+   },
+   {
+      "id":"1324863194658004992",
+      "text":"@kayleighmcenany @realDonaldTrump You should have seen him at his high school in Santa Monica, CA. Total asshole",
+      "tag":"Santa"
+   },
+   {
+      "id":"1324863190837030913",
+      "text":"Got a Barbie Dreamhouse last year.  I ask my daughter this year what she wants and apparently there is a \u201cSmart\u201d dreamhouse that is \u201c999.9999999\u201d that Santa is bringing. Come on man can\u2019t they come out with a new one every 5 years like game systems? She would outgrow it by then.",
+      "tag":"Santa"
+   },
+   {
+      "id":"1324863189197131776",
+      "text":"RT @luisfanovich: @Pontifex_es Ave Mar\u00eda\nDIOS te salve MAR\u00cdA, llena eres de Gracia,\nel Se\u00f1or est\u00e1 contigo,\nbendita t\u00fa eres entre todas las\u2026",
+      "tag":"Santa"
+   },
+   {
+      "id":"1324863188752601093",
+      "text":"RT @RogerBaires1: #SantaRosaDeLima Desprendimiento de tierra en el Caser\u00edo Los Espinosa, Municipio de Santa Rosa de Lima. #ReporteCiudadano\u2026",
+      "tag":"Santa"
+   },
+   {
+      "id":"1324863154707378177",
+      "text":"RT @KevBeenWavy: Mariah really secured a never ending bag",
+      "tag":"Mariahcarey"
+   },
+   {
+      "id":"1324863115427782659",
+      "text":"@bansheenickk @ifblakes @MariahCarey Yes",
+      "tag":"Mariahcarey"
+   },
+   {
+      "id":"1324863030426030082",
+      "text":"RT @fireman452a: The Lady singing needs NO introduction Mariah!!!  This is meant to inspire!!  #MakeYourselfHeardNov3rd #ObamaWasBetterAtEv\u2026",
+      "tag":"Mariahcarey"
+   },
+   {
+      "id":"1324863019126464512",
+      "text":"RT @billboard: .@MariahCarey shares stunning throwback performance of \"I'll Be There\"  https://t.co/I7LdlyCcbe",
+      "tag":"Mariahcarey"
+   },
+   {
+      "id":"1324863007734820865",
+      "text":"RT @MariahCarey: Guess what? \u2744\ufe0f https://t.co/2IUNkCOyCz",
+      "tag":"Mariahcarey"
+   },
+   {
+      "id":"1324863202291818496",
+      "text":"Making my babies pizza,  hot chocolate, popcorn &amp; cookies for movie night \ud83e\udd70",
+      "tag":"Pizza"
+   },
+   {
+      "id":"1324863201830334464",
+      "text":"RT @MonicaLewinsky: why is there not a website that tells me which pizza places use the small pepperonis?!? \ud83e\udd2c",
+      "tag":"Pizza"
+   },
+   {
+      "id":"1324863201335500800",
+      "text":"I feel offended. The pizza guy gave me blue cheese instead of ranch \ud83d\ude43",
+      "tag":"Pizza"
+   },
+   {
+      "id":"1324863199879987200",
+      "text":"i wish i could eat pizza with a straw",
+      "tag":"Pizza"
+   },
+   {
+      "id":"1324863198500171782",
+      "text":"RT @stoolpresidente: Barstool Pizza Review - Goodfellas Distillery (Lexington, KY) https://t.co/eRUc4fu9dt",
+      "tag":"Pizza"
+   },
+   {
+      "id":"1324863204162326529",
+      "text":"Thanks to @Silly_Jackie for connecting me to her friend who sells bomb ass cookies.",
+      "tag":"Cookies"
+   },
+   {
+      "id":"1324863202291818496",
+      "text":"Making my babies pizza,  hot chocolate, popcorn &amp; cookies for movie night \ud83e\udd70",
+      "tag":"Cookies"
+   },
+   {
+      "id":"1324863170293456900",
+      "text":"RT @immigrationcom: @senatemajldr Mr. McConnell:\n\nWe are looking for a clear repudiation of Trump's lies, allegations without evidence, and\u2026",
+      "tag":"Cookies"
+   },
+   {
+      "id":"1324863163167203329",
+      "text":"@spurs_legacy @Kandyn @DJBecca @b__mccoy @EmmaKinery Facts? Yea bro, there's going to be a coup the night before Christmas. Forget the legal processes that have been happening since... the first president, Biden's going to swoop down through the chimney, overthrow Trump, eat his cookies and milk, then go back up the chimney.",
+      "tag":"Cookies"
+   },
+   {
+      "id":"1324863142866931712",
+      "text":"fav ice cream flavour? \u2014 cookies and cream! love ha \ud83d\udc46 https://t.co/qXiFDB3eJz",
+      "tag":"Cookies"
+   },
+   {
+      "id":"1324863185480904704",
+      "text":"I\u2019m baking who want to FaceTime",
+      "tag":"Baking"
+   },
+   {
+      "id":"1324863164714868738",
+      "text":"RT @mental_floss: Research has already shown us that making art is a good stress reliever, even if your skill level is more kindergartener\u2026",
+      "tag":"Baking"
+   },
+   {
+      "id":"1324863123778572288",
+      "text":"E vamos pra mais um m\u00eas de open na baking",
+      "tag":"Baking"
+   },
+   {
+      "id":"1324863086759714816",
+      "text":"Still vote in this tho I will be baking the other thing tomorrow",
+      "tag":"Baking"
+   },
+   {
+      "id":"1324863086071779338",
+      "text":"My mom watches one episode of Great British Baking Show. Now all of a sudden she wanna make a cake \ud83d\ude02\ud83d\ude02 #GreatBritishBakeOff",
+      "tag":"Baking"
+   },
+   {
+      "id":"1324863192149995523",
+      "text":"I need @LuvDayah_dotcom to make some cupcakes \ud83e\udd7a",
+      "tag":"Cupcakes"
+   },
+   {
+      "id":"1324863182406635521",
+      "text":"@Jooks4Life @LisaVermette11 @ottawahealth Like, it\u2019s right in their face and they still don\u2019t wanna see it, they believe the government are rainbows and cupcakes and they couldn\u2019t lie to them!",
+      "tag":"Cupcakes"
+   },
+   {
+      "id":"1324863145052151809",
+      "text":"8- Ahora mismo estoy haciendo cupcakes o como se escriba",
+      "tag":"Cupcakes"
+   },
+   {
+      "id":"1324863060796993536",
+      "text":"He said caramel cupcakes no caramel. Dad Got said if nobody thinks if it. But no peanut butter and butter butters too or they choose. God chooses. Yes Dad we have no right to demand a Passover by the sad angel. SHe never looks sad. Well I mean the hungry one. Anne she doesn't eat",
+      "tag":"Cupcakes"
+   },
+   {
+      "id":"1324862995676192772",
+      "text":"\u2800     \u2800\u2800\n\u2800     \u2800\u2800offering cupcakes , \n\u2800     \u2800\u2800warm apple cider , \n\u2800     \u2800\u2800and sugar cookies !\n\n\u2800     \u2800\u2800but beware , they're \n\u2800     \u2800\u2800spiked with amortentia !\n\u2800     \u2800\u2800he wants to see if\n\u2800     \u2800\u2800he did it correctly . \n\u2800     \u2800\u2800",
+      "tag":"Cupcakes"
+   },
+   {
+      "id":"1324863207425667074",
+      "text":"RT @elektrotal: all those republicans begging for mercy and kindness right now were nowhere to be found when ICE was raiding their towns in\u2026",
+      "tag":"Mexican"
+   },
+   {
+      "id":"1324863183366967297",
+      "text":"RT @txxjen: Nevada taking longer than mexican parents saying bye after a party",
+      "tag":"Mexican"
+   },
+   {
+      "id":"1324863180019994627",
+      "text":"RT @nypost: Gangster busted in Mexican cartel massacre of Mormon moms and kids https://t.co/fSv9hx2XPc https://t.co/BLUBbwPkPA",
+      "tag":"Mexican"
+   },
+   {
+      "id":"1324863179424456704",
+      "text":"RT @NiiaLaFlare: That Mexican rapper weird as hell. Some shit really don\u2019t even be funny like ?",
+      "tag":"Mexican"
+   },
+   {
+      "id":"1324863178069651457",
+      "text":"RT @Andrea_Chiri_: \u00daltimo Instagram Live Session de la campa\u00f1a digital \u201cMind, Body &amp; More in the Mexican Caribbean\u201d en colaboraci\u00f3n con la\u2026",
+      "tag":"Mexican"
+   },
+   {
+      "id":"1324863196168073217",
+      "text":"RT @PopCrave: #Positions by Ariana Grande debuts at #1 in the UK. It becomes her fourth #1 album.\n\nCongratulations, @ArianaGrande! \ud83c\udf7e https:\u2026",
+      "tag":"Ariana Grande"
+   },
+   {
+      "id":"1324863170515673089",
+      "text":"RT @giawaholic: As the 46th President of the United States, I hereby announce God is a woman by Ariana Grande the new national anthem.",
+      "tag":"Ariana Grande"
+   },
+   {
+      "id":"1324863167747461120",
+      "text":"RT @antoniiogarza21: i love when ariana grande",
+      "tag":"Ariana Grande"
+   },
+   {
+      "id":"1324863139171733505",
+      "text":"larri shows praise for singer ariana grande. https://t.co/MmGMYm8Zb9",
+      "tag":"Ariana Grande"
+   },
+   {
+      "id":"1324863134050422785",
+      "text":"RT @giawaholic: As the 46th President of the United States, I hereby announce God is a woman by Ariana Grande the new national anthem.",
+      "tag":"Ariana Grande"
+   },
+   {
+      "id":"1324863175167250432",
+      "text":"Meek did body Drake on War Pain https://t.co/eekScSh1nS",
+      "tag":"Drake"
+   },
+   {
+      "id":"1324863122000195595",
+      "text":"@bandobritt this reminds me of that Drake &amp; Josh episode when they ran over Oprah",
+      "tag":"Drake"
+   },
+   {
+      "id":"1324863115129987074",
+      "text":"Sabe que os drake tem o cora\u00e7\u00e3o gelado",
+      "tag":"Drake"
+   },
+   {
+      "id":"1324863106015768577",
+      "text":"@iFireMonkey Drake song",
+      "tag":"Drake"
+   },
+   {
+      "id":"1324863098025598979",
+      "text":"@guiuwu_ @yasssbarbosaaa eu uso foto do drake mamando\ud83d\ude0e",
+      "tag":"Drake"
+   },
+   {
+      "id":"1324863160491315201",
+      "text":"RT @riiavenus: when U high listening to music U hear everything. like Damn who tf on that Violin \ud83d\udc40 \ud83d\ude2d",
+      "tag":"Violin"
+   },
+   {
+      "id":"1324863146624868354",
+      "text":"RT @KTH_News: Taehyung with a violin is in a league of its own! https://t.co/lHXtrKiNnl",
+      "tag":"Violin"
+   },
+   {
+      "id":"1324863136843902976",
+      "text":"\ud83d\ude05\ud83d\ude05\ud83d\ude05I want to too, with a small violin https://t.co/r8Ck3aVX1f",
+      "tag":"Violin"
+   },
+   {
+      "id":"1324863123027857414",
+      "text":"RT @riiavenus: when U high listening to music U hear everything. like Damn who tf on that Violin \ud83d\udc40 \ud83d\ude2d",
+      "tag":"Violin"
+   },
+   {
+      "id":"1324863104942018560",
+      "text":"RT @itsJeffTiedrich: @realDonaldTrump mister president sir I'm playing the world's tiniest violin for you right now",
+      "tag":"Violin"
+   },
+   {
+      "id":"1324863214107156480",
+      "text":"@lauraanbw @valentuck En ese lugar siempre cerr\u00e9 mis noches de rumba los fines de semana y algunas veces entre semana. Fui, soy y siempre ser\u00e9 amante y coleccionista de Jazz. Una que otra vez compart\u00ed tardes con el padre de Frank Quintero, \u00e9l al piano y yo con un frasco de Black Label",
+      "tag":"Piano"
+   },
+   {
+      "id":"1324863204762275841",
+      "text":"Franz Schubert, Khatia Buniatishvili - Piano Sonata No. 21 in B-Flat Major, D. 960: III. Scherzo - Allegro vivace con delicatezza",
+      "tag":"Piano"
+   },
+   {
+      "id":"1324863185522974722",
+      "text":"RT @BAENegocios: #Jazz\nhttps://t.co/lhWg1oNU59 \nPor @eldesimone https://t.co/5icVXAHMUp",
+      "tag":"Piano"
+   },
+   {
+      "id":"1324863180078800896",
+      "text":"RT @FcoToscano: @miblogestublog OMG, this is ON POINT! \ud83d\ude02\ud83d\ude02\ud83d\ude02 question is: who we identify with we: a) the rioters, b)the police, c)the couple\u2026",
+      "tag":"Piano"
+   },
+   {
+      "id":"1324863143466643458",
+      "text":"@jjperezvivas En el SORTEO donde particip\u00e9 rifaron una TECLAde piano y un GATO, el cual gan\u00e9. El DETALLE es que soy al\u00e9rgica y no pude ni tomarme una FOTO con \u00e9l. AGARR\u00c9 una HOJA y firm\u00e9 para que me lo cambiaran por un LIM\u00d3N.\ud83c\udf40",
+      "tag":"Piano"
+   },
+   {
+      "id":"1324861069714747392",
+      "text":"AAAAH JUSTIN BEIBER",
+      "tag":"Justin Beiber"
+   },
+   {
+      "id":"1324856279765053443",
+      "text":"Go put on \u201cSomebody to Love\u201d by Justin Beiber right. Now. It\u2019s fitting for the moment, an instant mood lifter and you\u2019ll be dancing before you know it! #changeyourstate #moodbooster #musicismedicine #lovemesomeBiebs",
+      "tag":"Justin Beiber"
+   },
+   {
+      "id":"1324841386793791488",
+      "text":"sand justin beiber arc",
+      "tag":"Justin Beiber"
+   },
+   {
+      "id":"1324841036473159681",
+      "text":"I can\u2019t believe I\u2019m going to admit this but I like a Justin Beiber song . I love the song holy holy holy",
+      "tag":"Justin Beiber"
+   },
+   {
+      "id":"1324840094403072001",
+      "text":"Being Canadian must be actually sad. Like all ur actors/ actresses nd singers all move to LA and forget about you guys. I didn\u2019t even know Justin beiber was from over there and Drake is just obsessed with the UK. There\u2019s no pride, no distinction btwn u and American tbh, sad stuff",
+      "tag":"Justin Beiber"
    }
 ]

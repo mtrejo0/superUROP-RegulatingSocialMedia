@@ -1,7 +1,7 @@
 import json
 import urllib.parse
+from util import BearerTokenAuth
 import requests
-from requests.auth import AuthBase
 
 # Fill these in. Generate tokens at /content/developer-twitter/en/apps. 
 
@@ -17,42 +17,57 @@ headers = {
     "Accept-Encoding": "gzip"
 }
 
-# Generates a bearer token with consumer key and secret via https://api.twitter.com/oauth2/token.
-class BearerTokenAuth(AuthBase):
-    def __init__(self, consumer_key, consumer_secret):
-        self.bearer_token_url = "https://api.twitter.com/oauth2/token"
-        self.consumer_key = consumer_key
-        self.consumer_secret = consumer_secret
-        self.bearer_token = self.get_bearer_token()
-
-    def get_bearer_token(self):
-        response = requests.post(
-            self.bearer_token_url,
-            auth=(self.consumer_key, self.consumer_secret),
-            data={'grant_type': 'client_credentials'},
-            headers={'User-Agent': 'LabsRecentSearchQuickStartPython'})
-
-        if response.status_code != 200:
-            raise Exception("Cannot get a Bearer token (HTTP %d): %s" % (response.status_code, response.text))
-
-        body = response.json()
-        return body['access_token']
-
-    def __call__(self, r):
-        r.headers['Authorization'] = f"Bearer %s" % self.bearer_token
-        r.headers['User-Agent'] = 'LabsResearchSearchQuickStartPython'
-        return r
-
-
-#Create Bearer Token for authenticating with recent search.
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 
 
-queries = ['trump', 'soccer', 'covid', 'music', 'food']
-totalTweets = []
 
-for query in queries:
-    url = f'https://api.twitter.com/2/tweets/search/recent?query={query}'
+categories = {
+    "News" : [
+        "Politics",
+        "Trump",
+        "Election",
+        "Covid",
+        "Biden",
+    ],
+    "Sports" : [
+        "Patriots",
+        "Cowboys",
+        "Football",
+        "Basketball",
+        "Baseball",
+    ],
+    "Holidays" : [
+        "Christmas",
+        "New Years",
+        "Thanksgiving",
+        "Santa",
+        "Mariahcarey",
+    ],
+    "Food" : [
+        "Pizza",
+        "Cookies",
+        "Baking",
+        "Cupcakes",
+        "Mexican",
+    ],
+    "Music" : [
+        "Ariana Grande",
+        "Drake",
+        "Violin",
+        "Piano",
+        "Justin Beiber",
+    ]
+}
+
+all_tags = []
+for category in categories:
+    tags = categories[category]
+    all_tags.extend(tags)
+
+totalTweets = []
+for tag in all_tags:
+    print(tag)
+    url = f'https://api.twitter.com/2/tweets/search/recent?query={tag}'
 
     #Make a GET request to the Labs recent search endpoint.
     response = requests.get(url, auth=bearer_token, headers = headers)
@@ -65,12 +80,12 @@ for query in queries:
     data = parsed['data']
 
     pretty_print = json.dumps(data, indent=2, sort_keys=True)
-
-    for tweet in data:
-        tweet['tag'] = query
+    for tweet in data[:5]:
+        tweet['tag'] = tag
         totalTweets.append(tweet)
 
-with open('twitter.json', 'w') as f:
+
+with open('twitter2.json', 'w') as f:
     json.dump(totalTweets, f)
 
 print('fin')

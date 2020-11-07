@@ -5,18 +5,25 @@ from scipy.stats import bernoulli
 from als import ALS
 from util import generate_mask, calc_unobserved_rmse
 
-n = 50
-m = 8
-k = 8
+
+
     
 with open('twitter.json') as f:
   data = json.load(f)
 
+with open('social_graph.json') as f:
+  graph = json.load(f)
+
+n = len(data)
+m = 8
+k = len(graph)
+
 # item matrix from tweets k x n
 V = []
 for tweet in data:
-    one_hot = tweet['one_hot']
-    V.append(one_hot)
+  tag = tweet['tag']
+  latent_factors = graph[tag]
+  V.append(latent_factors)
 V = np.array(V).T
 print('Item matrix: ', np.shape(V))
 
