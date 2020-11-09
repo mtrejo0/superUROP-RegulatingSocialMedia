@@ -15,7 +15,7 @@ with open('social_graph.json') as f:
   graph = json.load(f)
 
 n = len(data)
-m = 8
+m = 25
 k = len(graph)
 
 # item matrix from tweets k x n
@@ -32,6 +32,9 @@ thing1 = np.identity(m)
 thing2 = np.random.rand(m, 1)
 s = np.multiply(thing1, thing2)
 
+# change test user
+test_user = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+
 M = np.random.rand(m,m)
 a, b, c = np.linalg.svd(M)
 U = np.dot(a, np.dot(s, c.T))
@@ -43,11 +46,11 @@ R = np.random.rand(m, n) * sigma + np.dot(U, V)
 print(R)
 
 # sample some values out
-mask_prob = .1
+mask_prob = .5
 mask = generate_mask(mask_prob, m, n)
 
 # matrix factorization, guess actual values
-lamba = .5
+lamba = .7
 R_hat = ALS(R, mask, k, lamba)
 
 print(R_hat)
@@ -59,7 +62,6 @@ print('RMSE: ', rmse)
 def getTweets(data,ratings):
   order = list(enumerate(ratings))
   order.sort(key=lambda x: x[1])
-  # print(order)
   tweets = [data[tweet[0]] for tweet in order]
   return tweets
 
