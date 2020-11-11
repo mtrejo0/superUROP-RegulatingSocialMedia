@@ -28,13 +28,7 @@ V = np.array(V).T
 print('Item matrix: ', np.shape(V))
 
 # generate random user matrix m x k
-thing1 = np.identity(m)
-thing2 = np.random.rand(m, 1)
-s = np.multiply(thing1, thing2)
-
-M = np.random.rand(m,m)
-a, b, c = np.linalg.svd(M)
-U = np.dot(a, np.dot(s, c.T))
+U = np.random.rand(m, k)
 print('User matrix: ', np.shape(U))
 
 # generate true rating matrix, with variance
