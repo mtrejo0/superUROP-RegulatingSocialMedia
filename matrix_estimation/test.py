@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import bernoulli
 from als import ALS
 from util import generate_mask, calc_unobserved_rmse
-
-
+import random
 
     
 with open('twitter.json') as f:
@@ -53,8 +52,21 @@ print('RMSE: ', rmse)
 def getTweets(data,ratings):
   order = list(enumerate(ratings))
   order.sort(key=lambda x: x[1])
-  # print(order)
   tweets = [data[tweet[0]] for tweet in order]
+  return tweets
+
+def getTweetsLoose(data,ratings):
+  k = 3
+  order = list(enumerate(ratings))
+  order.sort(key=lambda x: x[1])
+  tweets = [data[tweet[0]] for tweet in order]
+  i = 0
+  while i < len(tweets):
+    if random.random() < .9:
+      k = int(random.random()*3)
+      j = min(len(tweets)-1, i + k)
+      tweets[i], tweets[j] = tweets[j],  tweets[i]
+    i+=1
   return tweets
 
 recs = []
@@ -63,6 +75,7 @@ for i in range(m):
   rec['user'] = list(U[i])
   rec['truth'] =  getTweets(data,R[i])
   rec['rec'] =  getTweets(data,R_hat[i])
+  rec['loose'] =  getTweetsLoose(data,R_hat[i])
   recs.append(rec)
 
 with open('compare.json', 'w') as f:

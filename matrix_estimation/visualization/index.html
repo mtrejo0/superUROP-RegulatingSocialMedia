@@ -21,6 +21,9 @@
     .rec{
       background-color:rgb(255, 228, 233)
     }
+    .loose{
+      background-color:gainsboro
+    }
   </style>
 </head>
 
@@ -45,6 +48,12 @@
           </div>
           <div>
             <div class = "tweet rec" v-for="tweet in rec.rec">
+              <p>{{tweet.text}}</p>
+              <p>{{tweet.tag}}</p>
+            </div>
+          </div>
+          <div>
+            <div class = "tweet loose" v-for="tweet in rec.loose">
               <p>{{tweet.text}}</p>
               <p>{{tweet.tag}}</p>
             </div>
