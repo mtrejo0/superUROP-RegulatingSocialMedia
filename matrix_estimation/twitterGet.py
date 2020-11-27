@@ -20,7 +20,9 @@ bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 tag = 'sports'
 
 # gets 100 tweets that are sports related with extra tags
-url = f'https://api.twitter.com/2/tweets/search/recent?query={tag}&tweet.fields=created_at&expansions=author_id&user.fields=created_at&max_results=100'
+url = f'https://api.twitter.com/2/tweets/search/recent?query={tag}&expansions=author_id&user.fields=created_at&max_results=100&tweet.fields=public_metrics,lang,created_at'
+
+#public_metrics.like_count
 
 #Make a GET request to the Labs recent search endpoint.
 response = requests.get(url, auth=bearer_token, headers = headers)
