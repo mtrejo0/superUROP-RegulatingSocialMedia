@@ -15,7 +15,11 @@ headers = {
 
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 
+"""
+Help
+https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent
 
+"""
 
 tag = 'sports'
 
