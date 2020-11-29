@@ -21,7 +21,7 @@ https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/ge
 
 """
 
-tag = 'sports'
+tag = 'food'
 
 # gets 100 tweets that are sports related with extra tags
 url = f'https://api.twitter.com/2/tweets/search/recent?query={tag}&expansions=author_id&user.fields=created_at&max_results=100&tweet.fields=public_metrics,lang,created_at'
@@ -39,7 +39,7 @@ parsed = json.loads(response.text)
 data = parsed['data']
 
 
-with open('sports.json', 'w') as f:
+with open(f'{tag}.json', 'w') as f:
     json.dump(data, f, indent=4)
 
 print('fin')
