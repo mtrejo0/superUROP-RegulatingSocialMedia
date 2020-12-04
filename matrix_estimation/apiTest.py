@@ -10,3 +10,5 @@ r.plotRatings(True)
 
 r.plotR()
 
+r.showPlots()
+
