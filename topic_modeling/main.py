@@ -6,18 +6,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# model building package
+# model building packages
 import sklearn
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 
-# package to clean text
+# package to clean text using regex
 import re
 
 # cleaning unstructured text data
 import nltk
-from nltk.tokenize import RegexpTokenizer
-from nltk.corpus import stopwords
+
 my_stopwords = nltk.corpus.stopwords.words('english')
 word_rooter = nltk.stem.snowball.PorterStemmer(ignore_stopwords=False).stem
 my_punctuation = '!"$%&\'()*+,-./:;<=>?[\\]^_`{|}~•@'
@@ -66,15 +65,6 @@ def clean_tweet(tweet, bigrams=False):
     tweet = ' '.join(tweet_token_list)
     return tweet
 
-def display_topics(model, feature_names, no_top_words):
-    topic_dict = {}
-    for topic_idx, topic in enumerate(model.components_):
-        topic_dict["Topic %d words" % (topic_idx)]= ['{}'.format(feature_names[i])
-                        for i in topic.argsort()[:-no_top_words - 1:-1]]
-        topic_dict["Topic %d weights" % (topic_idx)]= ['{:.1f}'.format(topic[i])
-                        for i in topic.argsort()[:-no_top_words - 1:-1]]
-    return pd.DataFrame(topic_dict)
-
 def hashtag_correlating(df):
     # take the rows from the hashtag columns where there are actually hashtags
     hashtags_list_df = df.loc[
@@ -82,14 +72,11 @@ def hashtag_correlating(df):
             lambda hashtags_list: hashtags_list != []
         ), ['hashtags']]
 
-    # create dataframe where each use of hashtag gets its own row
+    # create dataframe where each use of hashtag gets its own row (note these rows are not all unique)
     flattened_hashtags_df = pd.DataFrame(
         [hashtag for hashtags_list in hashtags_list_df.hashtags
          for hashtag in hashtags_list],
         columns=['hashtag'])
-
-    # number of unique hashtags
-    # print(flattened_hashtags_df['hashtag'].unique().size)
 
     # count of appearances of each hashtag
     popular_hashtags = flattened_hashtags_df.groupby('hashtag').size() \
@@ -97,10 +84,16 @@ def hashtag_correlating(df):
         .sort_values('counts', ascending=False) \
         .reset_index(drop=True)
 
+    # print(popular_hashtags)
+
+    ##############################################
+    # PLOTTING GRAPH 1: FREQUENCY VS HASHTAG NUMBER OF APPEARANCES
     # number of times each hashtag appears
     counts = flattened_hashtags_df.groupby(['hashtag']).size() \
         .reset_index(name='counts') \
         .counts
+
+    # print(counts)
 
     # define bins for histogram
     my_bins = np.arange(0, counts.max() + 2, 5) - 0.5
@@ -113,6 +106,7 @@ def hashtag_correlating(df):
     plt.ylabel('frequency')
     plt.yscale('log', nonposy='clip')
     plt.show()
+    ##############################################
 
     # take hashtags which appear at least this amount of times
     min_appearance = 10
@@ -120,7 +114,6 @@ def hashtag_correlating(df):
     popular_hashtags_set = set(popular_hashtags[
                                    popular_hashtags.counts >= min_appearance
                                    ]['hashtag'])
-
     # make a new column with only the popular hashtags
     hashtags_list_df['popular_hashtags'] = hashtags_list_df.hashtags.apply(
         lambda hashtag_list: [hashtag for hashtag in hashtag_list
@@ -137,8 +130,10 @@ def hashtag_correlating(df):
         hashtag_vector_df['{}'.format(hashtag)] = hashtag_vector_df.popular_hashtags.apply(
             lambda hashtag_list: int(hashtag in hashtag_list))
 
+    print(hashtag_vector_df)
     hashtag_matrix = hashtag_vector_df.drop('popular_hashtags', axis=1)
 
+    print(hashtag_matrix)
     # calculate the correlation matrix
     correlations = hashtag_matrix.corr()
 
@@ -151,6 +146,15 @@ def hashtag_correlating(df):
                 square=True,
                 cbar_kws={'label': 'correlation'})
     plt.show()
+
+def display_topics(model, feature_names, no_top_words):
+    topic_dict = {}
+    for topic_idx, topic in enumerate(model.components_):
+        topic_dict["Topic %d words" % (topic_idx)]= ['{}'.format(feature_names[i])
+                        for i in topic.argsort()[:-no_top_words - 1:-1]]
+        topic_dict["Topic %d weights" % (topic_idx)]= ['{:.1f}'.format(topic[i])
+                        for i in topic.argsort()[:-no_top_words - 1:-1]]
+    return pd.DataFrame(topic_dict)
 
 def topic_modeling(df):
     df['clean_tweet'] = df.tweet.apply(clean_tweet)
@@ -173,16 +177,61 @@ def topic_modeling(df):
     no_top_words = 10
     print(display_topics(model, tf_feature_names, no_top_words))
 
+def topic_correlating(df):
+    df['clean_tweet'] = df.tweet.apply(clean_tweet)
+
+    # the vectorizer object will be used to transform text to vector form
+    vectorizer = CountVectorizer(max_df=0.9, min_df=25, token_pattern='\w+|\$[\d\.]+|\S+')
+
+    # apply transformation
+    tf = vectorizer.fit_transform(df['clean_tweet']).toarray()
+
+    # tf_feature_names tells us what word each column in the matric represents
+    tf_feature_names = vectorizer.get_feature_names()
+
+    topics_df = pd.DataFrame(tf)
+    topics_df.columns = tf_feature_names
+
+    # number of topics to correlate
+    TOPIC_CORRELATING_COUNT = 20
+
+    topics_df_counts = topics_df.sum(axis=0)
+
+    # getting the top x topics seen in the tweets
+    top_x_topics = list(topics_df_counts.sort_values(ascending=False)[0:TOPIC_CORRELATING_COUNT].index)
+
+    # getting the vector matrix of the top 10 topics
+    top_x_vector_matrix = topics_df.copy(deep=True)
+    for topic in topics_df.columns:
+        if topic not in top_x_topics:
+            top_x_vector_matrix = top_x_vector_matrix.drop(topic, axis=1)
+    print(top_x_vector_matrix)
+
+    correlations = top_x_vector_matrix.corr()
+
+    # plot the correlation matrix
+    plt.figure()
+    sns.heatmap(correlations,
+                cmap='RdBu',
+                vmin=-1,
+                vmax=1,
+                square=True,
+                cbar_kws={'label': 'correlation'})
+    plt.show()
+    return top_x_topics
+
 
 if __name__ == "__main__":
     # open data file
     df = pd.read_csv('climate_tweets.csv')
 
     # make new columns for retweeted usernames, mentioned usernames and hashtags
+    df['is_retweet'] = df['tweet'].apply(lambda x: x[:2] == 'RT')
     df['retweeted'] = df.tweet.apply(find_retweeted)
     df['mentioned'] = df.tweet.apply(find_mentioned)
     df['hashtags'] = df.tweet.apply(find_hashtags)
 
     # hashtag_correlating(df)
-
-    topic_modeling(df)
+    # topic_modeling(df)
+    top_topics = topic_correlating(df)
+    print(top_topics)
