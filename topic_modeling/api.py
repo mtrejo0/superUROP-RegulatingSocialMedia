@@ -100,16 +100,38 @@ class TopicModel():
 
     def calcPreference(self, tweet, user_prefs):
         '''calculate the affinity towards a tweet given user preferences'''
+        cleaned_tweet  = self.clean_tweet(tweet)
         value = 0
         for i in range(len(self.topStopwords)):
-            if self.topStopwords[i] in tweet:
+            if self.topStopwords[i] in cleaned_tweet:
                 value += user_prefs[i]
         return value
 
+    def rankTweetSet(self, tweets, user_prefs):
+        '''rank tweets based on affinity to user preferences'''
+        tupled_tweets = []
+        for tweet in tweets:
+            val = self.calcPreference(tweet, user_prefs)
+            tupled_tweets.append((tweet, val))
+        tupled_tweets.sort(key=lambda x: x[1], reverse=True)
+        return [i[0] for i in tupled_tweets]
+
 
 if __name__ == "__main__":
-    j = TopicModel("climate_tweets.csv")
-    j.getTopStopWords(10)
-    user_pref = [.5, .5 ,0, 0, 0, 1, 0, 0, 0, 0]
-    p = j.calcPreference("climate change is fake news", user_pref)
-    print(p)
+    model = TopicModel("climate_tweets.csv")
+
+    model.getTopStopWords(10)
+    print(model.topStopwords) # ['climat', 'chang', 'global', 'warm', 'via', 'new', 'snow', 'bill', '#tcot', '#climate']
+
+    # given user gotten from matrix factorization
+    user_pref = [.5, .5 ,0, 1, 0, 1, 4, 0, 0, 0]
+
+    # tweets
+    test_tweets = ["climate change isn't real",
+                   "#climate let's fix global warming via a new bill",
+                   "milk is my favorite drink",
+                   "it snowed today",
+                   ]
+
+    ranking = model.rankTweetSet(test_tweets, user_pref)
+    print(ranking)
