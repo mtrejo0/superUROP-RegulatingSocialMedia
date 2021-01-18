@@ -21,7 +21,7 @@ my_stopwords = nltk.corpus.stopwords.words('english')
 word_rooter = nltk.stem.snowball.PorterStemmer(ignore_stopwords=False).stem
 my_punctuation = '!"$%&\'()*+,-./:;<=>?[\\]^_`{|}~•@'
 
-class TopicModel():
+class TopicModel:
 
     def __init__(self, FILENAME):
         self.df = pd.read_csv(FILENAME)
@@ -116,22 +116,89 @@ class TopicModel():
         tupled_tweets.sort(key=lambda x: x[1], reverse=True)
         return [i[0] for i in tupled_tweets]
 
+    def sampleTweets(self, num_tweets=1):
+        content = self.df.sample(n=num_tweets)
+        return list(content["tweet"])
+
+    def tweetToVector(self, tweet):
+        return np.array([[topic in tweet for topic in self.topStopwords]])
+
+
+
+class UserGroup:
+
+    def __init__(self, topics):
+        self.topics = topics
+        self.user_vect_dict = {}
+
+    def getDimension(self):
+        return (len(self.topics), len(self.user_vect_dict.keys()))
+
+    def getUser(self, user):
+        return sklearn.preprocessing.normalize(self.user_vect_dict[user])
+
+    def addUser(self, user):
+        if user not in self.user_vect_dict.keys():
+            self.user_vect_dict[user] = np.zeros((1, len(self.topics)))
+            return
+        raise ValueError('user already exists')
+
+    def updateUser(self, user, vector):
+        self.user_vect_dict[user] += vector
+
+    def getRatingMatrix(self): # sorted by username
+        names = list(self.user_vect_dict.keys())
+        names.sort()
+        return np.concatenate(tuple([self.getUser(name) for name in names]), axis=0)
+
+
+class TweetBase:
+
+    def __init__(self, database_file, num_topics):
+        self.model = TopicModel(database_file)
+        self.model.getTopStopWords(num_topics)
+        self.usergroup = UserGroup(self.model.topStopwords)
+
+    def gen_R(self, usernames, num_samples):
+        for name in usernames:
+            self.usergroup.addUser(name)
+            tweet_samples = self.model.sampleTweets(num_samples)
+            for tweet in tweet_samples:
+                tweet_vec = self.model.tweetToVector(tweet)
+                self.usergroup.updateUser(name, tweet_vec)
+        return self.usergroup.getRatingMatrix()
+
+
+
 
 if __name__ == "__main__":
+    # tweetbase = TweetBase("climate_tweets.csv", 10)
+    # j = tweetbase.gen_R(["a", "b", "c", "d", "e"], 9)
+    # print(j)
+
     model = TopicModel("climate_tweets.csv")
-
     model.getTopStopWords(10)
-    print(model.topStopwords) # ['climat', 'chang', 'global', 'warm', 'via', 'new', 'snow', 'bill', '#tcot', '#climate']
+    usergroup = UserGroup(model.topStopwords)
 
-    # given user gotten from matrix factorization
-    user_pref = [.5, .5 ,0, 1, 0, 1, 4, 0, 0, 0]
+    username = input("Enter a new user or a type FIN to finish: ")
+    while username != "FIN":
+        usergroup.addUser(username)
+        num_samples = int(input("input number of samples: "))
+        tweet_samples = model.sampleTweets(num_samples)
+        if input("manually like tweets? (y/n): ") == "y":
+            for tweet in tweet_samples:
+                if input("tweet: '" + tweet + "', like? (y/n)") == "y":
+                    tweet_vec = model.tweetToVector(tweet)
+                    usergroup.updateUser(username, tweet_vec)
+        else:
+            for tweet in tweet_samples:
+                if np.random.randint(0,2) == 1:
+                    tweet_vec = model.tweetToVector(tweet)
+                    usergroup.updateUser(username, tweet_vec)
+        print(username + " vector: " + str(usergroup.getUser(username)))
+        username = input("Enter a new user or a type FIN to finish: ")
+    R = usergroup.getRatingMatrix()
+    print(R)
 
-    # tweets
-    test_tweets = ["climate change isn't real",
-                   "#climate let's fix global warming via a new bill",
-                   "milk is my favorite drink",
-                   "it snowed today",
-                   ]
-
-    ranking = model.rankTweetSet(test_tweets, user_pref)
-    print(ranking)
+    # step 1: do this
+    # step 2:
