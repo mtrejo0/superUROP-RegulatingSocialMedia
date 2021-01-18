@@ -129,6 +129,7 @@ class UserGroup:
 
     def __init__(self, topics):
         self.topics = topics
+        self.userOrder = []
         self.user_vect_dict = {}
 
     def getDimension(self):
@@ -140,6 +141,7 @@ class UserGroup:
     def addUser(self, user):
         if user not in self.user_vect_dict.keys():
             self.user_vect_dict[user] = np.zeros((1, len(self.topics)))
+            self.userOrder.append(user)
             return
         raise ValueError('user already exists')
 
@@ -147,26 +149,25 @@ class UserGroup:
         self.user_vect_dict[user] += vector
 
     def getRatingMatrix(self): # sorted by username
-        names = list(self.user_vect_dict.keys())
-        names.sort()
+        names = self.userOrder
         return np.concatenate(tuple([self.getUser(name) for name in names]), axis=0)
 
 
-class TweetBase:
-
-    def __init__(self, database_file, num_topics):
-        self.model = TopicModel(database_file)
-        self.model.getTopStopWords(num_topics)
-        self.usergroup = UserGroup(self.model.topStopwords)
-
-    def gen_R(self, usernames, num_samples):
-        for name in usernames:
-            self.usergroup.addUser(name)
-            tweet_samples = self.model.sampleTweets(num_samples)
-            for tweet in tweet_samples:
-                tweet_vec = self.model.tweetToVector(tweet)
-                self.usergroup.updateUser(name, tweet_vec)
-        return self.usergroup.getRatingMatrix()
+# class TweetBase:
+#
+#     def __init__(self, database_file, num_topics):
+#         self.model = TopicModel(database_file)
+#         self.model.getTopStopWords(num_topics)
+#         self.usergroup = UserGroup(self.model.topStopwords)
+#
+#     def gen_R(self, usernames, num_samples):
+#         for name in usernames:
+#             self.usergroup.addUser(name)
+#             tweet_samples = self.model.sampleTweets(num_samples)
+#             for tweet in tweet_samples:
+#                 tweet_vec = self.model.tweetToVector(tweet)
+#                 self.usergroup.updateUser(name, tweet_vec)
+#         return self.usergroup.getRatingMatrix()
 
 
 
