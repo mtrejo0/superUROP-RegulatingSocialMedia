@@ -21,9 +21,11 @@ if __name__ == "__main__":
                     usergroup.updateUser(username, tweet_vec)
         else:
             for tweet in tweet_samples:
+                tweet_vec = model.tweetToVector(tweet)
                 if np.random.randint(0, 2) == 1:
-                    tweet_vec = model.tweetToVector(tweet)
                     usergroup.updateUser(username, tweet_vec)
+                else:
+                    usergroup.updateUser(username, tweet_vec, liked=False)
         print(username + " vector: " + str(usergroup.getUser(username)))
         username = input("Enter a new user or a type FIN to finish: ")
     R = usergroup.getRatingMatrix()
@@ -42,12 +44,17 @@ if __name__ == "__main__":
     samples_mat = np.vstack([model.tweetToVector(i) for i in tweet_samples])
     sample_pref_score_vec = samples_mat.dot(user_pref_vec)
 
-    ranking = [x for x,_ in sorted(zip(tweet_samples, list(sample_pref_score_vec)), reverse=True)]
+    ranking = [(x,y) for x,y in sorted(zip(tweet_samples, list(sample_pref_score_vec)), reverse=True)]
+    prob_dist = [x[1] for x in ranking]
+    prob_dist = prob_dist / sum(prob_dist)
 
     if is_ranked:
-        print(ranking[0: num_tweets])
-    # else:
-
+        res = [x[0] for x in ranking[0:num_tweets]]
+    else:
+        res = []
+        vals = np.random.choice(len(ranking), num_tweets, p=prob_dist)
+        res = [ranking[x] for x in vals]
+    print(res)
 
 
 

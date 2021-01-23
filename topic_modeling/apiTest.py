@@ -53,6 +53,38 @@ class apiTests(unittest.TestCase):
             y = R[i]
             self.assertEqual(x.all(), y.all())
 
+    def testMaskAllCoveredOneTweet(self):
+        usergroup = UserGroup(self.model.topStopwords)
+        usergroup.addUser("a")
+        expected_init = np.zeros((1, len(usergroup.topics))) + 1
+        self.assertEqual(usergroup.getUserMask("a").all(), expected_init.all())
+        vec_all = expected_init
+        usergroup.updateUser("a", vec_all)
+        self.assertEqual(usergroup.getUserMask("a").all(), np.zeros((1, len(usergroup.topics))).all())
+
+    def testMaskOneTweet(self):
+        usergroup = UserGroup(self.model.topStopwords)
+        usergroup.addUser("a")
+        tweet = self.model.sampleTweets(1)
+        vec = self.model.tweetToVector(tweet[0])
+        expected = np.zeros((1, len(usergroup.topics))) + 1 - vec
+        usergroup.updateUser("a", vec)
+        self.assertEqual(usergroup.getUserMask("a").all(), expected.all())
+
+    def testMaskTenTweets(self):
+        usergroup = UserGroup(self.model.topStopwords)
+        usergroup.addUser("a")
+        tweet = self.model.sampleTweets(10)
+        vec_all = np.zeros((1, len(usergroup.topics)))
+        for i in range(10):
+            vec = self.model.tweetToVector(tweet[0])
+            vec_all += vec
+            usergroup.updateUser("a", vec)
+            for i in range(len(vec)):
+                if vec_all[i][0] == 0:
+                    self.assertEqual(usergroup.getUserMask("a")[i][0], 1)
+
+
 
 if __name__ == '__main__':
     unittest.main()

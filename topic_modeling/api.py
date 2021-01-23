@@ -131,6 +131,7 @@ class UserGroup:
         self.topics = topics
         self.userOrder = []
         self.user_vect_dict = {}
+        self.user_mask_dict = {}
 
     def getDimension(self):
         return (len(self.topics), len(self.user_vect_dict.keys()))
@@ -138,68 +139,61 @@ class UserGroup:
     def getUser(self, user):
         return sklearn.preprocessing.normalize(self.user_vect_dict[user])
 
+    def getUserMask(self, user):
+        return self.user_mask_dict[user]
+
     def addUser(self, user):
         if user not in self.user_vect_dict.keys():
             self.user_vect_dict[user] = np.zeros((1, len(self.topics)))
+            self.user_mask_dict[user] = np.zeros((1, len(self.topics))) + 1
             self.userOrder.append(user)
             return
         raise ValueError('user already exists')
 
-    def updateUser(self, user, vector):
-        self.user_vect_dict[user] += vector
+    def updateUser(self, user, vector, liked=True):
+        if liked:
+            self.user_vect_dict[user] += vector
+        for i in range(len(vector)):
+            self.user_mask_dict[user][i][0] = 0
 
     def getRatingMatrix(self): # sorted by username
         names = self.userOrder
         return np.concatenate(tuple([self.getUser(name) for name in names]), axis=0)
 
 
-# class TweetBase:
-#
-#     def __init__(self, database_file, num_topics):
-#         self.model = TopicModel(database_file)
-#         self.model.getTopStopWords(num_topics)
-#         self.usergroup = UserGroup(self.model.topStopwords)
-#
-#     def gen_R(self, usernames, num_samples):
-#         for name in usernames:
-#             self.usergroup.addUser(name)
-#             tweet_samples = self.model.sampleTweets(num_samples)
-#             for tweet in tweet_samples:
-#                 tweet_vec = self.model.tweetToVector(tweet)
-#                 self.usergroup.updateUser(name, tweet_vec)
-#         return self.usergroup.getRatingMatrix()
 
 
 
-
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # tweetbase = TweetBase("climate_tweets.csv", 10)
     # j = tweetbase.gen_R(["a", "b", "c", "d", "e"], 9)
     # print(j)
 
-    model = TopicModel("climate_tweets.csv")
-    model.getTopStopWords(10)
-    usergroup = UserGroup(model.topStopwords)
-
-    username = input("Enter a new user or a type FIN to finish: ")
-    while username != "FIN":
-        usergroup.addUser(username)
-        num_samples = int(input("input number of samples: "))
-        tweet_samples = model.sampleTweets(num_samples)
-        if input("manually like tweets? (y/n): ") == "y":
-            for tweet in tweet_samples:
-                if input("tweet: '" + tweet + "', like? (y/n)") == "y":
-                    tweet_vec = model.tweetToVector(tweet)
-                    usergroup.updateUser(username, tweet_vec)
-        else:
-            for tweet in tweet_samples:
-                if np.random.randint(0,2) == 1:
-                    tweet_vec = model.tweetToVector(tweet)
-                    usergroup.updateUser(username, tweet_vec)
-        print(username + " vector: " + str(usergroup.getUser(username)))
-        username = input("Enter a new user or a type FIN to finish: ")
-    R = usergroup.getRatingMatrix()
-    print(R)
+    # model = TopicModel("climate_tweets.csv")
+    # model.getTopStopWords(10)
+    # usergroup = UserGroup(model.topStopwords)
+    #
+    # username = input("Enter a new user or a type FIN to finish: ")
+    # while username != "FIN":
+    #     usergroup.addUser(username)
+    #     num_samples = int(input("input number of samples: "))
+    #     tweet_samples = model.sampleTweets(num_samples)
+    #     if input("manually like tweets? (y/n): ") == "y":
+    #         for tweet in tweet_samples:
+    #             if input("tweet: '" + tweet + "', like? (y/n)") == "y":
+    #                 tweet_vec = model.tweetToVector(tweet)
+    #                 usergroup.updateUser(username, tweet_vec)
+    #     else:
+    #         for tweet in tweet_samples:
+    #             tweet_vec = model.tweetToVector(tweet)
+    #             if np.random.randint(0,2) == 1:
+    #                 usergroup.updateUser(username, tweet_vec)
+    #             else:
+    #                 usergroup.updateUser(username, tweet_vec, liked=False)
+    #     print(username + " vector: " + str(usergroup.getUser(username)))
+    #     username = input("Enter a new user or a type FIN to finish: ")
+    # R = usergroup.getRatingMatrix()
+    # print(R)
 
     # step 1: do this
     # step 2:
