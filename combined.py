@@ -1,5 +1,5 @@
 from topic_modeling.api import TopicModel, UserGroup
-# from matrix_estimation.api import RecommenderSystem
+from matrix_estimation.api import RecommenderSystem
 import numpy as np
 
 
@@ -27,12 +27,13 @@ if __name__ == "__main__":
                 else:
                     usergroup.updateUser(username, tweet_vec, liked=False)
         print(username + " vector: " + str(usergroup.getUser(username)))
+        print(username + " mask: " + str(usergroup.getUserMask(username)))
         username = input("Enter a new user or a type FIN to finish: ")
     R = usergroup.getRatingMatrix()
+    mask = usergroup.getMaskMatrix()
 
-    # mat_estimator = RecommenderSystem(1,1)
-
-    R_hat = R
+    mat_estimator = RecommenderSystem(R, mask, 5)
+    R_hat = mat_estimator.genRecommendedRatings()
 
     user = input("Which user to be recommended?: ")
     num_tweets_total = int(input("How big of a set of tweets to recommend from: "))
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     prob_dist = prob_dist / sum(prob_dist)
 
     if is_ranked:
-        res = [x[0] for x in ranking[0:num_tweets]]
+        res = [x for x in ranking[0:num_tweets]]
     else:
         res = []
         vals = np.random.choice(len(ranking), num_tweets, p=prob_dist)

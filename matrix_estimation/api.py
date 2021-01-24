@@ -1,30 +1,36 @@
-from util import *
-from als import ALS
-from nuclear_norm import nuclear_norm_solve
+from .util import *
+from .als import ALS
+from .nuclear_norm import nuclear_norm_solve
 
 class RecommenderSystem():
 
-    def __init__(self, n, m, k = 5, sigma = .1, mask_prob = .1):
-
-        self.figure = 0
-
-        self.n = n
-        self.m = m
+    def __init__(self, R, mask, k):
+        self.R = R
         self.k = k
-
-        # item matrix from tweets k x n
-        V = np.random.rand(k, n)
-
-        # generate random user matrix m x k
-        U = np.random.rand(m, k)
-
-        # generate true rating matrix, with variance
-        self.R = np.random.rand(m, n) * sigma + np.dot(U, V)
-
-        # sample some values out
-        self.mask = generate_mask(mask_prob, m, n)
-
+        self.mask = mask
         self.R_hat = None
+
+    # def __init__(self, n, m, k = 5, sigma = .1, mask_prob = .1):
+    #
+    #     self.figure = 0
+    #
+    #     self.n = n
+    #     self.m = m
+    #     self.k = k
+    #
+    #     # item matrix from tweets k x n
+    #     V = np.random.rand(k, n)
+    #
+    #     # generate random user matrix m x k
+    #     U = np.random.rand(m, k)
+    #
+    #     # generate true rating matrix, with variance
+    #     self.R = np.random.rand(m, n) * sigma + np.dot(U, V)
+    #
+    #     # sample some values out
+    #     self.mask = generate_mask(mask_prob, m, n)
+    #
+    #     self.R_hat = None
 
 
     def getUserRankings(self, user, recommended = False):

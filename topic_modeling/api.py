@@ -154,25 +154,29 @@ class UserGroup:
         if liked:
             self.user_vect_dict[user] += vector
         for i in range(len(vector)):
-            self.user_mask_dict[user][i][0] = 0
+            self.user_mask_dict[user][0][i] = 0
 
     def getRatingMatrix(self): # sorted by username
         names = self.userOrder
         return np.concatenate(tuple([self.getUser(name) for name in names]), axis=0)
+
+    def getMaskMatrix(self):
+        names = self.userOrder
+        return np.concatenate(tuple([self.getUserMask(name) for name in names]), axis=0)
 
 
 
 
 
 # if __name__ == "__main__":
-    # tweetbase = TweetBase("climate_tweets.csv", 10)
-    # j = tweetbase.gen_R(["a", "b", "c", "d", "e"], 9)
-    # print(j)
+#     tweetbase = TweetBase("climate_tweets.csv", 10)
+#     j = tweetbase.gen_R(["a", "b", "c", "d", "e"], 9)
+#     print(j)
+#
+#     model = TopicModel("climate_tweets.csv")
+#     model.getTopStopWords(10)
+#     usergroup = UserGroup(model.topStopwords)
 
-    # model = TopicModel("climate_tweets.csv")
-    # model.getTopStopWords(10)
-    # usergroup = UserGroup(model.topStopwords)
-    #
     # username = input("Enter a new user or a type FIN to finish: ")
     # while username != "FIN":
     #     usergroup.addUser(username)
@@ -194,6 +198,6 @@ class UserGroup:
     #     username = input("Enter a new user or a type FIN to finish: ")
     # R = usergroup.getRatingMatrix()
     # print(R)
-
+    #
     # step 1: do this
     # step 2:

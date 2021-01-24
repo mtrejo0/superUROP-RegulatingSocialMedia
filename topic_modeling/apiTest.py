@@ -37,7 +37,7 @@ class apiTests(unittest.TestCase):
             usergroup.updateUser("dog", vec)
         self.assertLessEqual(np.linalg.norm(usergroup.getUser("dog")), 1)
 
-    def testGenR(self):
+    def testGenRAndMask(self):
         usergroup = UserGroup(self.model.topStopwords)
         usergroup.addUser("a")
         usergroup.addUser("b")
@@ -48,10 +48,14 @@ class apiTests(unittest.TestCase):
                 vec = self.model.tweetToVector(tweet)
                 usergroup.updateUser(user, vec)
         R = usergroup.getRatingMatrix()
+        mask = usergroup.getMaskMatrix()
         for i in range(len(usergroup.userOrder)):
             x = usergroup.getUser(usergroup.userOrder[i])
             y = R[i]
             self.assertEqual(x.all(), y.all())
+            w = usergroup.getUserMask(usergroup.userOrder[i])
+            z = mask[i]
+            self.assertEqual(w.all(), z.all())
 
     def testMaskAllCoveredOneTweet(self):
         usergroup = UserGroup(self.model.topStopwords)
@@ -67,6 +71,7 @@ class apiTests(unittest.TestCase):
         usergroup.addUser("a")
         tweet = self.model.sampleTweets(1)
         vec = self.model.tweetToVector(tweet[0])
+        print(vec)
         expected = np.zeros((1, len(usergroup.topics))) + 1 - vec
         usergroup.updateUser("a", vec)
         self.assertEqual(usergroup.getUserMask("a").all(), expected.all())
@@ -77,12 +82,12 @@ class apiTests(unittest.TestCase):
         tweet = self.model.sampleTweets(10)
         vec_all = np.zeros((1, len(usergroup.topics)))
         for i in range(10):
-            vec = self.model.tweetToVector(tweet[0])
+            vec = self.model.tweetToVector(tweet[i])
             vec_all += vec
             usergroup.updateUser("a", vec)
             for i in range(len(vec)):
-                if vec_all[i][0] == 0:
-                    self.assertEqual(usergroup.getUserMask("a")[i][0], 1)
+                if vec_all[0][i] == 0:
+                    self.assertEqual(usergroup.getUserMask("a")[0][i], 1)
 
 
 
