@@ -1,86 +1,64 @@
 <template>
-  <v-card
-    class="freet-card"
-    outlined
-  >
-    <v-list-item three-line>
-        <v-avatar>
-            <v-img contain src="/images/profilepic.jpg" ></v-img>
-        </v-avatar>
-        <v-list-item-content class="title-content">
-            <v-list-item-title class="headline">
-            {{author}}
-            </v-list-item-title>
-            <v-list-item-subtitle>
-                <div id="time">
-                    {{ Math.round((Date.now() - time)/60000) }}m ago
-                </div>
-                <div id="refreeted-from" v-if="this.author != this.og_author">
-                    Refreeted from: {{ og_author }}
-                </div>
-            </v-list-item-subtitle>
-        </v-list-item-content>
-            <div v-if="author === this.$cookie.get('user-auth')">
-                <v-btn med icon
-                color="grey"
-                class="mx-2" 
-                id="edit"
-                @click=showModal
-                >
-                    <v-icon >
-                    mdi-pencil-outline
-                    </v-icon>
-                </v-btn>
-            </div>
-            <div v-if="author === this.$cookie.get('user-auth')">
-                <v-btn med icon
-                class="mx-2" 
-                color="grey"
-                id="delete"
-                @click=deleteFreet
-                >
-                    <v-icon dark>
-                    mdi-delete
-                    </v-icon>
-                </v-btn>
-            </div>
-    </v-list-item>
-    <v-card-text class="card-text">
-        {{ content }}
-    </v-card-text>
-    <v-card-text style="padding: 0 16px 0 16px">
-        {{ upvotes.length }} upvotes
-        {{ refreets.length }} refreets
-    </v-card-text>
-    <v-card-actions>
-        <v-btn
-            v-if="checkUpvoted"
-            outlined
-            text
-            :color="upvoteColor"
-            @click=toggleUpvote
-        >
-            upvote
-        </v-btn>
-        <v-btn
-            v-else
-            color="primary"
-            depressed
-            @click=toggleUpvote
-        >
-            upvote
-        </v-btn>
-        <v-btn
-            outlined
-            text
-            :color="refreetColor"
-            @click='refreetFreet'
-        >
-            refreet
-        </v-btn>
-    </v-card-actions>
-  </v-card>
+  <div class="freet-container">
+    <p><strong>{{freet.username}}</strong></p>
+    <p v-if="freet.refreet_id > 0"> <strong>refreet:</strong> <i>{{freet.body}}</i></p>
+    <p v-else> <i>{{freet.body}}</i></p>
+
+    <input v-if="editing" id='name' v-model.trim='editText' type='text' name='editText'  placeholder="New freet body">
+    
+    <div class="freet-buttons">
+      <div class="freet-button" v-if="!(freet.refreet_id > 0)">
+        <p>{{freet.likes.length}}</p>
+        <button v-if="!liked" class="button" v-on:click="likeFreet"> Like </button>
+        <button v-else disabled class="button faded" > Liked </button>
+      </div>
+      {{' '}}
+      <div>
+        <p>{{freet.refreets.length}}</p>
+        <button v-if="!retweeted" class="button" v-on:click="refreet"> Refreet </button>
+        <button v-else disabled class="button faded"> Refreeted </button>
+      </div>
+    </div>
+
+    <div class="freet-buttons" v-if='owner'>
+      <button class="button freet-button" v-on:click="editFreet" v-if="!(freet.refreet_id > 0) && !editing"> Edit </button>
+      <button class="button freet-button" v-on:click="submitEdit" v-else-if="editing"> Save </button>
+      <button class="button warning" v-on:click="deleteFreet"> Delete </button>
+    </div>
+    
+  </div>
 </template>
+
+<style scoped>
+    .freet-container {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:1em;
+        display: inline-block;
+        margin: 16px;
+        border-radius: 32px;
+        box-shadow: 0px 0px 12px 6px #eee;
+        width: 50vw;
+        padding: 32px;
+    }
+    .faded {
+      background: black;
+    }
+    .freet-buttons {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .freet-button {
+      margin-right: 32px;
+    }
+
+    .warning {
+      background:crimson;
+    }
+
+</style>
 
 <script>
 import axios from "axios";
@@ -88,165 +66,93 @@ import { eventBus } from "../main";
 
 export default {
   name: "Freet",
-  props: ['id', 'content', 'author', 'og_author', 'time', 'upvotes', 'refreets', 'refreetAuthors'],
+  props: {
+    freet: Object
+  },
   data() {
     return {
-        messages: [],
-        errors: [],
-    }
+        owner: this.$cookie.get('fritter-auth') == this.freet.username,
+        liked: this.hasLiked(),
+        retweeted: this.hasRefreeted(),
+        editing: false,
+        editText: ""
+    };
   },
+
   methods: {
-      toggleUpvote: function() {
-          if (this.upvotes.includes(this.$cookie.get('user-auth'))) {
-              this.undoUpvoteFreet();
-          } else {
-              this.upvoteFreet();
-          }
-      },
-      upvoteFreet: function() {
-        const bodyContent = { id: this.id, username: this.username};
-        axios
-            .post("/api/freets/upvote/" + this.id, bodyContent)
-            .then((res) => {
-                eventBus.$emit('upvote-success', res.data.id, res.data.upvotes);
-            })
-            .catch(err => {
-                // handle error
-                this.errors.push(err.response.data.error);
-            })
-            .then(() => {
-                this.clearMessages();
-            });
-      },
-      undoUpvoteFreet: function() {
-        const bodyContent = { id: this.id, username: this.username };
-        axios
-            .delete("/api/freets/upvote/" + this.id, bodyContent)
-            .then((res) => {
-                eventBus.$emit('undo-upvote-success', res.data.id, res.data.upvotes);
-            })
-            .catch(err => {
-                // handle error
-                this.errors.push(err.response.data.error);
-            }).then(() => {
-                this.clearMessages();
-            });
-      },
-      refreetFreet: function() {
-        const bodyContent = { id: this.id, username: this.username };
-        axios
-            .post("/api/freets/refreet/" + this.id, bodyContent)
-            .then((res) => {
-                eventBus.$emit('refreet-success', res.data, this.id); // expected outcome <- full freet is passed
-            })
-            .catch(err => {
-                this.errors.push(err.response.data.error);
-            })
-            .then(() => {
-                this.clearMessages();
-            });
-      },
-      deleteFreet: function() {
-        const bodyContent = { id: this.id };
-        axios
-            .delete("/api/freets/" + this.id, bodyContent)
-            .then((res) => {
-                eventBus.$emit('delete-freet-success', res.data.id);
-            })
-            .catch(err => {
-                this.errors.push(err.response.data.error)
-            })
-            .then(() => {
-                this.clearMessages();
-            });
-      },
-      clearMessages: function() {
-        setInterval(() => {
-            this.errors = [];
-        }, 5000);
-      },
-      showModal: function() {
-          eventBus.$emit('show-modal', this.id, this.content);
-      }
-  },
-  computed: {
-      upvoteColor() {
-          return this.upvotes.includes(this.$cookie.get('user-auth')) ? "primary" : "black";
-      },
-      refreetColor() {
-          let refreetAuthors = this.refreets.map(refreet => refreet.author);
-          return refreetAuthors.includes(this.$cookie.get('user-auth')) ? "primary" : "black";
-      },
-      checkUpvoted() {
-          return this.upvotes.includes(this.$cookie.get('user-auth')) ? false : true;
-      }
-  },
-  watch: {
-    errors: {
-      deep: true,
-      handler() {
-        if (this.errors.length) {
-          const newMsg = this.errors[this.errors.length-1];
-          this.$store.commit('push', newMsg);
+    hasLiked: function() {
+      let liked = false;
+      for(let i = 0 ; i < this.freet.likes.length; i++){
+        if (this.$cookie.get('fritter-auth-id') == this.freet.likes[i].user_id) {
+          liked = true;
         }
       }
+      return liked
+    },
+    hasRefreeted: function() {
+      let refreeted = false;
+      for(let i = 0 ; i < this.freet.refreets.length; i++){
+        if (this.$cookie.get('fritter-auth-id') == this.freet.refreets[i].creator) {
+          refreeted = true;
+        }
+      }
+      return refreeted
+    },
+    likeFreet: function() {
+        const body = { id: this.freet.post_id };
+        axios
+          .post(`/api/actions/likes`, body)
+          .then((res) => {
+            // handle success
+            this.liked = true
+            eventBus.$emit("like-freet-success", res);
+          })
+          .catch(err => {
+            // handle error
+            eventBus.$emit("like-freet-error", err);
+          })
+    },
+    refreet: function() {
+        const body = { id: this.freet.post_id };
+        axios
+          .post(`/api/actions/refreet`, body)
+          .then((res) => {
+            // handle success
+            this.retweeted = true
+            eventBus.$emit("refreet-freet-success", res);
+          })
+          .catch(err => {
+            // handle error
+            eventBus.$emit("refreet-freet-error", err);
+          })
+    },
+    editFreet: function() {
+      this.editing = true;
+    },
+    submitEdit: function() {
+      this.editing = false;
+      const body = { id: this.freet.post_id , content: this.editText};
+        axios
+          .put(`/api/freets`, body)
+          .then((res) => {
+            // handle success
+            eventBus.$emit("edit-freet-success", res);
+          })
+          .catch(err => {
+            // handle error
+            eventBus.$emit("edit-freet-error", err);
+          });
+    },
+    deleteFreet: function() {
+      axios
+        .delete(`/api/freets/${this.freet.post_id}`, {})
+        .then(() => {
+          eventBus.$emit("delete-freet-success", this.freet);
+        })
+        .catch(err => {
+          eventBus.$emit("delete-freet-error", err);
+        })
     }
-  },
+  }
 };
 </script>
-
-<style scoped>
-.title-content {
-    margin-left: 15px;
-    align-self: center;
-}
-.card-text {
-    overflow-y: hidden;
-    min-height: 100px;
-    max-height: 100px;
- }
-.card-actions {
-    display: flex;
-    align-content: flex-end;
-}
-
-.v-btn {
-  flex-grow: 1;
-}
-#freet {
-    display: grid;
-    grid-template-rows: 25% 60% 15%;
-    height: 14rem;
-    width: 45%;
-    color: white;
-    background-color: white;
-    border-style: solid;
-}
-.freet-card {
-    margin: 1em 1em 0 0;
-    max-height: 18rem;
-    min-height: 250px;
-    width: 30rem;
-    border: 1px solid rgba(54, 69, 79, .5);
-}
-
-#freet-button {
-    flex-grow: 1;
-    text-align: center;
-    border-style: solid;
-    border-width: 4px;
-}
-
-#undo-upvote {
-    color: green;
-}
-
-a {
-    color: white;
-}
-
-.btn {
-    color: white;
-    padding: 0;
-}
-</style>

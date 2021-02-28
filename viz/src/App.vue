@@ -1,21 +1,40 @@
 <template>
-  <v-app>
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
-<script>
+<!-- global styles -->
+<style>
+* {
+  box-sizing: border-box;
+}
 
+body {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+}
+
+.success-message {
+  color: green;
+  margin: auto;
+}
+
+.error-message {
+  color: red;
+  margin: auto;
+}
+</style>
+
+<script>
 export default {
   name: "app",
   beforeCreate: function() {
-    let authenticated = this.$cookie.get('url-auth');
+    let authenticated = this.$cookie.get('fritter-auth');
     if (!authenticated) {
-      // this.$router.push("account");
-    } else {
-      // this.$router.push("feed");
+      this.$router.push("account");
     }
   }
 };

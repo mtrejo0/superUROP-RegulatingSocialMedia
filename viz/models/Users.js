@@ -1,279 +1,158 @@
-const Freets = require("../models/Freets");
+const db = require('../db/db_config');
 
-
+let data = [];
 
 /**
  * @typedef User
- * @prop {string} name - some unique user name string
- * @prop {string} password - user password
- * @prop {string} sessionID - user sessionID
+ * @prop {string} username - username
+ * @prop {string} password - password
  */
 
 /**
- * Returns a closured Users object that can execute user operations
- * Stores all users.
+ * @class Users
+ * Stores all Users.
+ * Note that all methods are static.
  * Wherever you import this class, you will be accessing the same data.
  */
-function Users() {
-  const data = {
-    userA: {'pw': 'userA', 'following': new Set(['userA', 'userB', 'userC']), 'followedBy': new Set(['userA', 'userB', 'userC']), 'requested': new Set(['userD', 'userE']) },
-    userB: {'pw': 'userB', 'following': new Set(['userA', 'userB']), 'followedBy': new Set(['userA', 'userB']), 'requested': new Set() },
-    userC: {'pw': 'userC', 'following': new Set(['userA', 'userC']), 'followedBy': new Set(['userA', 'userC']), 'requested': new Set() },
-    userD: {'pw': 'userD', 'following': new Set(['userD']), 'followedBy': new Set(['userD']), 'requested': new Set() },
-    userE: {'pw': 'userE', 'following': new Set(['userE']), 'followedBy': new Set(['userE']), 'requested': new Set() },
-  };
-  const sessions = {};
-
-  const that = Object.create(Users.prototype);
-
+class Users {
   /**
-   * Add a user.
-   * @param {string} name - user name
-   * @param {string} password - user password
-   * @return {string} - name of created user
+   * Add a User.
+   * @param {string} username - User body
+   * @param {string} password - User id
+   * @return {User} - created User
    */
-  that.addOne = (name, password) => {
-    data[name] = {'pw': password, 'following': new Set([name]), 'followedBy': new Set([name]), 'requested': new Set()};
-    return name;
+  static async addOne(username, password) {
+    return db.run(`INSERT INTO users (${db.columnNames.userName}, ${db.columnNames.password}) VALUES ('${username}', '${password}')`)
+              .then( () => {
+                return Users.findOne(username);
+              });
   }
 
   /**
-   * Find a user by Name.
-   * @param {string} name - name of user to find
-   * @return {string | undefined} - found user
+   * Find a User by username.
+   * @param {string} username - username of User to find
+   * @return {User | undefined} - found User
    */
-  that.findOne = (name) => {
-    if (name in data) return name;
-    return undefined;
+  static async findOne(username) {
+    return db.get(`SELECT * FROM users WHERE username = '${username}'`);
   }
 
   /**
-   * Gets the set of all users
-   * @return {Set} - set of all names
+   * Return an array of all of the Users.
+   * @return {User[]}
    */
-  that.getUsers = () => {
-    return Object.keys(data);
+  static async findAll() {
+    return db.all(`SELECT * FROM users`);
   }
 
   /**
-   * Returns the name associated with the session id
-   * @param {string} sessionID 
-   * @return {string} - username
+   * Update a Users password
+   * @param {string} username - username of User to find
+   * @param {string} password - password of User to update
+   * @return {User | undefined} - updated User
    */
-  that.getUserBySession = sessionID => {
-    return sessions[sessionID];
+  static async updatePassword(username, password) {
+    return db.run(`UPDATE users 
+        SET ${db.columnNames.password} = '${password}' 
+        WHERE ${db.columnNames.userName} = '${username}'`)
+        .then( () => {
+          return Users.findOne(username);
+        });
   }
 
   /**
-   * Get the follow requests for a user
-   * @param {string} sessionID
-   * @return {string} - name of the followed user
+   * Update a Users password
+   * @param {string} username - username of User to find
+   * @param {string} new_username - new username for User
+   * @return {User | undefined} - updated User
    */
-  that.getFollowRequests = (sessionID) => {
-    const currentUser = sessions[sessionID];
-    return new Set(data[currentUser].requested);
+  static async updateUsername(username, new_username) {
+    return db.run(`UPDATE users 
+        SET ${db.columnNames.userName} = '${new_username}' 
+        WHERE ${db.columnNames.userName} = '${username}'`)
+        .then( () => {
+          return Users.findOne(new_username);
+        });
   }
 
   /**
-   * Removes the user of the current session from their desired user's followers list
-   * @param {string} followedUser 
-   * @param {string} sessionID 
-   * @return {string} - name of the followed user
+   * Delete a User
+   * @param {string} username - username of User to find
+   * @return {User | undefined} - updated User
    */
-  that.unfollowerUser = (followedUser, sessionID) => {
-    const currentUser = sessions[sessionID];
-    data[followedUser].followedBy.delete(currentUser);
-    data[currentUser].following.delete(followedUser);
-    return followedUser;
+  static deleteOne(username) {
+    return Users.getUserID(username)
+                .then( (user) => {
+                  return db.run(`DELETE FROM users WHERE ${db.columnNames.userId} = ${user.user_id}`)
+                    .then(() => {
+                      return db.run(`DELETE FROM likes WHERE ${db.columnNames.userId} = ${user.user_id}`)
+                        .then( () => {
+                          return db.run(`DELETE FROM following WHERE ${db.columnNames.user1Id} = ${user.user_id} OR ${db.columnNames.user2Id} = ${user.user_id}`)
+                            .then( () => {
+                              return db.run(`DELETE FROM posts WHERE ${db.columnNames.postCreator} = ${user.user_id}`)
+                                      .then( () => {
+                                        return username;
+                                      });
+                            })
+                        })
+                    })
+                });
   }
 
   /**
-   * Removes a user from the current user's list of followers
-   * @param {string} followingUser 
-   * @param {string} sessionID 
-   * @return {string} - name of the following user
+   * Find user with this login info username and password
+   * @param {string} username - username of User to find
+   * @param {string} password - password of User to find
+   * @return {User | undefined} - User with the matching username and password
    */
-  that.removeFollower = (followingUser, sessionID) => {
-    const currentUser = sessions[sessionID];
-    data[currentUser].followedBy.delete(followingUser);
-    data[followingUser].following.delete(currentUser);
-    return followingUser;
+  static async findUserLogin(username, password) {
+    return db.get(`SELECT ${db.columnNames.userName} 
+                  FROM users 
+                  WHERE ${db.columnNames.userName} = '${username}' and ${db.columnNames.password} = '${password}'`);
   }
 
   /**
-   * Add the user of the current session to their desired user's follow request list
-   * @param {string} followingUser 
-   * @param {string} sessionID
-   * @return {string} - name of the followed user
+   * Find userID for given username
+   * @param {string} username - username of userID to find
+   * @return {User | undefined} - userID of username
    */
-  that.addFollowRequest = (followingUser, sessionID) => {
-    const currentUser = sessions[sessionID];
-    data[followingUser].requested.add(currentUser);
-    return followingUser;
+  static async getUserID(username) {
+    return db.get(`SELECT ${db.columnNames.userId} FROM users WHERE ${db.columnNames.userName} = '${username}'`);
   }
 
   /**
-   * Add a user to the follower list of the user in the current session
-   * @param {string} follower 
-   * @param {string} sessionID
-   * @return {string} - name of the followed user
+   * Find username for given user_id
+   * @param {Number} userID - userID of username to find
+   * @return {User | undefined} - username of userID
    */
-  that.approveFollowerRequest = (follower, sessionID) => {
-    const currentUser = sessions[sessionID];
-    data[currentUser].followedBy.add(follower);
-    data[currentUser].requested.delete(follower);
-    data[follower].following.add(currentUser);
-    return follower;
+  static async getUserName(userID) {
+    return db.get(`SELECT ${db.columnNames.userName} FROM users WHERE ${db.columnNames.userId} = ${userID}`);
   }
 
   /**
-   * Reject a user from being added to the follower list of the user in the current session
-   * @param {string} follower 
-   * @param {string} sessionID
-   * @return {string} - name of the followed user
+   * Find all users a user is following
+   * @param {Number} userID - userID of username to find
+   * @return {User} - user ids
    */
-  that.rejectFollowerRequest = (follower, sessionID) => {
-    const currentUser = sessions[sessionID];
-    data[currentUser].requested.delete(follower);
-    return follower;
-  }
-
-
-  /**
-   * Gets the set of followers for a user
-   * @param {string} user 
-   * @return {string | undefined} - new set of followers
-   */
-  that.getFollowers = (user) => {
-    if (!(user in data)) return undefined;
-    return new Set(data[user].followedBy);
+  static async getFollowing(userID) {
+    return db.all(`SELECT * FROM following WHERE ${db.columnNames.user1Id} = "${userID}"`);
   }
 
   /**
-   * Gets the set of following for a user
-   * @param {string} user 
-   * @return {string | undefined} - new set of following
+   * User1 follows User2
+   * @param {string} user1 - username of follower
+   * @param {string} user2 - username of who to follow
+   * @return {User | undefined} - username of who user1 just followed
    */
-  that.getFollowing = (user) => {
-    if (!(user in data)) return undefined;
-    return new Set(data[user].following);
+  static async followUser(user1, user2) {
+    let user1_id = await Users.getUserID(user1);
+    let user2_id = await Users.getUserID(user2);
+    return db.run(`INSERT INTO following (${db.columnNames.user1Id}, ${db.columnNames.user2Id}) VALUES (${user1_id.user_id}, ${user2_id.user_id});`)
+              .then( () => {
+                return user2;
+              });
   }
-
-  /**
-   * Gets the set of not following for a user
-   * @param {string} user 
-   * @return {string | undefined} - new set of following
-   */
-  that.getNotFollowing = (user) => {
-    if (!(user in data)) return undefined;
-    let following = new Set(data[user].following);
-    let allusers = new Set(Object.keys(data));
-    let notFollowing = [...allusers].filter(x => !following.has(x));
-    return new Set(notFollowing);
-  }
-
-  /**
-   * Update a user name.
-   * @param {string} name - name of user to update
-   * @param {string} newName - new name
-   * @return {string | undefined} - name of updated user
-   */
-  that.updateName = (name, newName, sessionID) => {
-    const freetsAssociatedWithOldName = Freets.findFreetsByAuthor(name);
-    freetsAssociatedWithOldName.forEach(freet => {
-      Freets._updateFreetAuthor(freet.id, newName);
-      Freets._updateFreetUpvotes(freet.id, name, newName);
-    });
-    const user = that.findOne(name);
-    data[newName] = Object.assign({}, data[user])
-    for (const user in data) {
-      const following = data[user].following;
-      const followedBy = data[user].followedBy;
-      if (following.has(name)) { 
-        following.delete(name);
-        following.add(newName);
-      }
-      if (followedBy.has(name)) {
-        followedBy.delete(name);
-        followedBy.add(newName);
-      }
-    };
-    sessions[sessionID] = newName;
-    that.deleteUser(name);
-    return newName;
-  }
-
-  /**
-   * Update a user password.
-   * @param {string} name - name of user to update
-   * @param {string} newPw - new password
-   * @return {string | undefined} - name of updated user
-   */
-  that.updatePassword = (name, newPw) => {
-    const user = that.findOne(name);
-    data[user].pw = newPw;
-    return user;
-  }
-
-  /**
-   * Delete a user 
-   * @param {string} sessionID - user sessionID
-   * @return {string | undefined} - deleted user
-   */
-  that.deleteUser = (sessionID) => {
-    const name = sessions[sessionID];
-    if (name !== undefined) {
-      delete data[name];
-      delete sessions[sessionID]
-    }
-    for (const user in data) {
-      const following = data[user].following;
-      const followedBy = data[user].followedBy;
-      if (following.has(name)) { 
-        following.delete(name);
-      }
-      if (followedBy.has(name)) {
-        followedBy.delete(name);
-      }
-    };
-    const freetsAssociatedWithName = Freets.findFreetsByAuthor(name);
-    freetsAssociatedWithName.forEach(freet => {
-      Freets.deleteFreet(freet.id);
-    });
-
-    return name;
-  }
-
-  /**
-   * Removes a user session
-   * @param {string} sessionID
-   * @return {string} - deleted session id 
-   */
-  that.logout = (sessionID) => {
-    delete sessions[sessionID];
-    return sessionID;
-  }
-
-  /**
-   * Authenticate a user
-   * @param {string} name - name of user to authenticate
-   * @param {string} password - password of user to authenticate
-   * @param {string} sessionID - user sessionID
-   * @return {true | false} - whether the user's credentials are correct
-   */
-  that.authenticateUser = (name, password, sessionID) => {
-    const user = that.findOne(name);
-
-    if (user !== undefined) {
-        if (data[user].pw === password) {
-            sessions[sessionID] = name;
-            return true;
-        }
-    }
-    return false
-  }
-  Object.freeze(that);
-  return that;
 }
 
-module.exports = Users();
+
+module.exports = Users;

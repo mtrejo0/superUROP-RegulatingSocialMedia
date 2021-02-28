@@ -1,362 +1,215 @@
-const express = require("express");
+const express = require('express');
 
-const Freets = require("../models/Freets");
-const Users = require("../models/Users");
-const { checkSessionActive, checkUserLoggedIn } = require('./helpers');
+const Freets = require('../models/Freets');
+const Users = require('../models/Users');
 
 const router = express.Router();
 
-// 400 error code for empty
+const util = require('./util.js');
 
 /**
- * Create a Freet if the user is logged in
- * @name POST/api/freets
- * @param {string} content - content of the freet as a string where messages are 140 characters or less
- * @return {Freet} - the created Freet object
+ * Create a Freet.
+ * @name POST/api/Freets
+ * @param {string} body - body of Freet (link will be /:Freet)
+ * @param {string} id - id points to Freet
+ * @return {Freet} - the created Freet
+ * @throws {403} - if user is not logged in 
+ * @throws {400} - if name is already taken
  */
-router.post("/", (req, res) => {
-    // make sure user is logged in
-    if (checkUserLoggedIn(req, res) === false) return; 
-
-    // make sure user session is still active
-    if (checkSessionActive(req, res) === false) return;
-
-    if (req.body.content.length > 140) {
-        res.status(400)
-            .json({
-                error: `Your updated freet must be less than 140 characters long.`
-            })
-            .end();
-        return;
-    } else if (!req.body.content.trim()) {
-        res.status(400)
-            .json({
-                error: `Freets must be non-empty`
-            })
-            .end();
-        return;
-    }
+router.post('/', [], async (req, res) => {
+  try {
+    if (!util.isLoggedIn(req, res)) return;
+    if (!util.matchFreet(req.body.body, res)) return;
+    const freet = await Freets.addOne(req.body.body, req.body.username)
+    res.status(200).json({'message':'Succesfully created freet', 'freet': freet}).end();
     
-    const currentUser = Users.getUserBySession(req.session.id);
-    const freet = Freets.addFreet(req.body.content, currentUser);
-    res.status(200)
-        .json(freet)
-        .end();
+  } catch (error) {
+    res.status(503).json({ message: `Could not add new freet: ${error}` }).end();
+  }
+
 });
 
 /**
- * Lists all Freets regardless of author
- * @name GET/api/freets
- * @return {Freet[]} - list of all Freets
+ * List all Freets.
+ * @name GET/api/Freets
+ * @return {Freet[]} - list of Freets
  */
-router.get("/", (req, res) => {
-    const currentUser = Users.getUserBySession(req.session.id);
-    const following = Users.getFollowing(currentUser);
-    const freets = Freets.findFreetsByFollowing(following).reverse();
-    res.status(200)
-        .json({ data: freets })
-        .end();
+router.get('/', [], async (req, res) => {
+  try {
+    const freets = await Freets.findAll()
+    const freetsExtra = []
+    for (let i = 0; i < freets.length ; i++) {
+      const freet = freets[i];
+      const likes  =  await Freets.getLikes(freet.post_id)
+      const refreets  =  await Freets.getRefreets(freet.post_id)
+      const username  =  await Users.getUserName(freet.creator)
+      freet.likes = likes
+      freet.refreets = refreets
+      freet.username = username['username']
+      freetsExtra.push(freet)
+    }
+      
+    res.status(200).json({'freets': freetsExtra}).end();
+  } catch (error) {
+    res.status(503).json({ message: `Could not fetch all shorts: ${error}` }).end();
+  }
 });
 
 /**
- * Lists all Freets associated with an author
- * @name GET/api/freets/:author
- * :author is a username (as a string)
- * @return {Freet[]} - list of all Freets associated with the given author
+ * List all posts from users that the user is following
+ * @name GET/api/freets/feed
+ * @return {Freet[]} - list of Freets
  */
-router.get("/:author", (req, res) => {
-    const author = req.params.author;
-    if (!Users.findOne(author)) {
-        res.status(404).json({
-            error: `Author with the name: ${author} does not exist!`
-        });
-        return;
+router.get('/feed', [], async (req, res) => {
+  try {
+    const freets = await Freets.findAll()
+    const following = await Users.getFollowing(req.cookies['fritter-auth-id'])
+    const freetsExtra = []
+    for (let i = 0; i < freets.length ; i++) {
+      const freet = freets[i];
+      // make sure its from someone the user is following
+      let isFollowing = false
+      for (let j = 0; j < following.length ; j++) {
+        if ( freet.creator == following[j]['user2_id']) {
+          isFollowing = true;
+          break
+        }
+      }
+      if (!isFollowing) {
+        continue
+      }
+      const likes  =  await Freets.getLikes(freet.post_id)
+      const refreets  =  await Freets.getRefreets(freet.post_id)
+      const username  =  await Users.getUserName(freet.creator)
+      freet.likes = likes
+      freet.refreets = refreets
+      freet.username = username['username']
+      freetsExtra.push(freet)
     }
-    const currentUser = Users.getUserBySession(req.session.id);
-    const following = Users.getFollowing(currentUser);
+    res.status(200).json({'freets': freetsExtra}).end();
+  } catch (error) {
+    res.status(503).json({ message: `Could not fetch all shorts: ${error}` }).end();
+  }
+});
 
-    if (!(following.has(author))) {
-        res.status(403).json({
-            error: `You must follow user ${author} to see their Freets!`
-        });
-        return;
+
+
+/**
+ * List all Freets by author.
+ * @name POST/api/Freets/author
+ * @return {Freet[]} - list of Freets by author
+ */
+router.get('/:author', [], async (req, res) => {
+  try {
+    if(!util.matchUsername(req.params.author, res)) return;
+
+    const allFreets = await Freets.findAllBy(req.params.author);
+    const allFreetsLikes = []
+    for (let i = 0; i < allFreets.length ; i++) {
+      const freet = allFreets[i];
+      const likes  =  await Freets.getLikes(freet.post_id)
+      const refreets  =  await Freets.getRefreets(freet.post_id)
+      const username  =  await Users.getUserName(freet.creator)
+      freet.likes = likes
+      freet.refreets = refreets
+      freet.username = username['username']
+      allFreetsLikes.push(freet)
     }
-
-    const freets = Freets.findFreetsByAuthor(author);
-    res.status(200)
-        .json(freets.reverse())
-        .end();
+    res.status(200).json({'freets': allFreetsLikes}).end();
+    
+  } catch (error) {
+    res.status(503).json({ message: `Could not get all freets: ${error}` }).end();
+  }
 });
 
 /**
- * Updates a Freet if the user is logged in and the Freet associated with the given id exists
- * @name PUT/api/freets/:id
- * :id is the unique ID of the Freet
- * @param {string} content - new content that the user wants to update
- * @return {Freet} - the updated Freet object
+ * Update a Freet.
+ * @username PUT/api/freets/
+ * @param {string} body - the new body of the freet
+ * @return {Freet} - the updated Freet
+ * @throws {403} - if user is not logged in, or logged in to another account
  * @throws {404} - if Freet does not exist
  */
-router.put("/:id", (req, res) => {
-    // make sure user is logged in
-    if (checkUserLoggedIn(req, res) === false) return; 
+router.put('/', [], async (req, res) => {
+  try {
+    if (!util.isLoggedIn(req, res)) return;
+    if (!util.matchID(req.body.id, res)) return;
 
-    // make sure user session is still active
-    if (checkSessionActive(req, res) === false) return;
+    const freetId = parseInt(req.body.id)
 
-    if (req.params.id.length === 0) {
-        res.status(404)
-            .json({
-                error: `Freet ID must be nonempty`
-            })
-            .end();
-        return;
+    // find the freet
+    const existingFreet = await Freets.findOne(freetId);
+
+    if (!existingFreet) {
+      res.status(404).json({
+        error: `Freet with id ${freetId} does not exist.`,
+      }).end();
+      return;
+    }  
+
+    if (req.cookies['fritter-auth-id'] != existingFreet.creator){
+      res.status(403).json({
+        error: `You must be logged in to the owner account (${existingFreet.creator}) to edit freet ${freetId}!`
+      }).end();
+      return;
     }
 
-    if (Freets.findFreetByID(req.params.id) === undefined) {
-        res.status(404)
-            .json({
-                error: `The Freet associated with ID ${req.params.id} does not exist.`
-            })
-            .end();
-        return;
+    if (req.body.content.length < 1){
+      res.status(403).json({
+        error: `Freet body cannot be empty!`
+      }).end();
+      return;
     }
 
-    const freet = Freets.findFreetByID(req.params.id);
-    const currentUser = Users.getUserBySession(req.session.id);
-    if (freet.author !== currentUser || freet.og_author !== currentUser) {
-        res.status(403)
-            .json({
-                error: `You do not have permissions to edit this freet associated with ID ${req.params.id}.`
-            })
-            .end();
-        return;
-    }
+    const Freet = await Freets.updateOne(req.body.content, freetId)
+    res.status(200).json({'message':'Succesfully updated freet', 'freet': Freet}).end()
+    
 
-    if (req.body.content.length > 140) {
-        res.status(400)
-            .json({
-                error: `Your updated freet must be less than 140 characters long.`
-            })
-            .end();
-        return;
-    } else if (!req.body.content.trim()) {
-        res.status(400)
-            .json({
-                error: `Freets must be non-empty`
-            })
-            .end();
-        return;
-    }
-    Freets.updateFreet(req.params.id, req.body.content);
-    res.status(200)
-        .json(freet)
-        .end();
+  } catch (error) {
+    res.status(503).json({ message: `Could not update freet: ${error}` }).end();
+  }
 });
 
 /**
- * Deletes a Freet if the user is logged in and the Freet associated with the given id exists
- * @name DELETE/api/freets/:id
- * :id is the unique ID of the Freet
- * @return {Freet} - the deleted Freet object
+ * Delete a Freet.
+ * @username DELETE/api/Freets/:id
+ * @return {Freet} - the deleted Freet
+ * @throws {403} - if user is not logged in, or logged in to another account 
  * @throws {404} - if Freet does not exist
  */
-router.delete("/:id", (req, res) => {
-    // make sure user is logged in
-    if (checkUserLoggedIn(req, res) === false) return; 
+router.delete('/:id', [], async (req, res) => {
+  try {
+    if (!util.isLoggedIn(req, res)) return;
+    if (!util.matchID(req.params.id, res)) return;
 
-    // make sure user session is still active
-    if (checkSessionActive(req, res) === false) return;
+    const freetId = parseInt(req.params.id)
 
-    if (req.params.id.length === 0) {
-        res.status(404)
-            .json({
-                error: `Freet ID must be nonempty`
-            })
-            .end();
-        return;
-    }
+    // find the freet
+    const existingFreet = await Freets.findOne(freetId);
 
-    if (Freets.findFreetByID(req.params.id) === undefined) {
-        res.status(404)
-            .json({
-                error: `The Freet associated with ID ${req.params.id} does not exist.`
-            })
-            .end();
-        return;
-    }
+    if (!existingFreet) {
+      res.status(404).json({
+        error: `Freet with id ${freetId} does not exist.`,
+      }).end();
+      return;
+    }  
+    if (req.cookies['fritter-auth-id'] != existingFreet.creator) {
+      res.status(403).json({
+        error: `You must be logged in to the owner account (${existingFreet.creator}) to delete freet ${freetId}!`
+      }).end();
+      return;
+    } 
 
-    const freet = Freets.findFreetByID(req.params.id);
-    const currentUser = Users.getUserBySession(req.session.id);
-    if (freet.author !== currentUser) {
-        res.status(403)
-            .json({
-                error: `You do not have permissions to delete this freet associated with ID ${req.params.id}.`
-            })
-            .end();
-        return;
-    }
-
-    Freets.deleteFreet(req.params.id);
-    res.status(200)
-        .json(freet)
-        .end();
-});
-
-/**
- * Upvotes a Freet if user follows the Freet's author
- * @name POST/api/freets/upvote/:id
- * :id is the unique ID of the Freet
- * @return {Freet} - the Freet object that was upvoted
- * @throws {404} - if Freet does not exist
- * @throws {403} - user does not follow Freet's author and original author
- */
-router.post("/upvote/:id", (req, res) => {
-    // make sure user is logged in
-    if (checkUserLoggedIn(req, res) === false) return; 
-
-    // make sure user session is still active
-    if (checkSessionActive(req, res) === false) return;
-
-    if (req.params.id.length === 0) {
-        res.status(404)
-            .json({
-                error: `Freet ID must be nonempty`
-            })
-            .end();
-        return;
-    }
+    const Freet = await Freets.deleteOne(freetId)
+    res.status(200).json({'message':'Succesfully deleted freet', 'freet': Freet}).end()
     
-    if (Freets.findFreetByID(req.params.id) === undefined) {
-        res.status(404)
-            .json({
-                error: `The Freet associated with ID ${req.params.id} does not exist.`
-            })
-            .end();
-        return;
-    }
-    const freet = Freets.findFreetByID(req.params.id);
+  }
+  catch(error){
+    res.status(503).json({ message: `Could not get delete freet: ${error}` }).end()
+  }
 
-    const currentUser = Users.getUserBySession(req.session.id);
-    const following = Users.getFollowing(currentUser);
-    const author = freet.author;
-    if (!(following.has(author)) || !(following.has(freet.og_author))) {
-        res.status(403).json({
-            error: `You must follow this Freet's author and original author to upvote this Freet!`
-        });
-        return;
-    }
-    Freets.upvoteFreet(req.params.id, currentUser);
-    res.status(200)
-        .json(freet)
-        .end();
-});
-
-/**
- * Undos Freet upvote if user follows the Freet's author
- * @name DELETE/api/freets/upvote/:id
- * :id is the unique ID of the Freet
- * @return {Freet} - the Freet object to remove an upvote from
- * @throws {404} - if Freet does not exist
- * @throws {403} - user does not follow Freet's author and original author
- */
-router.delete("/upvote/:id", (req, res) => {
-    // make sure user is logged in
-    if (checkUserLoggedIn(req, res) === false) return; 
-
-    // make sure user session is still active
-    if (checkSessionActive(req, res) === false) return;
-
-    if (req.params.id.length === 0) {
-        res.status(404)
-            .json({
-                error: `Freet ID must be nonempty`
-            })
-            .end();
-        return;
-    }
-    
-    if (Freets.findFreetByID(req.params.id) === undefined) {
-        res.status(404)
-            .json({
-                error: `The Freet associated with ID ${req.params.id} does not exist.`
-            })
-            .end();
-        return;
-    }
-    const freet = Freets.findFreetByID(req.params.id);
-    const currentUser = Users.getUserBySession(req.session.id);
-    const following = Users.getFollowing(currentUser);
-    const author = freet.author;
-    if (!(following.has(author)) || !(following.has(freet.og_author))) {
-        res.status(403).json({
-            error: `You are not following this Freet's author and original author!`
-        });
-        return;
-    }
-    Freets.undoFreetUpvote(req.params.id, currentUser);
-    res.status(200)
-        .json(freet)
-        .end();
 });
 
 
-/**
- * Refreets a Freet if user follows the Freet's author and original author
- * @name POST/api/freets/upvote/:id
- * :id is the unique ID of the Freet
- * @return {Freet} - the refreet, if successful
- * @throws {404} - if Freet does not exist
- * @throws {403} - user does not follow Freet's author and original author
- * @throws {400} - user trying to refreet a freet that was originally theirs
- */
-router.post("/refreet/:id", (req, res) => {
-    // make sure user is logged in
-    if (checkUserLoggedIn(req, res) === false) return; 
-
-    // make sure user session is still active
-    if (checkSessionActive(req, res) === false) return;
-
-    if (req.params.id.length === 0) {
-        res.status(404)
-            .json({
-                error: `Freet ID must be nonempty`
-            })
-            .end();
-        return;
-    }
-    
-    if (Freets.findFreetByID(req.params.id) === undefined) {
-        res.status(404)
-            .json({
-                error: `The Freet associated with ID ${req.params.id} does not exist.`
-            })
-            .end();
-        return;
-    }
-    const freet = Freets.findFreetByID(req.params.id);
-
-    const currentUser = Users.getUserBySession(req.session.id);
-    const following = Users.getFollowing(currentUser);
-    const author = freet.author;
-    if (!(following.has(author)) || !(following.has(freet.og_author))) {
-        res.status(403).json({
-            error: `You must follow this Freet's author and original author to refreet this Freet!`
-        });
-        return;
-    }
-    const newFreet = Freets.refreetFreet(req.params.id, currentUser);
-    if (newFreet === undefined) {
-        res.status(400)
-            .json({
-                error: `You may not refreet your own freet, and you can only refreet a freet once.`
-            })
-            .end();
-    } else {
-        res.status(200)
-            .json(newFreet)
-            .end();
-    }
-    
-});
 
 module.exports = router;

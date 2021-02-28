@@ -1,25 +1,19 @@
 <template>
   <div>
-    <Navbar/>
-    <HomePage />
+    <FritterLogo/>
     <UserSettings/>
   </div>
 </template>
 
 <script>
 import UserSettings from "../components/UserSettings.vue";
-import Navbar from "../components/Navbar.vue";
-import HomePage from "../components/HomePage.vue";
+import FritterLogo from "../components/FritterLogo.vue";
 
 export default {
   name: "account",
-  created() {
-    localStorage.removeItem('user-auth');
-  },
   components: {
     UserSettings,
-    Navbar,
-    HomePage,
+    FritterLogo
   }
 };
 </script>
