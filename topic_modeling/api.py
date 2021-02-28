@@ -121,7 +121,7 @@ class TopicModel:
         return list(content["tweet"])
 
     def tweetToVector(self, tweet):
-        return np.array([[topic in tweet for topic in self.topStopwords]])
+        return np.array([[1. if topic in tweet else 0 for topic in self.topStopwords]])
 
 
 
@@ -145,7 +145,7 @@ class UserGroup:
     def addUser(self, user):
         if user not in self.user_vect_dict.keys():
             self.user_vect_dict[user] = np.zeros((1, len(self.topics)))
-            self.user_mask_dict[user] = np.zeros((1, len(self.topics))) + 1
+            self.user_mask_dict[user] = np.ones((1, len(self.topics)))
             self.userOrder.append(user)
             return
         raise ValueError('user already exists')
@@ -153,8 +153,9 @@ class UserGroup:
     def updateUser(self, user, vector, liked=True):
         if liked:
             self.user_vect_dict[user] += vector
-        for i in range(len(vector)):
-            self.user_mask_dict[user][0][i] = 0
+        for i in range(len(self.topics)):
+            if vector[0][i] == 1:
+                self.user_mask_dict[user][0][i] = 0
 
     def getRatingMatrix(self): # sorted by username
         names = self.userOrder

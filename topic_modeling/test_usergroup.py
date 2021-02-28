@@ -60,7 +60,7 @@ class apiTests(unittest.TestCase):
     def testMaskAllCoveredOneTweet(self):
         usergroup = UserGroup(self.model.topStopwords)
         usergroup.addUser("a")
-        expected_init = np.zeros((1, len(usergroup.topics))) + 1
+        expected_init = np.ones((1, len(usergroup.topics)))
         self.assertEqual(usergroup.getUserMask("a").all(), expected_init.all())
         vec_all = expected_init
         usergroup.updateUser("a", vec_all)
@@ -71,8 +71,7 @@ class apiTests(unittest.TestCase):
         usergroup.addUser("a")
         tweet = self.model.sampleTweets(1)
         vec = self.model.tweetToVector(tweet[0])
-        print(vec)
-        expected = np.zeros((1, len(usergroup.topics))) + 1 - vec
+        expected = np.ones((1, len(usergroup.topics))) - vec
         usergroup.updateUser("a", vec)
         self.assertEqual(usergroup.getUserMask("a").all(), expected.all())
 

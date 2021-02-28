@@ -5,10 +5,12 @@ import numpy as np
 
 if __name__ == "__main__":
 
+    # 1
     model = TopicModel("topic_modeling/climate_tweets.csv")
     model.getTopStopWords(10)
     usergroup = UserGroup(model.topStopwords)
 
+    # 2
     username = input("Enter a new user or a type FIN to finish: ")
     while username != "FIN":
         usergroup.addUser(username)
@@ -32,9 +34,11 @@ if __name__ == "__main__":
     R = usergroup.getRatingMatrix()
     mask = usergroup.getMaskMatrix()
 
+    # 3
     mat_estimator = RecommenderSystem(R, mask, 5)
     R_hat = mat_estimator.genRecommendedRatings()
 
+    # 4
     user = input("Which user to be recommended?: ")
     num_tweets_total = int(input("How big of a set of tweets to recommend from: "))
     num_tweets = int(input("How many tweets desired: "))
