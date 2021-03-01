@@ -1,8 +1,8 @@
 <template>
   <div class="inner-container">
     <Navbar/>
-    <div class='all'>
-        <Titlebar title="All"/>
+    <div class='recommend'>
+        <Titlebar title="Recommend"/>
     </div>
 
     <div class="freets-container" v-if="freets.length">
@@ -46,7 +46,7 @@ import EmptyPage from "../components/EmptyPage.vue";
 import _ from 'lodash';
 
 export default {
-  name: "All",
+  name: "Recommend",
   data() {
     return {
         messages: [],
@@ -116,7 +116,7 @@ export default {
   methods: {
     retriveFreets: function() {
       axios
-        .get("/api/freets/random", {})
+        .get("/api/freets/recommend", {})
         .then((res) => {
           this.freets = res.data.data;
           localStorage.setItem('freets', JSON.stringify(this.freets));

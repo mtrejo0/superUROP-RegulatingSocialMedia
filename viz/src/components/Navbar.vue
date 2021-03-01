@@ -11,9 +11,14 @@
           All
         </span>
       </router-link>
+      <router-link to="/recommend" v-if="isSignedIn" class="navlink">
+        <span @click="setTab('recommend')" v-bind:style="getStyle('explore')" >
+          Recommended
+        </span>
+      </router-link>
       <router-link to="/explore" v-if="isSignedIn" class="navlink">
         <span @click="setTab('explore')" v-bind:style="getStyle('explore')" >
-          Explore
+          Users
         </span>
       </router-link>
       <router-link to="/requests" v-if="isSignedIn" class="navlink" >

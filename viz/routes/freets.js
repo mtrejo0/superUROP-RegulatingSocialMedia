@@ -63,10 +63,29 @@ router.get("/", (req, res) => {
  * @name GET/api/freets/all
  * @return {Freet[]} - list of all Freets
  */
-router.get("/all", (req, res) => {
+router.get("/random", (req, res) => {
     const currentUser = Users.getUserBySession(req.session.id);
     const following = Users.getFollowing(currentUser);
     const freets = Freets.findAllFreets(following).reverse();
+    const size = 10;
+    console.log(freets.length)
+    const index = Math.floor(Math.random()*(freets.length - size))
+    console.log(index)
+    const freetSelection = freets.slice(index, index + size)
+    res.status(200)
+        .json({ data: freetSelection })
+        .end();
+});
+
+/**
+ * Lists tweets recommended for a user
+ * @name GET/api/freets/recommend
+ * @return {Freet[]} - list of all Freets
+ */
+router.get("/recommend", (req, res) => {
+    const currentUser = Users.getUserBySession(req.session.id);
+    const following = Users.getFollowing(currentUser);
+    const freets = [{ id: 1 , content: "recommended", author: "hello", og_author: null, time: "", 'upvotes': [], 'refreets': []}];
     res.status(200)
         .json({ data: freets })
         .end();
@@ -253,12 +272,12 @@ router.post("/upvote/:id", (req, res) => {
     const currentUser = Users.getUserBySession(req.session.id);
     const following = Users.getFollowing(currentUser);
     const author = freet.author;
-    if (!(following.has(author)) || !(following.has(freet.og_author))) {
-        res.status(403).json({
-            error: `You must follow this Freet's author and original author to upvote this Freet!`
-        });
-        return;
-    }
+    // if (!(following.has(author)) || !(following.has(freet.og_author))) {
+    //     res.status(403).json({
+    //         error: `You must follow this Freet's author and original author to upvote this Freet!`
+    //     });
+    //     return;
+    // }
     Freets.upvoteFreet(req.params.id, currentUser);
     res.status(200)
         .json(freet)
@@ -301,12 +320,12 @@ router.delete("/upvote/:id", (req, res) => {
     const currentUser = Users.getUserBySession(req.session.id);
     const following = Users.getFollowing(currentUser);
     const author = freet.author;
-    if (!(following.has(author)) || !(following.has(freet.og_author))) {
-        res.status(403).json({
-            error: `You are not following this Freet's author and original author!`
-        });
-        return;
-    }
+    // if (!(following.has(author)) || !(following.has(freet.og_author))) {
+    //     res.status(403).json({
+    //         error: `You are not following this Freet's author and original author!`
+    //     });
+    //     return;
+    // }
     Freets.undoFreetUpvote(req.params.id, currentUser);
     res.status(200)
         .json(freet)
@@ -352,12 +371,12 @@ router.post("/refreet/:id", (req, res) => {
     const currentUser = Users.getUserBySession(req.session.id);
     const following = Users.getFollowing(currentUser);
     const author = freet.author;
-    if (!(following.has(author)) || !(following.has(freet.og_author))) {
-        res.status(403).json({
-            error: `You must follow this Freet's author and original author to refreet this Freet!`
-        });
-        return;
-    }
+    // if (!(following.has(author)) || !(following.has(freet.og_author))) {
+    //     res.status(403).json({
+    //         error: `You must follow this Freet's author and original author to refreet this Freet!`
+    //     });
+    //     return;
+    // }
     const newFreet = Freets.refreetFreet(req.params.id, currentUser);
     if (newFreet === undefined) {
         res.status(400)

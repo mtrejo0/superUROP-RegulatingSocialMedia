@@ -18309,7 +18309,7 @@ function Freets() {
         return freet;
     };
 
-    for(let i = 0 ; i < 10 ; i ++){
+    for(let i = 0 ; i < preFreets.length ; i ++){
         that.addFreet(preFreets[i].tweet)
     }
 

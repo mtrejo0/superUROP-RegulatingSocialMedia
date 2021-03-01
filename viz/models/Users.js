@@ -21,6 +21,7 @@ function Users() {
     userC: {'pw': 'userC', 'following': new Set(['userA', 'userC']), 'followedBy': new Set(['userA', 'userC']), 'requested': new Set() },
     userD: {'pw': 'userD', 'following': new Set(['userD']), 'followedBy': new Set(['userD']), 'requested': new Set() },
     userE: {'pw': 'userE', 'following': new Set(['userE']), 'followedBy': new Set(['userE']), 'requested': new Set() },
+    moi: {'pw': '123', 'following': new Set(['userA', 'userB', 'userC']), 'followedBy': new Set(['userA', 'userB', 'userC']), 'requested': new Set(['userD', 'userE']) },
   };
   const sessions = {};
 

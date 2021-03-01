@@ -28,6 +28,14 @@ let router = new VueRouter({
       component: () => import('./views/All.vue')
     },
     {
+      path: '/recommend',
+      name : 'recommend',
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('./views/Recommend.vue')
+    },
+    {
       path: '/explore',
       name : 'explore',
       meta: {

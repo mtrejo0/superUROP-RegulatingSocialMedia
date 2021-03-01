@@ -2,7 +2,7 @@
   <div class="inner-container">
     <Navbar/>
     <div class='explore'>
-      <Titlebar title="Explore"/>
+      <Titlebar title="Users"/>
     </div>
     <div class="container cardContainer">
         <UserCard
