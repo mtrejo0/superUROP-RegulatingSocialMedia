@@ -1,170 +1,396 @@
 const express = require('express');
-
 const Users = require('../models/Users');
+const { checkSessionActive, checkUserLoggedIn } = require('./helpers');
 
 const router = express.Router();
 
-const {isLoggedIn, matchUsername, matchPassword} = require('./util');
 
 /**
- * Create new user
+ * Create a user.
  * @name POST/api/users/
- * @param {string} username 
- * @param {string }password 
+ * @param {string} username - name of user 
+ * @param {string} password - password of user
+ * @return {User} - the created user
+ * @throws {400} - if name is already taken
  */
- router.post('/', async (req, res) => {
-  try {
-    if (!matchUsername(req.body.username, res)) return;
-    if (!matchPassword(req.body.password, res)) return;
-    let username = await Users.findOne(req.body.username);
-
-    if (username) {
-      res.status(409).json({ message: 'That username already exists' }).end();
-      return;
+router.post('/', (req, res) => {
+  if (req.session.username !== undefined && req.session.username !== null ) {
+    res.status(400).json({ error: 'Please sign out to make a new account.' }).end();
+    return;
+  }
+  if (req.body.username.length === 0 || req.body.password.length === 0) {
+    res.status(400).json({
+      error: `Username and password must be nonempty`,
+    }).end();
+  } else {
+    if (Users.findOne(req.body.username) === undefined) {
+      const user = Users.addOne(req.body.username, req.body.password); 
+      res.status(200).json({ message: `User ${user} has been created` }).end();
+    } else {
+      res.status(400).json({
+        error: `The username "${req.body.username}" has already been taken.`,
+      }).end();
     }
-    username = await Users.addOne(req.body.username, req.body.password);
-    res.status(201).json(username).end();
-
-  } catch (error) {
-    res.status(503).json({ message: `Could not create the user: ${error}` }).end();
   }
 });
 
 /**
- * Get all users
- * @name GET/api/users/
- */
-router.get('/', async (req, res) => {
-  try {
-    let users =  await Users.findAll();
-    res.status(200).json({'users': users}).end();
-  } catch (error) {
-    res.status(503).json({ message: `Could not create the user: ${error}` }).end();
-  }
-});
-
-/**
- * Get user with username
- * @name GET/api/users/
- * @param username
- */
-router.get('/:username', async (req, res) => {
-  try {
-    let user =  await Users.findOne(req.params.username);
-    res.status(200).json(user).end();
-  } catch (error) {
-    res.status(503).json({ message: `Could not create the user: ${error}` }).end();
-  }
-});
-
-/**
- * Delete a user
- * @name DELETE/api/users/
- * @param {string} username 
- */
-router.delete('/', async (req, res) => {
-  try {
-    if (!isLoggedIn(req, res)) return;
-    let user = await Users.deleteOne(req.cookies['fritter-auth']);
-    res.status(200).json({ message: `(${user}) has been deleted` }).end();
-    return;
-  } catch (error) {
-    res.status(503).json({ message: `Could not delete the user: ${error}` }).end();
-    return;
-  }
-});
-
-/**
- * Update the username for logged in user
+ * Update user's name
  * @name PUT/api/users/username
- * @param {string} username 
+ * @param {string} username - new name of user 
+ * @return {User} - the new username
+ * @throws {400} - if name is already taken 
+ * @throws {401} - if attempting to update username while not logged in
  */
-router.put('/username', async (req, res) => {
-  try {
-    if (!isLoggedIn(req, res)) return;
-    if (!matchUsername(req.body.username, res)) return;
-    if (req.body.old === req.body.username) {
-      res.status(400).json({ message: `Username is already (${req.body.username})`}).end();
-      return;
-    }
+router.put('/username', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
 
-    let existingUser = await Users.findOne(req.body.username);
-    if (existingUser) {
-      res.status(400).json({ message: `There is already a user with the username (${req.body.username})`}).end();
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+
+
+  if (Users.findOne(req.body.username) !== undefined) {
+    if (req.session.username === req.body.username) {
+      res.status(400).json({
+        error: `This your current username.`,
+      }).end();
+    } else {
+      res.status(400).json({
+        error: `This username is already taken.`,
+      }).end();
     }
-    let user = await Users.updateUsername(req.body.old,req.body.username)
-    if (user) {
-      req.body.old = user.username;
-      res.status(200).json({ message: `Username changed to (${user.username})`}).end();
-      return;
-    }
-  } catch (error) {
-      res.status(503).json({ message: `Could not change the username: ${error}` }).end();
-      return;
+  } else {
+    const user = Users.updateName(req.session.username, req.body.username, req.session.id);
+    req.session.username = user;
+    res.status(200).json({ message: `Your new user name is: ${user}` }).end();
   }
-  res.status(503).json({ message: `Could not change the username.` }).end();
 });
 
 /**
- * Update the password for logged in user
+ * Update user's password
  * @name PUT/api/users/password
- * @param {string} password 
+ * @param {string} password - new name of user 
+ * @throws {401} - if attempting to update password while not logged in
  */
-router.put('/password', async (req, res) => {
-  try {
-    if (!isLoggedIn(req, res)) return;
-    if (!matchPassword(req.body.password, res)) return;
-    let user = await Users.updatePassword(req.body.username, req.body.password);
-    if (user) {
-      res.status(200).json({ username: user.username, message: `(${user.username})'s password succesfully changed!`}).end();
-      return;
+router.put('/password', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+
+  Users.updatePassword(req.session.username, req.body.password, req.session.id); 
+  res.status(200).json({ message: `Your password has been changed.` }).end();
+});
+
+
+/**
+ * Login the user to be able to post and delete tweets
+ * @name POST/api/users/signin
+ * @param {string} username - name of user 
+ * @param {string} password - password of user 
+ * @return {User} - the new username
+ * @throws {400} - if name is already taken 
+ */
+router.post('/auth', (req, res) => {
+  // make sure user is not logged in
+  if (req.session.username === undefined || req.session.username === null) {
+    if (req.body.username.length === 0 || req.body.password.length === 0) {
+      res.status(400).json({ error: 'The user name and password must both be at least 1 character.' }).end();
+    } else {
+      if (Users.authenticateUser(req.body.username, req.body.password, req.session.id) === true) {
+        req.session.username = req.body.username;
+        res.status(200).json({ name: `${req.session.username}` }).end();
+      } else {
+        res.status(400).json({ error: 'Your name or password is incorrect' }).end();
+      }
     }
-  } catch (error) {
-    res.status(503).json({ message: `Could not change the password: ${error}` }).end();
-    return;
+  } else {
+    res.status(400).json({ error: 'You are already signed in.' }).end();
   }
-  res.status(503).json({ message: `Could not change the password` }).end();
 });
 
 /**
- * Sign in as user with (username, password)
- * @name POST/api/users/signin
- * @param {string} username 
- * @param {string} password 
+ * Logout the user from their current session
+ * @name DELETE/api/users/auth
+ * @throws {401} - if attempting to logout while not logged in
  */
-router.post('/signin', async (req, res) => {
-  try{
-    // if not already logged in
-    if (!matchUsername(req.body.username, res)) return;
-    if (!matchPassword(req.body.password, res)) return;
-    if (!req.cookies['fritter-auth']) {
-      user = await Users.findUserLogin(req.body.username, req.body.password);
-      if (!user) {
-        res.status(404).json({ message: `The username and/or password is incorrect` }).end();
+router.delete('/auth', (req, res) => {
+    // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  Users.logout(req.session.id);
+  req.session.destroy();
+  res.status(200).json( {message: `Successfully signed out.`}).end();
+});
+
+/**
+ * Delete a user.
+ * @name DELETE/api/users
+ * @param {string} name - name of user 
+ * @param {string} password - password of user
+ * @return {User} - the created user
+ * @throws {400} - if name is already taken
+ */
+router.delete('/', (req, res) => {
+  const currentUser = Users.getUserBySession(req.session.id)
+
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+  
+  Users.deleteUser(req.session.id);
+  req.session.destroy();
+  res.status(200).json({
+    message: `Successfully deleted account. You have been signed out. Please make a new account to post Freets.`
+  }).end();
+});
+
+/**
+ * Get list of users that the current user is not following.
+ * @name GET/api/users
+ * @param {string} name - name of user 
+ * @param {string} password - password of user
+ * @return {User} - the created user
+ * @throws {400} - if name is already taken
+ */
+router.get('/', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+  
+  const users = Users.getNotFollowing(req.session.username);
+
+  res.status(200).json({
+    users: Array.from(users)
+  }).end();
+});
+
+/**
+ * Get list of user's followers
+ * @name GET/api/users
+ * @param {string} name - name of user 
+ * @return {Array} - list of followers
+ */
+router.get('/followers', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+  const followers = Users.getFollowers(req.session.username);
+
+  res.status(200).json({
+    followers: Array.from(followers)
+  }).end();
+});
+
+/**
+ * Get list of user's following
+ * @name GET/api/users
+ * @param {string} name - name of user 
+ * @return {Array} - list of followers
+ */
+router.get('/following', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+  
+  const following = Users.getFollowing(req.session.username);
+
+  res.status(200).json({
+    following: Array.from(following)
+  }).end();
+});
+
+/**
+ * Return a list of user's follower requests
+ * @name GET/api/users/requests
+ * @return {Set} - all follower requests
+ */
+router.get('/requests', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+
+  const requests = Users.getFollowRequests(req.session.id);
+  res.status(200).json({
+    requests: Array.from(requests)
+  }).end();
+  return;
+});
+
+/**
+ * Removes a follower from another user's list of  followers 
+ * @name PUT/api/users/requests
+ * @param {string} followingUser - name of user being followed
+ * @return {User} - the followed user
+ * @throws {400} - if user doesn't exist or invalid request
+ */
+router.put('/requests', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+
+  // making unfollow request
+  const unfollowUsername = req.body.unfollowUsername;
+  const followerUsername = req.body.followerUsername;
+  const currentUser = Users.getUserBySession(req.session.id)
+  // unfollower a user
+  if (unfollowUsername !== undefined) {
+      // make sure user exists
+      if (Users.findOne(unfollowUsername) === undefined) {
+        res.status(400).json({
+          error: `User ${unfollowUsername} does not exist`
+        }).end();
         return;
       }
-      res.status(201).json({username: user.username, message:`Succesfully signed in as (${user.username})`}).end();
 
-    } else {
-         res.status(400).json({ message: `You are already signed in to (${req.cookies['fritter-auth']})` }).end();
-    }
-  } catch (error) {
-    res.status(503).json({ message: "Could not sign user in" }).end();
+      if (Users.findOne(unfollowUsername) === currentUser) {
+        res.status(400).json({
+          error: `You cannot unfollow yourself`
+        }).end();
+        return;
+      }
+      // make sure user is currently following specified username
+      const followers = Users.getFollowers(unfollowUsername);
+      
+      if (!(followers.has(currentUser))) {
+        res.status(400).json({
+          error: `You are not following ${unfollowUsername}`
+        }).end();
+        return;
+      }
+
+      const user = Users.unfollowerUser(unfollowUsername, req.session.id);
+    
+      res.status(200).json({
+        message: `You have unfollowed user ${user}`
+      }).end();
+  } else if (followerUsername !== undefined) { // remove a user from a user's follower list
+      // make sure user exists
+      if (Users.findOne(followerUsername) === undefined) {
+        res.status(400).json({
+          error: `User ${followerUsername} does not exist`
+        }).end();
+        return;
+      }
+
+      // make sure user is currently following specified username
+      const currentUser = Users.getUserBySession(req.session.id)
+      const followers = Users.getFollowers(currentUser);
+      if (!(followers.has(followerUsername))) {
+        res.status(400).json({
+          error: `User ${followerUsername} is not following you`
+        }).end();
+        return;
+      }
+      if (Users.findOne(followerUsername) === currentUser) {
+        res.status(400).json({
+          error: `You cannot remove yourself`
+        }).end();
+        return;
+      }
+      const user = Users.removeFollower(followerUsername, req.session.id);
+    
+      res.status(200).json({
+        message: `User ${user} is no longer following you`
+      }).end();
+  } else {
+    res.status(400).json({
+      message: `Invalid username`
+    }).end();
   }
- });
+
+})
 
 
 /**
- * Sign out as current user
- * @name POST/api/users/signout
+ * Add a follower to another user's list of requested followers 
+ * or approve/reject another user's request
+ * @name POST/api/users/requests
+ * @param {string} followingUser - name of user being followed
+ * @return {User} - the followed user
+ * @throws {400} - if name is already taken
  */
-router.post('/signout', async (req, res) => {
-  try {
-    if (!isLoggedIn(req, res)) return;
-    res.status(200).json({ message: `Succesfully signed out!`}).end();
-  } catch (error) {
-    res.status(503).json({ message: "Could not sign user out" }).end();
+router.post('/requests', (req, res) => {
+  // make sure user is logged in
+  if (checkUserLoggedIn(req, res) === false) return; 
+  
+  // make sure user session is still active
+  if (checkSessionActive(req, res) === false) return;
+
+  // making follow request
+  const followUsername = req.body.followUsername;
+  const currentUser =Users.getUserBySession(req.session.id);
+  if (followUsername !== undefined) {
+      // make sure user exists
+      if (Users.findOne(followUsername) === undefined) {
+        res.status(400).json({
+          error: `User ${followUsername} does not exist`
+        }).end();
+        return;
+      }
+
+      if (Users.getFollowers(followUsername).has(currentUser)) {
+        res.status(400).json({
+          error: `You already follow ${followUsername}`
+        }).end();
+        return;
+      }
+      const followingUser = followUsername;
+      const user = Users.addFollowRequest(followingUser, req.session.id);
+    
+      res.status(200).json({
+        message: `You have sent a follow request to ${user}`
+      }).end();
+  } else {
+    // approve or reject follow request
+    const approveID = req.body.approveID;
+    const rejectID = req.body.rejectID;
+    if (approveID === undefined) {
+      // do nothing
+    } else if (Users.findOne(approveID) === undefined) {
+      res.status(400).json({
+        error: `User ${approveID} does not exist`
+      }).end();
+      return;
+    } else {
+
+      const user = Users.approveFollowerRequest(approveID, req.session.id);
+        res.status(200).json({
+          message: `User ${user} is now following you`
+        }).end();
+        return;
+    }
+    if (rejectID === undefined) {
+      return;
+    }
+    else if (Users.findOne(rejectID) === undefined) {
+      res.status(400).json({
+        error: `User ${rejectID} does not exist`
+      }).end();
+      return;
+    } else {
+      const user = Users.rejectFollowerRequest(rejectID, req.session.id);
+      res.status(200).json({
+        message: `You have rejected ${user}'s follow request`
+      }).end();
+      return;
+    }
+
   }
- });
+});
+
 
 module.exports = router;
