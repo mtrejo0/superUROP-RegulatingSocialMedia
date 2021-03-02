@@ -7,20 +7,26 @@
     <div class="container">
         <v-tabs v-model="tab">
             <v-tab>
-                Following
-            </v-tab>
-            <v-tab>
-                Followers
+                Likes
             </v-tab>
             <v-tab>
                 Posts
             </v-tab>
             <v-tab>
-                Likes
+                Following
+            </v-tab>
+            <v-tab>
+                Followers
             </v-tab>
         </v-tabs>
     <v-tabs-items v-model="tab">
-        <div v-if="tab === 0" >
+        <div v-if="tab === 0">
+          <MyUpvotes/>
+        </div>       
+        <div v-if="tab === 1">
+          <MyFreets/>
+        </div>
+        <div v-if="tab === 2" >
           <div v-if="following.length" class="container cardContainer">
             <UserCard
                 v-for="fol in following"
@@ -34,7 +40,7 @@
               <EmptyPage text="There is nothing here yet! Request to follow other users in the Explore tab" /> 
           </div>
         </div >
-        <div v-if="tab === 1">
+        <div v-if="tab === 3">
           <div v-if="followers.length" class="container cardContainer">
             <UserCard
                 v-for="fol in followers"
@@ -48,12 +54,6 @@
               <EmptyPage text="There is nothing here yet! Once you approve user requests to follow you, they will show up here" /> 
           </div>
         </div>
-        <div v-if="tab === 2">
-          <MyFreets/>
-        </div>
-        <div v-if="tab === 3">
-          <MyUpvotes/>
-        </div>        
     </v-tabs-items>
     <Snackbar />
     </div>
