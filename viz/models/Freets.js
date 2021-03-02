@@ -18341,6 +18341,15 @@ function Freets() {
     };
 
     /**
+     * Find all the Freets that are upvoted by an author username.
+     * @param {string} author - Author of Freets to find
+     * @return {Freet[] | undefined} - A list of Freet objects found or undefined
+     */
+    that.findFreetsUpvotedByAuthor = author => {
+      return _data.filter(freet => freet.upvotes.includes(author));
+  };
+
+    /**
      * Return an array of all Freets
      * @return {Freet[]}
      */

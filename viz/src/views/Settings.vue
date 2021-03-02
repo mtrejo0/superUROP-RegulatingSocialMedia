@@ -61,7 +61,7 @@ export default {
         messages: [],
         username: '',
         password: '',
-        userName: this.$cookie.get('url-auth')
+        userName: this.$cookie.get('')
     }
   },
   methods: {

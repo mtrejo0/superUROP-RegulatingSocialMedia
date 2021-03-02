@@ -147,7 +147,9 @@ function Users() {
    */
   that.getFollowers = (user) => {
     if (!(user in data)) return undefined;
-    return new Set(data[user].followedBy);
+    let followers = data[user].followedBy
+    followers.add(user)
+    return new Set(followers);
   }
 
   /**
@@ -157,7 +159,9 @@ function Users() {
    */
   that.getFollowing = (user) => {
     if (!(user in data)) return undefined;
-    return new Set(data[user].following);
+    let following = data[user].following;
+    following.add(user)
+    return new Set(following);
   }
 
   /**

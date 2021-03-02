@@ -13,7 +13,7 @@ export default {
   name: "home",
   data() {
     return {
-      userName: this.$cookie.get('url-auth')
+      userName: this.$cookie.get('auth')
     }
   },
   components: {

@@ -39,7 +39,7 @@ export default {
         errors: [],
         messages: [],
         requests: JSON.parse(localStorage.getItem('requests')) || [],
-        userName: this.$cookie.get('url-auth')
+        userName: this.$cookie.get('auth')
     }
   },
   created () {

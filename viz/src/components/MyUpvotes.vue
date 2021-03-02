@@ -1,10 +1,5 @@
 <template>
   <div class="inner-container">
-    <Navbar/>
-    <div class='recommend'>
-        <Titlebar title="Recommend"/>
-    </div>
-
     <div class="freets-container" v-if="freets.length">
         <Freet
           v-for="freet in orderedFreets"
@@ -25,10 +20,10 @@
         @modal-close="closeModal"
       />
       <Snackbar />
-  </div>
-  <div v-else>
-      <EmptyPage text="There is nothing here yet! Once you or users you follow create a Freet, they will show up here" /> 
-  </div>
+    </div>
+    <div v-else>
+        <EmptyPage text="There is nothing here yet! Once you or users you like a Freet, they will show up here" /> 
+    </div>
 </div>
 
 </template>
@@ -36,17 +31,17 @@
 <script>
 import axios from "axios";
 import { eventBus } from "../main";
-import Freet from "../components/Freet.vue";
-import Navbar from "../components/Navbar.vue";
-import Titlebar from "../components/Titlebar.vue";
-import Modal from "../components/Modal.vue";
-import Snackbar from "../components/Snackbar.vue";
-import EmptyPage from "../components/EmptyPage.vue";
+import Freet from "./Freet.vue";
+import Navbar from "./Navbar.vue";
+import Titlebar from "./Titlebar.vue";
+import Modal from "./Modal.vue";
+import Snackbar from "./Snackbar.vue";
+import EmptyPage from "./EmptyPage.vue";
 
 import _ from 'lodash';
 
 export default {
-  name: "Recommend",
+  name: "MyLikes",
   data() {
     return {
         messages: [],
@@ -57,6 +52,7 @@ export default {
         placeholderContent: "",
         placeholderId: "",
         snackMsg: "",
+        userName: this.$cookie.get('auth'),
     }    
   },
   created() {
@@ -66,12 +62,14 @@ export default {
       let upvotedFreet = this.freets.filter(freet => freet.id == currId)
       if (upvotedFreet.length) {
         upvotedFreet[0].upvotes = currUpvotes;
+         
       }
     });
     eventBus.$on("undo-upvote-success", (currId, currUpvotes) => {
       let upvotedFreet = this.freets.filter(freet => freet.id == currId);
       if (upvotedFreet.length) {
         upvotedFreet[0].upvotes = currUpvotes;
+         
       }
     });
     eventBus.$on("refreet-success", (newFreet, currId) => {
@@ -82,6 +80,7 @@ export default {
         if (!refreetAuthors.includes(newFreet.author)) {
           refreetedFreet[0].refreets.push(newFreet);
         }
+         
         const snackMsg = "Successfully refreeted";
         this.messages.push(snackMsg);
       }
@@ -91,6 +90,7 @@ export default {
       this.freets = this.freets.filter(freet => freet.id != currId);
       // we do not need to delete all refreets pertaining to the deleted freet
       // this.freets.forEach(freet => freet.refreets = freet.refreets.filter(refreet => refreet.id != currId));
+       
       const snackMsg = "Freet deleted successfully.";
       this.messages.push(snackMsg);
     });
@@ -101,6 +101,7 @@ export default {
     });
     eventBus.$on("modal-update-freet", (freetId, newContent) => {
       this.updateFreet(freetId, newContent);
+       
     });
   },
   computed: {
@@ -111,9 +112,10 @@ export default {
   methods: {
     retriveFreets: function() {
       axios
-        .get("/api/freets/recommend", {})
+        .get(`/api/freets/upvotes/${this.userName}`, {})
         .then((res) => {
-          this.freets = res.data.data;
+          this.freets = res.data;
+           
         })
         .catch(err => {
           this.errors.push(err.response.data.error);
@@ -130,6 +132,7 @@ export default {
           this.freets = this.freets.filter(freet => freet.id != res.data.id); // drop old Freet
           this.freets.push(res.data); // add new copy of Freet
           this.closeModal();
+          
         })
         .catch(err => {
           this.errors.push(err.response.data.error);

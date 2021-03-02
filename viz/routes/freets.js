@@ -68,9 +68,7 @@ router.get("/random", (req, res) => {
     const following = Users.getFollowing(currentUser);
     const freets = Freets.findAllFreets(following).reverse();
     const size = 10;
-    console.log(freets.length)
     const index = Math.floor(Math.random()*(freets.length - size))
-    console.log(index)
     const freetSelection = freets.slice(index, index + size)
     res.status(200)
         .json({ data: freetSelection })
@@ -116,6 +114,36 @@ router.get("/:author", (req, res) => {
     }
 
     const freets = Freets.findFreetsByAuthor(author);
+    res.status(200)
+        .json(freets.reverse())
+        .end();
+});
+
+/**
+ * Lists all Freets upvoted by an author
+ * @name GET/api/freets/upvotes/:author
+ * :author is a username (as a string)
+ * @return {Freet[]} - list of all Freets associated with the given author
+ */
+router.get("/upvotes/:author", (req, res) => {
+    const author = req.params.author;
+    if (!Users.findOne(author)) {
+        res.status(404).json({
+            error: `Author with the name: ${author} does not exist!`
+        });
+        return;
+    }
+    const currentUser = Users.getUserBySession(req.session.id);
+    const following = Users.getFollowing(currentUser);
+
+    if (!(following.has(author))) {
+        res.status(403).json({
+            error: `You must follow user ${author} to see their Freets!`
+        });
+        return;
+    }
+
+    const freets = Freets.findFreetsUpvotedByAuthor(author);
     res.status(200)
         .json(freets.reverse())
         .end();
@@ -335,7 +363,7 @@ router.delete("/upvote/:id", (req, res) => {
 
 /**
  * Refreets a Freet if user follows the Freet's author and original author
- * @name POST/api/freets/upvote/:id
+ * @name POST/api/freets/refreet/:id
  * :id is the unique ID of the Freet
  * @return {Freet} - the refreet, if successful
  * @throws {404} - if Freet does not exist

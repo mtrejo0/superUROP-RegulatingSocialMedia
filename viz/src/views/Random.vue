@@ -1,8 +1,8 @@
 <template>
   <div class="inner-container">
     <Navbar/>
-    <div class='recommend'>
-        <Titlebar title="Recommend"/>
+    <div class='all'>
+        <Titlebar title="All"/>
     </div>
 
     <div class="freets-container" v-if="freets.length">
@@ -25,10 +25,10 @@
         @modal-close="closeModal"
       />
       <Snackbar />
-  </div>
-  <div v-else>
-      <EmptyPage text="There is nothing here yet! Once you or users you follow create a Freet, they will show up here" /> 
-  </div>
+    </div>
+    <div v-else>
+        <EmptyPage text="There is nothing here yet! Once you or users you follow create a Freet, they will show up here" /> 
+    </div>
 </div>
 
 </template>
@@ -46,7 +46,7 @@ import EmptyPage from "../components/EmptyPage.vue";
 import _ from 'lodash';
 
 export default {
-  name: "Recommend",
+  name: "All",
   data() {
     return {
         messages: [],
@@ -111,7 +111,7 @@ export default {
   methods: {
     retriveFreets: function() {
       axios
-        .get("/api/freets/recommend", {})
+        .get("/api/freets/random", {})
         .then((res) => {
           this.freets = res.data.data;
         })

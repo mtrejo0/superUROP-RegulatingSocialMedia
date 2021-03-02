@@ -6,13 +6,13 @@
           Feed
         </span>
       </router-link>
-      <router-link to="/all" v-if="isSignedIn" class="navlink">
-        <span  @click="setTab('all')" v-bind:style="getStyle('all')" >
-          All
+      <router-link to="/random" v-if="isSignedIn" class="navlink">
+        <span  @click="setTab('random')" v-bind:style="getStyle('random')" >
+          Random
         </span>
       </router-link>
       <router-link to="/recommend" v-if="isSignedIn" class="navlink">
-        <span @click="setTab('recommend')" v-bind:style="getStyle('explore')" >
+        <span @click="setTab('recommend')" v-bind:style="getStyle('recommend')" >
           Recommended
         </span>
       </router-link>

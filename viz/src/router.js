@@ -20,12 +20,12 @@ let router = new VueRouter({
       component: () => import('./views/Feed.vue')
     },
     {
-      path: '/all',
-      name : 'all',
+      path: '/random',
+      name : 'random',
       meta: {
         requiresAuth: true
       },
-      component: () => import('./views/All.vue')
+      component: () => import('./views/Random.vue')
     },
     {
       path: '/recommend',

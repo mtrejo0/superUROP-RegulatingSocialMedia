@@ -11,7 +11,7 @@
 export default {
   name: "app",
   beforeCreate: function() {
-    let authenticated = this.$cookie.get('url-auth');
+    let authenticated = this.$cookie.get('auth');
     if (!authenticated) {
       // this.$router.push("account");
     } else {

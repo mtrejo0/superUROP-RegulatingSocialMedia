@@ -12,6 +12,12 @@
             <v-tab>
                 Followers
             </v-tab>
+            <v-tab>
+                Posts
+            </v-tab>
+            <v-tab>
+                Likes
+            </v-tab>
         </v-tabs>
     <v-tabs-items v-model="tab">
         <div v-if="tab === 0" >
@@ -42,6 +48,12 @@
               <EmptyPage text="There is nothing here yet! Once you approve user requests to follow you, they will show up here" /> 
           </div>
         </div>
+        <div v-if="tab === 2">
+          <MyFreets/>
+        </div>
+        <div v-if="tab === 3">
+          <MyUpvotes/>
+        </div>        
     </v-tabs-items>
     <Snackbar />
     </div>
@@ -55,6 +67,8 @@ import Titlebar from "../components/Titlebar.vue";
 import UserCard from "../components/UserCard.vue";
 import EmptyPage from "../components/EmptyPage.vue";
 import Snackbar from "../components/Snackbar.vue";
+import MyFreets from "../components/MyFreets"
+import MyUpvotes from "../components/MyUpvotes"
 
 import axios from "axios";
 import { eventBus } from "../main";
@@ -68,7 +82,7 @@ export default {
         messages: [],
         following: JSON.parse(localStorage.getItem('following')) || [],
         followers: JSON.parse(localStorage.getItem('followers')) || [],
-        userName: this.$cookie.get('url-auth'),
+        userName: this.$cookie.get('auth'),
     }
   },
   created () {
@@ -151,6 +165,8 @@ export default {
     Titlebar,
     EmptyPage,
     Snackbar,
+    MyFreets,
+    MyUpvotes
   }
 };
 </script>

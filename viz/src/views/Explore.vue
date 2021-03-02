@@ -35,7 +35,7 @@ export default {
         errors: [],
         messages: [],
         users: JSON.parse(localStorage.getItem('explore')) || [],
-        userName: this.$cookie.get('url-auth')
+        userName: this.$cookie.get('auth')
     }
   },
   created () {
