@@ -1,4 +1,4 @@
-from api import RecommenderSystem
+from recommender_system import RecommenderSystem
 
 r = RecommenderSystem(20,10)
 

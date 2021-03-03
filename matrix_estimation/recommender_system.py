@@ -16,6 +16,8 @@ class RecommenderSystem():
         self.n = 0
         self.m = 0
 
+        self.figure = 0
+
     """
     Initialize Recommender System with R and mask matricies
 
@@ -34,6 +36,8 @@ class RecommenderSystem():
         self.m = shape[0]
         self.n = shape[1]
 
+        self.figure = 0
+
     """
     Initialize Recommender System and generate a random rating matrix
 
@@ -44,8 +48,7 @@ class RecommenderSystem():
     mask_prob - sampling probability for mask
     
     """
-    def __init__(self, n, m, k = 5, sigma = .1, mask_prob = .1):
-    
+    def __init__(self, m, n, k = 5, sigma = .1, mask_prob = .1):
         self.figure = 0
     
         self.n = n
@@ -59,7 +62,11 @@ class RecommenderSystem():
         U = np.random.rand(m, k)
     
         # generate true rating matrix, with variance
-        self.R = np.random.rand(m, n) * sigma + np.dot(U, V)
+        R = np.random.rand(m, n) * sigma + np.dot(U, V)
+
+        # map to range (0,1)
+        R = np.interp(R, (R.min(), R.max()), (0, 1))
+        self.R = R
     
         # sample some values out
         self.mask = generate_mask(mask_prob, m, n)
@@ -80,7 +87,7 @@ class RecommenderSystem():
         self.mask = np.append(self.mask , new_row, axis=0)
 
         self.m += 1
-
+        self.R_hat = None
 
     """
     Add new item col to R and mask
@@ -93,7 +100,9 @@ class RecommenderSystem():
 
         new_col = np.ones((self.m, 1))
         self.mask = np.append(self.mask , new_col, axis=1)
+
         self.n += 1
+        self.R_hat = None
 
 
     """
@@ -107,7 +116,8 @@ class RecommenderSystem():
     """
     def getUserRankings(self, user, recommended = False):
         assert 0 <= user <= self.m - 1 
-        if recommended and self.R_hat is not None:
+        if recommended:
+            assert self.R_hat
             return self.R_hat[user]
         else:
             truth = np.multiply(self.R, (1 - self.mask))
@@ -132,8 +142,8 @@ class RecommenderSystem():
 
     """
     def getRMSE(self):
-        if self.R_hat:
-            return calc_validation_rmse(self.R, self.R_hat)
+        assert self.R_hat
+        return calc_validation_rmse(self.R, self.R_hat)
         
     """
     Return rating the user has for an item
@@ -149,7 +159,8 @@ class RecommenderSystem():
         assert 0 <= user <= self.m - 1 
         assert 0 <= item <= self.n - 1 
 
-        if recommended and self.R_hat is not None:
+        if recommended:
+            assert self.R_hat
             return self.R_hat[user][item]
         else:
             truth = np.multiply(self.R, (1 - self.mask))
@@ -169,12 +180,12 @@ class RecommenderSystem():
 
         # save rating
         self.R[user][item] = rating
+
         # update mask
-        if self.mask[user][item] == 0:
-            self.mask[user][item] == 1
+        if self.mask[user][item]:
+            self.mask[user][item] -= 1
             
     def plotR(self):
-
         title = "R "
         title += str(self.figure)
         self.figure += 1
@@ -182,6 +193,20 @@ class RecommenderSystem():
         plt.figure(title)
 
         plt.imshow(self.R)
+        plt.yticks(np.arange(0, self.m , 1.0))
+        plt.xticks(np.arange(0, self.n , 1.0))
+        plt.xlabel('items')
+        plt.ylabel('users')
+    
+    def plotMask(self):
+
+        title = "Mask "
+        title += str(self.figure)
+        self.figure += 1
+
+        plt.figure(title)
+
+        plt.imshow(self.mask)
         plt.yticks(np.arange(0, self.m , 1.0))
         plt.xticks(np.arange(0, self.n , 1.0))
         plt.xlabel('items')
@@ -200,7 +225,8 @@ class RecommenderSystem():
 
         plt.figure(title)
         
-        if recommended and self.R_hat is not None:
+        if recommended:
+            assert self.R_hat
             plt.imshow(self.R_hat)
         else:
             truth = np.multiply(self.R, (1 - self.mask))
@@ -222,7 +248,8 @@ class RecommenderSystem():
 
         plt.figure(title)
 
-        if recommended and self.R_hat is not None:
+        if recommended:
+            assert self.R_hat
             plt.imshow(self.R_hat[user:user+1])
         else:
             truth = np.multiply(self.R, (1 - self.mask))
