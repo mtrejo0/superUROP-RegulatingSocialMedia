@@ -1,38 +1,110 @@
-from .util import *
-from .als import ALS
-from .nuclear_norm import nuclear_norm_solve
+from util import *
+from als import ALS
+from nuclear_norm import nuclear_norm_solve
 
 class RecommenderSystem():
 
-    def __init__(self, R, mask, k):
+
+    """
+    Initialize Recommender System 
+
+    """
+    def __init__(self, R, mask):
+        self.R = np.array([[]])
+        self.mask = np.array([[]])
+        self.R_hat = None
+        self.n = 0
+        self.m = 0
+
+    """
+    Initialize Recommender System with R and mask matricies
+
+    R - m x n rating matrix
+    mask - m x n mask matrix
+        1 - missing rating
+        0 - recorded rating
+    
+    """
+    def __init__(self, R, mask):
         self.R = R
-        self.k = k
         self.mask = mask
         self.R_hat = None
 
-    # def __init__(self, n, m, k = 5, sigma = .1, mask_prob = .1):
-    #
-    #     self.figure = 0
-    #
-    #     self.n = n
-    #     self.m = m
-    #     self.k = k
-    #
-    #     # item matrix from tweets k x n
-    #     V = np.random.rand(k, n)
-    #
-    #     # generate random user matrix m x k
-    #     U = np.random.rand(m, k)
-    #
-    #     # generate true rating matrix, with variance
-    #     self.R = np.random.rand(m, n) * sigma + np.dot(U, V)
-    #
-    #     # sample some values out
-    #     self.mask = generate_mask(mask_prob, m, n)
-    #
-    #     self.R_hat = None
+        shape = self.R.shape
+        self.m = shape[0]
+        self.n = shape[1]
+
+    """
+    Initialize Recommender System and generate a random rating matrix
+
+    m - number of users
+    n - number of items
+    k - number of latent factors
+    sigma - variance in randomization
+    mask_prob - sampling probability for mask
+    
+    """
+    def __init__(self, n, m, k = 5, sigma = .1, mask_prob = .1):
+    
+        self.figure = 0
+    
+        self.n = n
+        self.m = m
+        self.k = k
+    
+        # item matrix from tweets k x n
+        V = np.random.rand(k, n)
+    
+        # generate random user matrix m x k
+        U = np.random.rand(m, k)
+    
+        # generate true rating matrix, with variance
+        self.R = np.random.rand(m, n) * sigma + np.dot(U, V)
+    
+        # sample some values out
+        self.mask = generate_mask(mask_prob, m, n)
+    
+        self.R_hat = None
 
 
+    """
+    Add new user row to R and mask
+    
+    """
+    def addUser(self):
+
+        new_row = np.zeros((1,self.n))
+        self.R = np.append(self.R , new_row, axis=0)
+
+        new_row = np.ones((1,self.n))
+        self.mask = np.append(self.mask , new_row, axis=0)
+
+        self.m += 1
+
+
+    """
+    Add new item col to R and mask
+    
+    """
+    def addItem(self):
+
+        new_col = np.zeros((self.m, 1))
+        self.R = np.append(self.R , new_col, axis=1)
+
+        new_col = np.ones((self.m, 1))
+        self.mask = np.append(self.mask , new_col, axis=1)
+        self.n += 1
+
+
+    """
+    Return rankings the user has for all items
+
+    user
+    recommended
+        true - recommended results
+        false - current recordings
+    
+    """
     def getUserRankings(self, user, recommended = False):
         assert 0 <= user <= self.m - 1 
         if recommended and self.R_hat is not None:
@@ -41,17 +113,38 @@ class RecommenderSystem():
             truth = np.multiply(self.R, (1 - self.mask))
             return truth[user]
 
-    def genRecommendedRatings(self, method = "ALS", lam = .5):
+    """
+    k - latent factors
+    lam - learning rate
+    """
+    def reommendALS(self, k, lam):
+        self.R_hat = ALS(self.R, self.mask, k, lam)
 
-        if method == "ALS":
-            self.R_hat = ALS(self.R, self.mask, self.k, lam)
-        if method == "NORM":
-            self.R_hat = nuclear_norm_solve(self.R, self.mask, self.k, lam)
+    """
+    mu - learning rate
+    """
+    def recommendNORM(self, mu=1.0):
+        self.R_hat = nuclear_norm_solve(self.R, mu)
 
+    """
+    Return Root Mean Square Error between R and R_hat
+    Recordings and the the recommended matrix
+
+    """
     def getRMSE(self):
         if self.R_hat:
             return calc_validation_rmse(self.R, self.R_hat)
         
+    """
+    Return rating the user has for an item
+
+    user
+    item
+    recommended
+        true - recommended results
+        false - current recordings
+
+    """
     def getItemRating(self, user, item, recommended = False):
         assert 0 <= user <= self.m - 1 
         assert 0 <= item <= self.n - 1 
@@ -62,6 +155,14 @@ class RecommenderSystem():
             truth = np.multiply(self.R, (1 - self.mask))
             return truth[user][item]
 
+    """
+    Set rating the user has for an item
+
+    user
+    item
+    rating
+
+    """
     def setItemRating(self, user, item, rating):
         assert 0 <= user <= self.m - 1 
         assert 0 <= item <= self.n - 1 
@@ -73,8 +174,12 @@ class RecommenderSystem():
             self.mask[user][item] == 1
             
     def plotR(self):
-        plt.figure(self.figure)
+
+        title = "R "
+        title += str(self.figure)
         self.figure += 1
+
+        plt.figure(title)
 
         plt.imshow(self.R)
         plt.yticks(np.arange(0, self.m , 1.0))
@@ -86,9 +191,15 @@ class RecommenderSystem():
         plt.show()
 
     def plotRatings(self, recommended = False):
-        plt.figure(self.figure)
+
+        title = "Ratings "
+        if recommended:
+            title += "(Recommended) "
+        title += str(self.figure)
         self.figure += 1
 
+        plt.figure(title)
+        
         if recommended and self.R_hat is not None:
             plt.imshow(self.R_hat)
         else:
@@ -103,8 +214,13 @@ class RecommenderSystem():
     def plotUserRankings(self, user, recommended = False):
         assert 0 <= user <= self.m - 1 
 
-        plt.figure(self.figure)
+        title = "User Rankings "
+        if recommended:
+            title += "(Recommended) "
+        title += str(self.figure)
         self.figure += 1
+
+        plt.figure(title)
 
         if recommended and self.R_hat is not None:
             plt.imshow(self.R_hat[user:user+1])
