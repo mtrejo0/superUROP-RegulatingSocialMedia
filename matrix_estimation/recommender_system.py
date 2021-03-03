@@ -6,7 +6,7 @@ class RecommenderSystem():
 
 
     """
-    Initialize Recommender System 
+    Initialize empty Recommender System 
 
     """
     def __init__(self, R, mask):
