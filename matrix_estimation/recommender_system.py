@@ -48,30 +48,30 @@ class RecommenderSystem():
     mask_prob - sampling probability for mask
     
     """
-    def __init__(self, m, n, k = 5, sigma = .1, mask_prob = .1):
-        self.figure = 0
+    # def __init__(self, m, n, k = 5, sigma = .1, mask_prob = .1):
+    #     self.figure = 0
     
-        self.n = n
-        self.m = m
-        self.k = k
+    #     self.n = n
+    #     self.m = m
+    #     self.k = k
     
-        # item matrix from tweets k x n
-        V = np.random.rand(k, n)
+    #     # item matrix from tweets k x n
+    #     V = np.random.rand(k, n)
     
-        # generate random user matrix m x k
-        U = np.random.rand(m, k)
+    #     # generate random user matrix m x k
+    #     U = np.random.rand(m, k)
     
-        # generate true rating matrix, with variance
-        R = np.random.rand(m, n) * sigma + np.dot(U, V)
+    #     # generate true rating matrix, with variance
+    #     R = np.random.rand(m, n) * sigma + np.dot(U, V)
 
-        # map to range (0,1)
-        R = np.interp(R, (R.min(), R.max()), (0, 1))
-        self.R = R
+    #     # map to range (0,1)
+    #     R = np.interp(R, (R.min(), R.max()), (0, 1))
+    #     self.R = R
     
-        # sample some values out
-        self.mask = generate_mask(mask_prob, m, n)
+    #     # sample some values out
+    #     self.mask = generate_mask(mask_prob, m, n)
     
-        self.R_hat = None
+    #     self.R_hat = None
 
 
     """
@@ -127,7 +127,7 @@ class RecommenderSystem():
     k - latent factors
     lam - learning rate
     """
-    def reommendALS(self, k, lam):
+    def recommendALS(self, k, lam):
         self.R_hat = ALS(self.R, self.mask, k, lam)
 
     """
