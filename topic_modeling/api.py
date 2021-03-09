@@ -16,6 +16,7 @@ import re
 
 # cleaning unstructured text data
 import nltk
+# nltk.download() # or nltk.download("stopwords")
 
 my_stopwords = nltk.corpus.stopwords.words('english')
 word_rooter = nltk.stem.snowball.PorterStemmer(ignore_stopwords=False).stem
@@ -98,30 +99,30 @@ class TopicModel:
         self.topStopwords = top_x_stopwords
         return top_x_stopwords
 
-    def calcPreference(self, tweet, user_prefs):
-        '''calculate the affinity towards a tweet given user preferences'''
-        cleaned_tweet  = self.clean_tweet(tweet)
-        value = 0
-        for i in range(len(self.topStopwords)):
-            if self.topStopwords[i] in cleaned_tweet:
-                value += user_prefs[i]
-        return value
-
-    def rankTweetSet(self, tweets, user_prefs):
-        '''rank tweets based on affinity to user preferences'''
-        tupled_tweets = []
-        for tweet in tweets:
-            val = self.calcPreference(tweet, user_prefs)
-            tupled_tweets.append((tweet, val))
-        tupled_tweets.sort(key=lambda x: x[1], reverse=True)
-        return [i[0] for i in tupled_tweets]
+    # def calcPreference(self, tweet, user_prefs):
+    #     '''calculate the affinity towards a tweet given user preferences'''
+    #     cleaned_tweet  = self.clean_tweet(tweet)
+    #     value = 0
+    #     for i in range(len(self.topStopwords)):
+    #         if self.topStopwords[i] in cleaned_tweet:
+    #             value += user_prefs[i]
+    #     return value
+    #
+    # def rankTweetSet(self, tweets, user_prefs):
+    #     '''rank tweets based on affinity to user preferences'''
+    #     tupled_tweets = []
+    #     for tweet in tweets:
+    #         val = self.calcPreference(tweet, user_prefs)
+    #         tupled_tweets.append((tweet, val))
+    #     tupled_tweets.sort(key=lambda x: x[1], reverse=True)
+    #     return [i[0] for i in tupled_tweets]
 
     def sampleTweets(self, num_tweets=1):
         content = self.df.sample(n=num_tweets)
         return list(content["tweet"])
 
-    def tweetToVector(self, tweet):
-        return np.array([[1. if topic in tweet else 0 for topic in self.topStopwords]])
+    # def tweetToVector(self, tweet):
+    #     return np.array([[1. if topic in tweet else 0 for topic in self.topStopwords]])
 
 
 
@@ -140,22 +141,30 @@ class UserGroup:
         return sklearn.preprocessing.normalize(self.user_vect_dict[user])
 
     def getUserMask(self, user):
-        return self.user_mask_dict[user]
+        res = np.zeros((1, len(self.topics)))
+        for i in range(len(self.user_mask_dict[user][0])):
+            if self.user_mask_dict[user][0][i] == 0:
+              res[0][i] = 1
+        return res
 
     def addUser(self, user):
         if user not in self.user_vect_dict.keys():
             self.user_vect_dict[user] = np.zeros((1, len(self.topics)))
-            self.user_mask_dict[user] = np.ones((1, len(self.topics)))
+            self.user_mask_dict[user] = np.zeros((1, len(self.topics)))
             self.userOrder.append(user)
             return
         raise ValueError('user already exists')
 
+    def likeTweet(self, user, vector):
+        self.user_vect_dict[user] += vector
+
     def updateUser(self, user, vector, liked=True):
+        self.showTweet(user, vector)
         if liked:
-            self.user_vect_dict[user] += vector
-        for i in range(len(self.topics)):
-            if vector[0][i] == 1:
-                self.user_mask_dict[user][0][i] = 0
+            self.likeTweet(user, vector)
+
+    def showTweet(self, user, vector):
+        self.user_mask_dict[user] += vector
 
     def getRatingMatrix(self): # sorted by username
         names = self.userOrder
@@ -164,6 +173,9 @@ class UserGroup:
     def getMaskMatrix(self):
         names = self.userOrder
         return np.concatenate(tuple([self.getUserMask(name) for name in names]), axis=0)
+
+    def tweetToVector(self, tweet):
+        return np.array([[1. if topic in tweet else 0 for topic in self.topics]])
 
 
 

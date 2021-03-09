@@ -22,7 +22,7 @@ class apiTests(unittest.TestCase):
         usergroup.addUser("moose")
         samples = self.model.sampleTweets(2)
         self.assertEquals(len(samples), 2)
-        sample_vectors = [self.model.tweetToVector(i) for i in samples]
+        sample_vectors = [usergroup.tweetToVector(i) for i in samples]
         usergroup.updateUser("moose", sample_vectors[0])
         self.assertLessEqual(np.linalg.norm(usergroup.getUser("moose")), 1)
         # print(self.usergroup.topics)
@@ -33,7 +33,7 @@ class apiTests(unittest.TestCase):
         usergroup.addUser("dog")
         samples = self.model.sampleTweets(100)
         for tweet in samples:
-            vec = self.model.tweetToVector(tweet)
+            vec = usergroup.tweetToVector(tweet)
             usergroup.updateUser("dog", vec)
         self.assertLessEqual(np.linalg.norm(usergroup.getUser("dog")), 1)
 
@@ -45,7 +45,7 @@ class apiTests(unittest.TestCase):
         for user in usergroup.userOrder:
             samples = self.model.sampleTweets(100)
             for tweet in samples:
-                vec = self.model.tweetToVector(tweet)
+                vec = usergroup.tweetToVector(tweet)
                 usergroup.updateUser(user, vec)
         R = usergroup.getRatingMatrix()
         mask = usergroup.getMaskMatrix()
@@ -70,7 +70,7 @@ class apiTests(unittest.TestCase):
         usergroup = UserGroup(self.model.topStopwords)
         usergroup.addUser("a")
         tweet = self.model.sampleTweets(1)
-        vec = self.model.tweetToVector(tweet[0])
+        vec = usergroup.tweetToVector(tweet[0])
         expected = np.ones((1, len(usergroup.topics))) - vec
         usergroup.updateUser("a", vec)
         self.assertEqual(usergroup.getUserMask("a").all(), expected.all())
@@ -81,7 +81,7 @@ class apiTests(unittest.TestCase):
         tweet = self.model.sampleTweets(10)
         vec_all = np.zeros((1, len(usergroup.topics)))
         for i in range(10):
-            vec = self.model.tweetToVector(tweet[i])
+            vec = usergroup.tweetToVector(tweet[i])
             vec_all += vec
             usergroup.updateUser("a", vec)
             for i in range(len(vec)):

@@ -1,5 +1,5 @@
 from topic_modeling.api import TopicModel, UserGroup
-from matrix_estimation.api import RecommenderSystem
+from matrix_estimation.recommender_system import RecommenderSystem
 import numpy as np
 
 
@@ -19,11 +19,11 @@ if __name__ == "__main__":
         if input("manually like tweets? (y/n): ") == "y":
             for tweet in tweet_samples:
                 if input("tweet: '" + tweet + "', like? (y/n)") == "y":
-                    tweet_vec = model.tweetToVector(tweet)
+                    tweet_vec = usergroup.tweetToVector(tweet)
                     usergroup.updateUser(username, tweet_vec)
         else:
             for tweet in tweet_samples:
-                tweet_vec = model.tweetToVector(tweet)
+                tweet_vec = usergroup.tweetToVector(tweet)
                 if np.random.randint(0, 2) == 1:
                     usergroup.updateUser(username, tweet_vec)
                 else:
@@ -35,8 +35,9 @@ if __name__ == "__main__":
     mask = usergroup.getMaskMatrix()
 
     # 3
-    mat_estimator = RecommenderSystem(R, mask, 5)
-    R_hat = mat_estimator.genRecommendedRatings()
+    mat_estimator = RecommenderSystem(R, mask)
+    mat_estimator.recommendALS(5, .5)
+    R_hat = mat_estimator.R_hat
 
     # 4
     user = input("Which user to be recommended?: ")
@@ -44,9 +45,9 @@ if __name__ == "__main__":
     num_tweets = int(input("How many tweets desired: "))
     is_ranked = input("ranked (r) or prob distribution (d)? (r/d): ") == "r"
 
-    user_pref_vec = R[usergroup.userOrder.index(user)]
+    user_pref_vec = R_hat[usergroup.userOrder.index(user)]
     tweet_samples = model.sampleTweets(num_tweets_total)
-    samples_mat = np.vstack([model.tweetToVector(i) for i in tweet_samples])
+    samples_mat = np.vstack([usergroup.tweetToVector(i) for i in tweet_samples])
     sample_pref_score_vec = samples_mat.dot(user_pref_vec)
 
     ranking = [(x,y) for x,y in sorted(zip(tweet_samples, list(sample_pref_score_vec)), reverse=True)]
