@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import jsonify
 from topic_modeling.api import TopicModel, UserGroup
 from matrix_estimation.recommender_system import RecommenderSystem
 import numpy as np
@@ -12,6 +13,10 @@ usergroup = UserGroup(model.topStopwords)
 @app.route('/')
 def hello_world():
     return "Recommender System has started!"
+
+@app.route('/user')
+def get_users():
+    return  jsonify(usergroup.userOrder)
 
 @app.route('/user/add/<username>')
 def add_user(username):
