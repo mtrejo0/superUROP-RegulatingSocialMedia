@@ -8,9 +8,10 @@ model = TopicModel("topic_modeling/climate_tweets.csv")
 model.getTopStopWords(10)
 usergroup = UserGroup(model.topStopwords)
 
+
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return "Recommender System has started!"
 
 @app.route('/user/add/<username>')
 def add_user(username):
@@ -22,7 +23,7 @@ def like_user(username, tweet):
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.likeTweet(username, tweet_vec)
 
-@app.route('user/show/<username>/<tweet>')
+@app.route('/user/show/<username>/<tweet>')
 def show_user(username, tweet):
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.showTweet(username, tweet_vec)
@@ -32,7 +33,7 @@ def get_user(username):
     return "{}: {}".format(username, usergroup.getUser(username))
 
 @app.route('/user/mask/<username>')
-def get_user(username):
+def get_mask(username):
     return "{}: {}".format(username, usergroup.getUserMask(username))
 
 @app.route('/user/recommend/<username>/<N>/<k>/<ranked>')

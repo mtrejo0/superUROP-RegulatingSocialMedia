@@ -1,6 +1,6 @@
-from util import *
-from als import ALS
-from nuclear_norm import nuclear_norm_solve
+from .util import *
+from .als import ALS
+from .nuclear_norm import nuclear_norm_solve
 
 class RecommenderSystem():
 
