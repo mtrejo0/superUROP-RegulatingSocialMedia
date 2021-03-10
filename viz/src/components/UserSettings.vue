@@ -45,6 +45,10 @@ export default {
     eventBus.$on("signup-success", () => {
       this.messages.push("You have been signed up! Sign in to continue.");
     });
+    
+    eventBus.$on("recommend-signup-success", () => {
+      this.messages.push("You have been signed up for recommendation");
+    });
   },
   watch: {
     messages: {

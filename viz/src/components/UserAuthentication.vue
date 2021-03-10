@@ -63,16 +63,17 @@ export default {
           .then(() => {
             // handle success
             eventBus.$emit('signup-success', true);
-            // eventBus.$emit('signin-success', res.data.data.name);
           })
           .catch(err => {
             // handle error
             this.errors.push(err.response.data.error);
           })
           .then(() => {
+            return axios.get("http://localhost:5000/user/add/"+this.username)
+          })
+          .then(() => {
             // always executed
             this.resetForm();
-            // this.clearMessages();
           });
     },
 

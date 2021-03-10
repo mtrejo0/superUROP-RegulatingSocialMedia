@@ -67,7 +67,7 @@ router.get("/random", (req, res) => {
     const currentUser = Users.getUserBySession(req.session.id);
     const following = Users.getFollowing(currentUser);
     const freets = Freets.findAllFreets(following).reverse();
-    const size = 10;
+    const size = 3;
     const index = Math.floor(Math.random()*(freets.length - size))
     const freetSelection = freets.slice(index, index + size)
     res.status(200)

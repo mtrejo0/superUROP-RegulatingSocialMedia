@@ -119,6 +119,13 @@ export default {
           this.errors.push(err.response.data.error);
         })
         .then(() => {
+            this.messages.push(this.freets.length)
+            for(let i = 0 ; i < this.freets.length ; i++){
+              let freet = this.freets[i]
+              axios.get("http://localhost:5000/user/show/"+freet.id)
+            }
+        })
+        .then(() => {
           this.clearMessages();
         })
     },

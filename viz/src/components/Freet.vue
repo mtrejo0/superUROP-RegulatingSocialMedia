@@ -115,6 +115,9 @@ export default {
                 this.errors.push(err.response.data.error);
             })
             .then(() => {
+                return axios.get("http://localhost:5000/user/like/"+this.id)
+            })
+            .then(() => {
                 this.clearMessages();
             });
       },

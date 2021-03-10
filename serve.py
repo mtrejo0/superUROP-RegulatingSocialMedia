@@ -56,7 +56,8 @@ def like_user(username, tweet_id):
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.likeTweet(username, tweet_vec)
     response = {
-        "message" : "\"{}\" liked tweet #{}".format(username, tweet_id)
+        "message" : "\"{}\" liked tweet #{}".format(username, tweet_id),
+        "tweet" : tweet
     }
     return jsonify(response)
 
@@ -66,7 +67,8 @@ def show_tweet(username, tweet_id):
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.showTweet(username, tweet_vec)
     response = {
-        "message" : "\"{}\" saw tweet #{}".format(username, tweet_id)
+        "message" : "\"{}\" saw tweet #{}".format(username, tweet_id),
+        "tweet" : tweet
     }
     return jsonify(response)
 
@@ -84,7 +86,7 @@ def user_mask(username):
     mask = usergroup.getUserMask(username)
     response = {
         "user" : username,
-        "mask" : mask
+        "mask" : mask.tolist()
     }
     return jsonify(response)
 
@@ -117,16 +119,17 @@ def recommend(username, N, k, ranked=True):
         vals = np.random.choice(len(ranking), k, p=prob_dist)
         res = [ranking[x] for x in vals]
 
-    return jsonify(res)
+    tweets = []
+
+    for content, val in res:
+        tweet = {}
+        tweet['content'] = content
+        tweet['value'] = val
+        tweets.append(tweet)
+
+    return jsonify(tweets)
 
 
-
-
-
-
-# @app.route('/user')
-# def get_users():
-#     return str(users)
 
 if __name__ == "__main__":
     app.run(debug=True)
