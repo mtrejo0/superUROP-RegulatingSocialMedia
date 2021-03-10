@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import jsonify
 from topic_modeling.api import TopicModel, UserGroup
+import pandas as pd
 from matrix_estimation.recommender_system import RecommenderSystem
 import numpy as np
 app = Flask(__name__)
@@ -23,13 +24,15 @@ def add_user(username):
     usergroup.addUser(username)
     return "User {} added".format(username)
 
-@app.route('/user/like/<username>/<tweet>')
-def like_user(username, tweet):
+@app.route('/user/like/<username>/<tweet_id>')
+def like_user(username, tweet_id):
+    tweet = model.retrieveTweet(tweet_id)
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.likeTweet(username, tweet_vec)
 
-@app.route('/user/show/<username>/<tweet>')
-def show_user(username, tweet):
+@app.route('/user/show/<username>/<tweet_id>')
+def show_user(username, tweet_id):
+    tweet = model.retrieveTweet(tweet_id)
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.showTweet(username, tweet_vec)
 
