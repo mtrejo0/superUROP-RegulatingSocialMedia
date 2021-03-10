@@ -12,37 +12,81 @@ usergroup = UserGroup(model.topStopwords)
 
 
 @app.route('/')
-def hello_world():
-    return "Recommender System has started!"
+def main():
+
+    response = {
+        "message": "Recommender System has started!"
+    }
+    return jsonify(response)
+
+@app.route('/describe')
+def describe():
+    users  = usergroup.userOrder
+    R = usergroup.getRatingMatrix()
+    mask = usergroup.getMaskMatrix()
+    response = {
+        "message": "Description of the server",
+        "users": users,
+        "R" : R,
+        "mask" : mask
+
+    }
+    return jsonify(response)
 
 @app.route('/user')
 def get_users():
-    return  jsonify(usergroup.userOrder)
+
+    users  = usergroup.userOrder
+    response = {
+        "users" : users
+    }
+    return jsonify(response)
 
 @app.route('/user/add/<username>')
 def add_user(username):
     usergroup.addUser(username)
-    return "User {} added".format(username)
+    response = {
+        "message" : "\"{}\" was added!".format(username)
+    }
+    return jsonify(response)
 
 @app.route('/user/like/<username>/<tweet_id>')
 def like_user(username, tweet_id):
     tweet = model.retrieveTweet(tweet_id)
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.likeTweet(username, tweet_vec)
+    response = {
+        "message" : "\"{}\" liked tweet #{}".format(username, tweet_id)
+    }
+    return jsonify(response)
 
 @app.route('/user/show/<username>/<tweet_id>')
-def show_user(username, tweet_id):
+def show_tweet(username, tweet_id):
     tweet = model.retrieveTweet(tweet_id)
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.showTweet(username, tweet_vec)
+    response = {
+        "message" : "\"{}\" saw tweet #{}".format(username, tweet_id)
+    }
+    return jsonify(response)
 
 @app.route('/user/vec/<username>')
-def get_user(username):
-    return "{}: {}".format(username, usergroup.getUser(username))
+def user_vector(username):
+    vector = usergroup.getUser(username)
+    response = {
+        "user" : username,
+        "vector" : vector.tolist()
+    }
+    return jsonify(response)
 
 @app.route('/user/mask/<username>')
-def get_mask(username):
-    return "{}: {}".format(username, usergroup.getUserMask(username))
+def user_mask(username):
+    mask = usergroup.getUserMask(username)
+    response = {
+        "user" : username,
+        "mask" : mask
+    }
+    return jsonify(response)
 
 @app.route('/user/recommend/<username>/<N>/<k>/<ranked>') # if ranked: its ranked; else prob distribution
 def recommend(username, N, k, ranked=True):
@@ -76,13 +120,6 @@ def recommend(username, N, k, ranked=True):
     return jsonify(res)
 
 
-
-
-
-
-# @app.route('/user')
-# def get_users():
-#     return str(users)
 
 if __name__ == "__main__":
     app.run(debug=True)
