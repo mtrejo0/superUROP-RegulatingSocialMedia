@@ -41,13 +41,16 @@ def get_user(username):
 def get_mask(username):
     return "{}: {}".format(username, usergroup.getUserMask(username))
 
-@app.route('/user/recommend/<username>/<N>/<k>/<ranked>')
-def recommend(username, N, k, ranked):
+@app.route('/user/recommend/<username>/<N>/<k>/<ranked>') # if ranked: its ranked; else prob distribution
+def recommend(username, N, k, ranked=True):
+    N = int(N)
+    k = int(k)
+    ranked = bool(ranked)
     R = usergroup.getRatingMatrix()
     mask = usergroup.getMaskMatrix()
 
     mat_estimator = RecommenderSystem(R, mask)
-    mat_estimator.recommendALS(5, .5)
+    mat_estimator.recommendNORM()
     R_hat = mat_estimator.R_hat
 
     user_pref_vec = R_hat[usergroup.userOrder.index(username)]
