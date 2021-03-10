@@ -122,8 +122,11 @@ class TopicModel:
         return list(content["tweet"])
 
     def retrieveTweet(self, tweet_id):
-        print(type(self.df['tweet']))
-        return "hello"
+
+        # tweet = self.df['tweet'].take([tweet_id])
+        # return tweet
+
+        return self.df['tweet'][tweet_id]
 
 
 
