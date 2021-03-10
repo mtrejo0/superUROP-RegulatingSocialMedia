@@ -62,12 +62,15 @@ def recommend(username, N, k, ranked=True):
     prob_dist = [x[1] for x in ranking]
     prob_dist = prob_dist / sum(prob_dist)
 
+    res = []
     if ranked:
         res = [x for x in ranking[0:k]]
     else:
         res = []
         vals = np.random.choice(len(ranking), k, p=prob_dist)
         res = [ranking[x] for x in vals]
+
+    return jsonify(res)
 
 
 
