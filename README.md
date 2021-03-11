@@ -17,4 +17,4 @@ In the `~/viz` directory
 `npm run serve`
 
 In the `~/viz` directory
-`python3 run awesome`
+`npm run awesome`
