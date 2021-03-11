@@ -10,4 +10,11 @@
 [Article](https://lids.mit.edu/news-and-events/news/3-questions-devavrat-shah-curbing-online-misinformation)
 
 
-`<addr>`
+In the `~/` directory
+`python3 run serve.py`
+
+In the `~/viz` directory
+`npm run serve`
+
+In the `~/viz` directory
+`python3 run awesome`
