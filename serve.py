@@ -99,37 +99,36 @@ def recommend(username, N, k):
     R_hat = mat_estimator.R_hat
 
     user_pref_vec = R_hat[usergroup.userOrder.index(username)]
-    tweet_samples = model.sampleTweets(N)
-    samples_mat = np.vstack([usergroup.tweetToVector(i) for i in tweet_samples])
+
+    # tweet_samples = model.sampleTweets(N)
+    tweets = tweets_object.sampleTweets(N)
+    tweets_text= [t['text'] for t in tweets]
+
+    samples_mat = np.vstack([usergroup.tweetToVector(i) for i in tweets_text])
     sample_pref_score_vec = samples_mat.dot(user_pref_vec)
 
-    ranking = [(x,y) for x,y in sorted(zip(tweet_samples, list(sample_pref_score_vec)), reverse=True)]
-    prob_dist = [x[1] for x in ranking]
+
+    for i in range(len(tweets)):
+        tweets[i]['val'] = sample_pref_score_vec[i]
+
+    tweets.sort(key = lambda x : x['val'])
+
+    prob_dist = [x['val'] for x in tweets]
     prob_dist = prob_dist / sum(prob_dist)
 
     res = []
     if ranked:
-        res = [x for x in ranking[0:k]]
+        res = [x for x in tweets[0:k]]
     else:
         res = []
         vals = np.random.choice(len(ranking), k, p=prob_dist)
-        res = [ranking[x] for x in vals]
+        res = [tweets[x] for x in vals]
 
-    tweets = []
+    for tweet in res:
+        tweet['content'] = tweet['text'] 
+        tweet['refreets'] = tweet['retweets'] 
 
-    for content, val in res:
-        tweet = {}
-        tweet['content'] = content
-        tweet['id'] = 10
-        tweet['author'] = ""
-        tweet['og_author'] = ""
-        tweet['time'] = ""
-        tweet['upvotes'] = []
-        tweet['refreets'] = []
-        tweet['value'] = val
-        tweets.append(tweet)
-
-    return jsonify(tweets)
+    return jsonify(res)
 
 
 

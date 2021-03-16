@@ -1,6 +1,6 @@
 from datetime import datetime
-
 import json   
+import random
 
 class Tweets():
 
@@ -14,6 +14,14 @@ class Tweets():
             data = json.load(f)
             for tweet in data:
                 self.addTweet(tweet['text'])
+
+    def sampleTweets(self, n):
+        tweets = []
+        for _ in range(n):
+            i = random.randint(0, len(self.tweets))
+            tweets.append(self.tweets[i])
+        return tweets
+
 
     def addTweet(self, text, author = None, og_author = None):
         id = self.counter
