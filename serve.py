@@ -37,6 +37,25 @@ def get_users():
     }
     return jsonify(response)
 
+@app.route('/topics')
+def get_topics():
+    topics = usergroup.topics
+    response = {
+        "topics" : topics
+
+    }
+    return jsonify(response)
+
+@app.route('/tweet/toVector/<tweet_id>')
+def get_tweetToVector(tweet_id):
+    tweet = tweets_object.getTweet(int(tweet_id))['text']
+    tweet_vec = usergroup.tweetToVector(tweet)
+    # TODO maybe change the tweet vec into a list if the numpy array has trouble being put in json
+    response = {
+        "vector" : tweet_vec
+    }
+    return jsonify(response)
+
 @app.route('/user/add/<username>')
 def add_user(username):
     usergroup.addUser(username)
