@@ -4,7 +4,6 @@
     <div class='recommend'>
         <Titlebar title="Recommend"/>
     </div>
-
     <div class="freets-container" v-if="freets.length">
         <Freet
           v-for="freet in orderedFreets"
@@ -57,6 +56,7 @@ export default {
         placeholderContent: "",
         placeholderId: "",
         snackMsg: "",
+        userName: this.$cookie.get('auth')
     }    
   },
   created() {
@@ -110,16 +110,17 @@ export default {
   },
   methods: {
     retriveFreets: function() {
+      
       axios
-        .get("/api/freets/recommend", {})
+        .get(`http://localhost:5000/user/recommend/${this.userName}/10/3`, {})
         .then((res) => {
-          this.freets = res.data.data;
+          this.freets = res.data
         })
         .catch(err => {
           this.errors.push(err.response.data.error);
         })
         .then(() => {
-          this.clearMessages();
+          // this.clearMessages();
         })
     },
     updateFreet: function(freetId, newContent) {
@@ -153,6 +154,9 @@ export default {
     closeModal: function() {
       this.isModalVisible = false;
     },
+    debug (event) {
+      console.log(event)
+    }
   },
   watch: {
     messages: {

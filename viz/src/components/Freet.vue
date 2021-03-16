@@ -93,6 +93,7 @@ export default {
     return {
         messages: [],
         errors: [],
+        userName: this.$cookie.get('auth'),
     }
   },
   methods: {
@@ -115,7 +116,7 @@ export default {
                 this.errors.push(err.response.data.error);
             })
             .then(() => {
-                return axios.get("http://localhost:5000/user/like/"+this.id)
+                return axios.get(`http://localhost:5000/user/like/${this.userName}/${this.id}`)
             })
             .then(() => {
                 this.clearMessages();

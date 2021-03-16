@@ -50,6 +50,9 @@ export default {
             this.errors.push(err.response.data.error);
           })
           .then(() => {
+            return axios.get("http://localhost:5000/user/add/"+this.username)
+          })
+          .then(() => {
             // always executed
             this.resetForm();
             // this.clearMessages();

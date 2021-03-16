@@ -3,12 +3,20 @@ from flask import jsonify
 from topic_modeling.api import TopicModel, UserGroup
 import pandas as pd
 from matrix_estimation.recommender_system import RecommenderSystem
+from models.Tweets import Tweets
 import numpy as np
-app = Flask(__name__)
+from flask_cors import CORS 
 
-model = TopicModel("topic_modeling/climate_tweets.csv")
+app = Flask(__name__)
+CORS(app)
+
+
+model = TopicModel("topic_modeling/cats_dogs.csv")
 model.getTopStopWords(10)
 usergroup = UserGroup(model.topStopwords)
+
+tweets_object = Tweets()
+tweets_object.addTweets()
 
 
 @app.route('/')
@@ -19,19 +27,6 @@ def main():
     }
     return jsonify(response)
 
-@app.route('/describe')
-def describe():
-    users  = usergroup.userOrder
-    R = usergroup.getRatingMatrix()
-    mask = usergroup.getMaskMatrix()
-    response = {
-        "message": "Description of the server",
-        "users": users,
-        "R" : R,
-        "mask" : mask
-
-    }
-    return jsonify(response)
 
 @app.route('/user')
 def get_users():
@@ -90,8 +85,9 @@ def user_mask(username):
     }
     return jsonify(response)
 
-@app.route('/user/recommend/<username>/<N>/<k>/<ranked>') # if ranked: its ranked; else prob distribution
-def recommend(username, N, k, ranked=True):
+@app.route('/user/recommend/<username>/<N>/<k>') # if ranked: its ranked; else prob distribution
+def recommend(username, N, k):
+    ranked = True
     N = int(N)
     k = int(k)
     ranked = bool(ranked)
@@ -124,6 +120,12 @@ def recommend(username, N, k, ranked=True):
     for content, val in res:
         tweet = {}
         tweet['content'] = content
+        tweet['id'] = 10
+        tweet['author'] = ""
+        tweet['og_author'] = ""
+        tweet['time'] = ""
+        tweet['upvotes'] = []
+        tweet['refreets'] = []
         tweet['value'] = val
         tweets.append(tweet)
 

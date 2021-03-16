@@ -68,8 +68,12 @@ router.get("/random", (req, res) => {
     const following = Users.getFollowing(currentUser);
     const freets = Freets.findAllFreets(following).reverse();
     const size = 3;
-    const index = Math.floor(Math.random()*(freets.length - size))
-    const freetSelection = freets.slice(index, index + size)
+    const freetSelection = []
+    for( let i = 0 ; i < size ; i ++){
+        const index = Math.floor(Math.random()*(freets.length))
+        freetSelection.push(freets[index])
+    }
+    
     res.status(200)
         .json({ data: freetSelection })
         .end();

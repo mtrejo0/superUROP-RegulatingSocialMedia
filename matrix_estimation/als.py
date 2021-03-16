@@ -1,10 +1,10 @@
 import numpy as np
 
 def ALS(A, mask, k, lam, epsilon=1e-3, max_iterations=100):
-  # A - matrix
-  # mask - 0 if missing 1 if present
+  # A - matrix users and item
+  # mask - 1 if missing 0 if present
   # lam - hyper param to penalize the magnitude of U and V
-  # k - latent factors 
+  # k - your guess for latent factors
   # epsilon - break if within this
   # max_iterations - numer of times we run this algorithm
 

@@ -57,6 +57,7 @@ export default {
         placeholderContent: "",
         placeholderId: "",
         snackMsg: "",
+        userName: this.$cookie.get('auth'),
     }    
   },
   created() {
@@ -119,10 +120,9 @@ export default {
           this.errors.push(err.response.data.error);
         })
         .then(() => {
-            this.messages.push(this.freets.length)
             for(let i = 0 ; i < this.freets.length ; i++){
               let freet = this.freets[i]
-              axios.get("http://localhost:5000/user/show/"+freet.id)
+              axios.get(`http://localhost:5000/user/show/${this.userName}/${freet.id}`)
             }
         })
         .then(() => {
