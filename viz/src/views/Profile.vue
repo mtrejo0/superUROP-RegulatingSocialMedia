@@ -13,6 +13,9 @@
                 Posts
             </v-tab>
             <v-tab>
+                Preferences
+            </v-tab>
+            <v-tab>
                 Following
             </v-tab>
             <v-tab>
@@ -26,7 +29,10 @@
         <div v-if="tab === 1">
           <MyFreets/>
         </div>
-        <div v-if="tab === 2" >
+        <div v-if="tab === 2">
+          <MyPreferences/>
+        </div>
+        <div v-if="tab === 3" >
           <div v-if="following.length" class="container cardContainer">
             <UserCard
                 v-for="fol in following"
@@ -40,7 +46,7 @@
               <EmptyPage text="There is nothing here yet! Request to follow other users in the Explore tab" /> 
           </div>
         </div >
-        <div v-if="tab === 3">
+        <div v-if="tab === 4">
           <div v-if="followers.length" class="container cardContainer">
             <UserCard
                 v-for="fol in followers"
@@ -69,6 +75,8 @@ import EmptyPage from "../components/EmptyPage.vue";
 import Snackbar from "../components/Snackbar.vue";
 import MyFreets from "../components/MyFreets"
 import MyUpvotes from "../components/MyUpvotes"
+import MyPreferences from "../components/MyPreferences"
+
 
 import axios from "axios";
 import { eventBus } from "../main";
@@ -166,7 +174,8 @@ export default {
     EmptyPage,
     Snackbar,
     MyFreets,
-    MyUpvotes
+    MyUpvotes,
+    MyPreferences
   }
 };
 </script>

@@ -120,7 +120,7 @@ export default {
           this.errors.push(err.response.data.error);
         })
         .then(() => {
-          // this.clearMessages();
+          this.clearMessages();
         })
     },
     updateFreet: function(freetId, newContent) {
