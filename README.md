@@ -8,3 +8,13 @@
 [Moises Trejo](https://superurop.mit.edu/scholars/moises-trejo/)
 
 [Article](https://lids.mit.edu/news-and-events/news/3-questions-devavrat-shah-curbing-online-misinformation)
+
+
+In the `~/` directory
+`python3 run serve.py`
+
+In the `~/viz` directory
+`npm run serve`
+
+In the `~/viz` directory
+`npm run awesome`
