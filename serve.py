@@ -47,7 +47,7 @@ def add_user(username):
 
 @app.route('/user/like/<username>/<tweet_id>')
 def like_user(username, tweet_id):
-    tweet = model.retrieveTweet(int(tweet_id))
+    tweet = tweets_object.getTweet(int(tweet_id))
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.likeTweet(username, tweet_vec)
     response = {
@@ -58,7 +58,7 @@ def like_user(username, tweet_id):
 
 @app.route('/user/show/<username>/<tweet_id>')
 def show_tweet(username, tweet_id):
-    tweet = model.retrieveTweet(int(tweet_id))
+    tweet = tweets_object.getTweet(int(tweet_id))
     tweet_vec = usergroup.tweetToVector(tweet)
     usergroup.showTweet(username, tweet_vec)
     response = {
