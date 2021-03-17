@@ -110,6 +110,7 @@ def recommend(username, N, k):
     N = int(N)
     k = int(k)
     ranked = bool(ranked)
+
     R = usergroup.getRatingMatrix()
     mask = usergroup.getMaskMatrix()
 
@@ -126,7 +127,6 @@ def recommend(username, N, k):
     samples_mat = np.vstack([usergroup.tweetToVector(i) for i in tweets_text])
     sample_pref_score_vec = samples_mat.dot(user_pref_vec)
 
-
     for i in range(len(tweets)):
         tweets[i]['val'] = sample_pref_score_vec[i]
 
@@ -140,7 +140,7 @@ def recommend(username, N, k):
         res = [x for x in tweets[0:k]]
     else:
         res = []
-        vals = np.random.choice(len(ranking), k, p=prob_dist)
+        vals = np.random.choice(N, k, p=prob_dist)
         res = [tweets[x] for x in vals]
 
     for tweet in res:
