@@ -88,19 +88,29 @@ def show_tweet(username, tweet_id):
 
 @app.route('/user/vec/<username>')
 def user_vector(username):
-    vector = usergroup.getUser(username)
+
+    vector = usergroup.getUser(username).tolist()[0]
+    topics = usergroup.topics
+
+
+    preferences = [(topics[i],vector[i]) for i in range(len(vector))]
+
     response = {
         "user" : username,
-        "vector" : vector.tolist()
+        "preferences" : preferences,
     }
     return jsonify(response)
 
 @app.route('/user/mask/<username>')
 def user_mask(username):
-    mask = usergroup.getUserMask(username)
+    mask = usergroup.getUserMask(username).tolist()[0]
+    topics = usergroup.topics
+
+    mask = [(topics[i],mask[i]) for i in range(len(mask))]
+
     response = {
         "user" : username,
-        "mask" : mask.tolist()
+        "mask" : mask
     }
     return jsonify(response)
 
@@ -118,6 +128,7 @@ def recommend(username, N, k):
     mat_estimator.recommendNORM()
     R_hat = mat_estimator.R_hat
 
+
     user_pref_vec = R_hat[usergroup.userOrder.index(username)]
 
     # tweet_samples = model.sampleTweets(N)
@@ -130,7 +141,7 @@ def recommend(username, N, k):
     for i in range(len(tweets)):
         tweets[i]['val'] = sample_pref_score_vec[i]
 
-    tweets.sort(key = lambda x : x['val'])
+    tweets.sort(key = lambda x : x['val'], reverse=True)
 
     prob_dist = [x['val'] for x in tweets]
     prob_dist = prob_dist / sum(prob_dist)

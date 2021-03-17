@@ -138,8 +138,8 @@ class UserGroup:
         return (len(self.topics), len(self.user_vect_dict.keys()))
 
     def getUser(self, user):
-        # return sklearn.preprocessing.normalize(self.user_vect_dict[user])
-        return np.divide(self.user_vect_dict[user], self.user_mask_dict[user])
+        return sklearn.preprocessing.normalize(self.user_vect_dict[user])
+        # return np.divide(self.user_vect_dict[user], self.user_mask_dict[user])
 
     def getUserMask(self, user):
         res = np.zeros((1, len(self.topics)))
