@@ -117,12 +117,12 @@ class TopicModel:
     #     tupled_tweets.sort(key=lambda x: x[1], reverse=True)
     #     return [i[0] for i in tupled_tweets]
 
-    # def sampleTweets(self, num_tweets=1):
-    #     content = self.df.sample(n=num_tweets)
-    #     return list(content["tweet"])
-    #
-    # def retrieveTweet(self, tweet_id):
-    #     return self.df['tweet'][tweet_id]
+    def sampleTweets(self, num_tweets=1):
+        content = self.df.sample(n=num_tweets)
+        return list(content["tweet"])
+
+    def retrieveTweet(self, tweet_id):
+        return self.df['tweet'][tweet_id]
 
 
 
@@ -138,8 +138,13 @@ class UserGroup:
         return (len(self.topics), len(self.user_vect_dict.keys()))
 
     def getUser(self, user):
-        return sklearn.preprocessing.normalize(self.user_vect_dict[user])
-        # return np.divide(self.user_vect_dict[user], self.user_mask_dict[user])
+        # return sklearn.preprocessing.normalize(self.user_vect_dict[user])
+        top = self.user_vect_dict[user]
+        bot = np.copy(self.user_mask_dict[user])
+        for i in range(len(bot[0])):
+            if bot[0][i] == 0:
+                bot[0][i] = 1
+        return np.divide(top, bot)
 
     def getUserMask(self, user):
         res = np.zeros((1, len(self.topics)))

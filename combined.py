@@ -18,9 +18,11 @@ if __name__ == "__main__":
         tweet_samples = model.sampleTweets(num_samples)
         if input("manually like tweets? (y/n): ") == "y":
             for tweet in tweet_samples:
+                tweet_vec = usergroup.tweetToVector(tweet)
                 if input("tweet: '" + tweet + "', like? (y/n)") == "y":
-                    tweet_vec = usergroup.tweetToVector(tweet)
                     usergroup.updateUser(username, tweet_vec)
+                else:
+                    usergroup.updateUser(username, tweet_vec, liked=False)
         else:
             for tweet in tweet_samples:
                 tweet_vec = usergroup.tweetToVector(tweet)
