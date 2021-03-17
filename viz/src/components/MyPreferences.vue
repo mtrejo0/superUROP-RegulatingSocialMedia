@@ -1,11 +1,29 @@
 <template>
   <div id="user-preferences">
-    <h1>Preferences</h1>
-    <br/>
-    <pre>{{preferences}}</pre>
-    <h1>Mask</h1>
-    <br/>
-    <pre>{{mask}}</pre>
+    <div class="next">
+      <div class="preferences">
+        <h1>Preferences</h1>
+        <br/>
+        <div v-for="p in preferences" v-bind:key="p">
+          <div class="item">
+            Topic: <strong>{{p[0]}}</strong>
+            <br/>
+            {{p[1]*100}}%
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1>Mask</h1>
+        <br/>
+        <div v-for="m in mask" v-bind:key="m">
+          <div class="item">
+            Topic: <strong>{{m[0]}}</strong>
+            <br/>
+            {{m[1]}}
+          </div>
+        </div>
+      </div>
+    </div>
   <Snackbar />
   </div>
 </template>
@@ -37,7 +55,7 @@ export default {
       axios
         .get(`http://localhost:5000/user/vec/${this.userName}`, {})
         .then((res) => {
-          this.preferences = res.data
+          this.preferences = res.data.preferences
         })
         .catch(err => {
           this.errors.push(err);
@@ -50,7 +68,7 @@ export default {
       axios
         .get(`http://localhost:5000/user/mask/${this.userName}`, {})
         .then((res) => {
-          this.mask = res.data
+          this.mask = res.data.mask
         })
         .catch(err => {
           this.errors.push(err);
@@ -73,3 +91,21 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .item {
+    padding: 32px;
+    margin: 16px;
+    box-shadow: 0 0 12px 6px #eee;
+    border-radius: 32px;
+
+  }
+  .preferences {
+    margin-right: 64px;
+  }
+  .next {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>

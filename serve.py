@@ -1,19 +1,23 @@
 from flask import Flask
 from flask import jsonify
-from topic_modeling.api import TopicModel, UserGroup
 import pandas as pd
-from matrix_estimation.recommender_system import RecommenderSystem
-from models.Tweets import Tweets
 import numpy as np
 from flask_cors import CORS 
+
+from topic_modeling.topic_modeling import TopicModel
+from matrix_estimation.recommender_system import RecommenderSystem
+from models.Tweets import Tweets
+from models.Users import Users
+
 
 app = Flask(__name__)
 CORS(app)
 
 
-model = TopicModel("topic_modeling/cats_dogs.csv")
+model = TopicModel("topic_modeling/tweets.csv")
 model.getTopStopWords(10)
-usergroup = UserGroup(model.topStopwords)
+
+users_object = Users(model.topStopwords)
 
 tweets_object = Tweets()
 tweets_object.addTweets()
@@ -31,7 +35,7 @@ def main():
 @app.route('/user')
 def get_users():
 
-    users  = usergroup.userOrder
+    users  = users_object.userOrder
     response = {
         "users" : users
     }
@@ -39,7 +43,7 @@ def get_users():
 
 @app.route('/topics')
 def get_topics():
-    topics = usergroup.topics
+    topics = users_object.topics
     response = {
         "topics" : topics
 
@@ -49,7 +53,7 @@ def get_topics():
 @app.route('/tweet/toVector/<tweet_id>')
 def get_tweetToVector(tweet_id):
     tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = usergroup.tweetToVector(tweet)
+    tweet_vec = users_object.tweetToVector(tweet)
     # TODO maybe change the tweet vec into a list if the numpy array has trouble being put in json
     response = {
         "vector" : tweet_vec
@@ -58,7 +62,7 @@ def get_tweetToVector(tweet_id):
 
 @app.route('/user/add/<username>')
 def add_user(username):
-    usergroup.addUser(username)
+    users_object.addUser(username)
     response = {
         "message" : "\"{}\" was added!".format(username)
     }
@@ -67,8 +71,8 @@ def add_user(username):
 @app.route('/user/like/<username>/<tweet_id>')
 def like_user(username, tweet_id):
     tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = usergroup.tweetToVector(tweet)
-    usergroup.likeTweet(username, tweet_vec)
+    tweet_vec = users_object.tweetToVector(tweet)
+    users_object.likeTweet(username, tweet_vec)
     response = {
         "message" : "\"{}\" liked tweet #{}".format(username, tweet_id),
         "tweet" : tweet
@@ -78,8 +82,8 @@ def like_user(username, tweet_id):
 @app.route('/user/show/<username>/<tweet_id>')
 def show_tweet(username, tweet_id):
     tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = usergroup.tweetToVector(tweet)
-    usergroup.showTweet(username, tweet_vec)
+    tweet_vec = users_object.tweetToVector(tweet)
+    users_object.showTweet(username, tweet_vec)
     response = {
         "message" : "\"{}\" saw tweet #{}".format(username, tweet_id),
         "tweet" : tweet
@@ -89,8 +93,8 @@ def show_tweet(username, tweet_id):
 @app.route('/user/vec/<username>')
 def user_vector(username):
 
-    vector = usergroup.getUser(username).tolist()[0]
-    topics = usergroup.topics
+    vector = users_object.getUser(username).tolist()[0]
+    topics = users_object.topics
 
 
     preferences = [(topics[i],vector[i]) for i in range(len(vector))]
@@ -103,8 +107,8 @@ def user_vector(username):
 
 @app.route('/user/mask/<username>')
 def user_mask(username):
-    mask = usergroup.getUserMask(username).tolist()[0]
-    topics = usergroup.topics
+    mask = users_object.getUserMask(username).tolist()[0]
+    topics = users_object.topics
 
     mask = [(topics[i],mask[i]) for i in range(len(mask))]
 
@@ -121,21 +125,21 @@ def recommend(username, N, k):
     k = int(k)
     ranked = bool(ranked)
 
-    R = usergroup.getRatingMatrix()
-    mask = usergroup.getMaskMatrix()
+    R = users_object.getRatingMatrix()
+    mask = users_object.getMaskMatrix()
 
     mat_estimator = RecommenderSystem(R, mask)
     mat_estimator.recommendNORM()
     R_hat = mat_estimator.R_hat
 
 
-    user_pref_vec = R_hat[usergroup.userOrder.index(username)]
+    user_pref_vec = R_hat[users_object.userOrder.index(username)]
 
     # tweet_samples = model.sampleTweets(N)
     tweets = tweets_object.sampleTweets(N)
     tweets_text= [t['text'] for t in tweets]
 
-    samples_mat = np.vstack([usergroup.tweetToVector(i) for i in tweets_text])
+    samples_mat = np.vstack([users_object.tweetToVector(i) for i in tweets_text])
     sample_pref_score_vec = samples_mat.dot(user_pref_vec)
 
     for i in range(len(tweets)):

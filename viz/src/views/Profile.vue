@@ -7,13 +7,13 @@
     <div class="container">
         <v-tabs v-model="tab">
             <v-tab>
-                Likes
+                Preferences
             </v-tab>
             <v-tab>
                 Posts
             </v-tab>
             <v-tab>
-                Preferences
+                Likes
             </v-tab>
             <v-tab>
                 Following
@@ -24,13 +24,14 @@
         </v-tabs>
     <v-tabs-items v-model="tab">
         <div v-if="tab === 0">
-          <MyUpvotes/>
+          
+          <MyPreferences/>
         </div>       
         <div v-if="tab === 1">
           <MyFreets/>
         </div>
         <div v-if="tab === 2">
-          <MyPreferences/>
+          <MyUpvotes/>
         </div>
         <div v-if="tab === 3" >
           <div v-if="following.length" class="container cardContainer">
