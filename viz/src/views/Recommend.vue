@@ -110,7 +110,6 @@ export default {
   },
   methods: {
     retriveFreets: function() {
-      
       axios
         .get(`http://localhost:5000/user/recommend/${this.userName}/10/3`, {})
         .then((res) => {

@@ -55,6 +55,7 @@ class Users:
         return np.concatenate(tuple([self.getUserMask(name) for name in names]), axis=0)
 
     def tweetToVector(self, tweet):
+        tweet = tweet.lower()
         return np.array([[1. if topic in tweet else 0 for topic in self.topics]])
 
 

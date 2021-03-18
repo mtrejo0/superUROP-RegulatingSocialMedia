@@ -47,6 +47,8 @@
     </v-list-item>
     <v-card-text class="card-text">
         {{ content }}
+        <br/>
+        {{ vector }}
     </v-card-text>
     <v-card-text style="padding: 0 16px 0 16px">
         {{ upvotes.length }} upvotes
@@ -93,10 +95,28 @@ export default {
     return {
         messages: [],
         errors: [],
+        vector: [],
         userName: this.$cookie.get('auth'),
     }
   },
+  created() {
+      this.getVector()
+  }
+  ,
   methods: {
+      getVector: function() {
+        axios
+            .get(`http://localhost:5000/tweet/vec/${this.id}`, {})
+            .then((res) => {
+            this.vector = res.data.vector
+            })
+            .catch(err => {
+            this.errors.push(err.response.data.error);
+            })
+            .then(() => {
+            this.clearMessages();
+            })
+      },
       toggleUpvote: function() {
           if (this.upvotes.includes(this.$cookie.get('user-auth'))) {
               this.undoUpvoteFreet();
@@ -228,7 +248,6 @@ export default {
 }
 .freet-card {
     margin: 1em 1em 0 0;
-    max-height: 18rem;
     min-height: 250px;
     width: 30rem;
     border: 1px solid rgba(54, 69, 79, .5);

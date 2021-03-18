@@ -50,13 +50,16 @@ def get_topics():
     }
     return jsonify(response)
 
-@app.route('/tweet/toVector/<tweet_id>')
+@app.route('/tweet/vec/<tweet_id>')
 def get_tweetToVector(tweet_id):
     tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = users_object.tweetToVector(tweet)
+    tweet_vec = users_object.tweetToVector(tweet).tolist()[0]
+    topics = users_object.topics
+    vector = [(topics[i],tweet_vec[i]) for i in range(len(tweet_vec))]
+
     # TODO maybe change the tweet vec into a list if the numpy array has trouble being put in json
     response = {
-        "vector" : tweet_vec
+        "vector" : vector
     }
     return jsonify(response)
 
@@ -158,9 +161,10 @@ def recommend(username, N, k):
         vals = np.random.choice(N, k, p=prob_dist)
         res = [tweets[x] for x in vals]
 
+    
     for tweet in res:
         tweet['content'] = tweet['text'] 
-        tweet['refreets'] = tweet['retweets'] 
+        tweet['refreets'] = tweet['retweets']
 
     return jsonify(res)
 
