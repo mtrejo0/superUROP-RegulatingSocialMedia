@@ -1,10 +1,13 @@
 <template>
   <div id="user-preferences">
+    <br/>
+    <LineGraph v-bind:history="history"></LineGraph>
+    <br/>
     <div class="next">
       <div class="preferences">
         <h1>Preferences</h1>
         <br/>
-        <div v-for="p in preferences" v-bind:key="p">
+        <div v-for="p in preferences" v-bind:key="p[0]">
           <div class="item">
             Topic: <strong>{{p[0]}}</strong>
             <br/>
@@ -15,7 +18,7 @@
       <div>
         <h1>Mask</h1>
         <br/>
-        <div v-for="m in mask" v-bind:key="m">
+        <div v-for="m in mask" v-bind:key="m[0]">
           <div class="item">
             Topic: <strong>{{m[0]}}</strong>
             <br/>
@@ -23,52 +26,45 @@
           </div>
         </div>
       </div>
+      
     </div>
   <Snackbar />
+  
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Snackbar from "./Snackbar.vue";
+import LineGraph from "./LineGraph.vue";
 
 export default {
   name: "MyPreferences",
 
   components: {
     Snackbar,
+    LineGraph
   },
 
   data() {
     return {
       preferences: [],
       mask: [],
+      history: [],
       userName: this.$cookie.get('auth'),
     };
   },
   created: function() {
-    this.retrivePreferences()
-    this.retriveMask()
+    this.retriveProfile()
   },
   methods: {
-    retrivePreferences: function() {
+    retriveProfile: function() {
       axios
-        .get(`http://localhost:5000/user/vec/${this.userName}`, {})
+        .get(`http://localhost:5000/user/profile/${this.userName}`, {})
         .then((res) => {
           this.preferences = res.data.preferences
-        })
-        .catch(err => {
-          this.errors.push(err);
-        })
-        .then(() => {
-
-        })
-    },
-    retriveMask: function() {
-      axios
-        .get(`http://localhost:5000/user/mask/${this.userName}`, {})
-        .then((res) => {
           this.mask = res.data.mask
+          this.history = res.data.history
         })
         .catch(err => {
           this.errors.push(err);

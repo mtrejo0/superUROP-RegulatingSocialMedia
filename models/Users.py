@@ -7,6 +7,7 @@ class Users:
         self.userOrder = []
         self.user_vect_dict = {}
         self.user_mask_dict = {}
+        self.history = {}
 
     def getDimension(self):
         return (len(self.topics), len(self.user_vect_dict.keys()))
@@ -31,6 +32,7 @@ class Users:
         if user not in self.user_vect_dict.keys():
             self.user_vect_dict[user] = np.zeros((1, len(self.topics)))
             self.user_mask_dict[user] = np.zeros((1, len(self.topics)))
+            self.history[user] = []
             self.userOrder.append(user)
             return
         raise ValueError('user already exists')

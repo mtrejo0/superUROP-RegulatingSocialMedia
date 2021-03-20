@@ -121,6 +121,38 @@ def user_mask(username):
     }
     return jsonify(response)
 
+@app.route('/user/profile/<username>')
+def user_profile(username):
+    mask = users_object.getUserMask(username).tolist()[0]
+    topics = users_object.topics
+
+    mask = [(topics[i],mask[i]) for i in range(len(mask))]
+
+    vector = users_object.getUser(username).tolist()[0]
+    topics = users_object.topics
+
+    preferences = [(topics[i],vector[i]) for i in range(len(vector))]
+
+    history = users_object.history[username]
+
+
+    data = []
+    for i, each in enumerate(history):
+        for j, topic in enumerate(topics):
+            point = {}
+            point['date'] = i
+            point['topic'] = topic
+            point['value'] = each[j]
+            data.append(point)
+
+    response = {
+        "user" : username,
+        "mask" : mask,
+        "preferences" : preferences,
+        "history": data
+    }
+    return jsonify(response)
+
 @app.route('/user/recommend/<username>/<N>/<k>') # if ranked: its ranked; else prob distribution
 def recommend(username, N, k):
     ranked = True
@@ -135,8 +167,10 @@ def recommend(username, N, k):
     mat_estimator.recommendNORM()
     R_hat = mat_estimator.R_hat
 
+    user_index = users_object.userOrder.index(username)
+    user_pref_vec = R_hat[user_index]
 
-    user_pref_vec = R_hat[users_object.userOrder.index(username)]
+    users_object.history[username].append(users_object.getUser(username).tolist()[0])
 
     # tweet_samples = model.sampleTweets(N)
     tweets = tweets_object.sampleTweets(N)
