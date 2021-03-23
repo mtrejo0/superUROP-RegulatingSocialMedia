@@ -23,7 +23,7 @@ def csv_maker():
             tweet =  row['text']
             tweet = tweet.replace("\n", " ")
             tweet = remove_non_ascii(tweet)
-            tweet = remove_punctiation(tweet)
+            # tweet = remove_punctiation(tweet)
             writer.writerow({'tweet': tweet})
 
     

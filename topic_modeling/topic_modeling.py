@@ -128,6 +128,6 @@ class TopicModel:
 
 
 if __name__ == "__main__":
-    model = TopicModel("climate_tweets.csv")
-    tweet = model.retrieveTweet(0)
-    print(tweet)
+    model = TopicModel("tweets.csv")
+    model.getTopStopWords(10)
+    print(model.topStopwords)
