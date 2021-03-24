@@ -144,7 +144,7 @@ def user_profile(username):
             point['topic'] = topic
             point['value'] = each[j]
             data.append(point)
-    
+
     response = {
         "user" : username,
         "mask" : mask,

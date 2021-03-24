@@ -18,7 +18,7 @@ https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/ge
 
 """
 
-tags = ["dog", "cat"]
+tags = ["dog", "cat", "pet", "fish", "sandwich", "velociraptor"]
 # number per tag
 n = 100
 

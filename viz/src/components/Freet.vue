@@ -48,7 +48,7 @@
     <v-card-text class="card-text">
         {{ content }}
         <br/>
-        {{ vector }}
+        <strong>{{ vector }}</strong>
     </v-card-text>
     <v-card-text style="padding: 0 16px 0 16px">
         {{ upvotes.length }} upvotes
@@ -227,7 +227,6 @@ export default {
 .card-text {
     overflow-y: hidden;
     min-height: 100px;
-    max-height: 100px;
  }
 .card-actions {
     display: flex;
