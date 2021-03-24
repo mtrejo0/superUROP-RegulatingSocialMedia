@@ -9,7 +9,7 @@ class Users:
         self.user_vect_dict = {}
         self.user_mask_dict = {}
         self.pref_history = {}
-        self.HL = 3
+        self.HL = half_life
         self.eps = eps
 
     def getDimension(self):
