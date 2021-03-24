@@ -63,6 +63,15 @@ def get_tweetToVector(tweet_id):
     }
     return jsonify(response)
 
+@app.route('/user/listall')
+def get_all_usernames():
+    users = users_object.userOrder
+    response = {
+        "users" : users
+
+    }
+    return jsonify(response)
+
 @app.route('/user/add/<username>')
 def add_user(username):
     users_object.addUser(username)
