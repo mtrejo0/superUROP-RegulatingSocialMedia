@@ -53,7 +53,7 @@ def get_topics():
 @app.route('/tweet/vec/<tweet_id>')
 def get_tweetToVector(tweet_id):
     tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = users_object.tweetToVector(tweet).tolist()[0]
+    tweet_vec = users_object.tweetToVector(tweet).tolist()
     topics = users_object.topics
     vector = [(topics[i],tweet_vec[i]) for i in range(len(tweet_vec))]
 
@@ -105,7 +105,7 @@ def show_tweet(username, tweet_id):
 @app.route('/user/vec/<username>')
 def user_vector(username):
 
-    vector = users_object.getUser(username).tolist()[0]
+    vector = users_object.getUser(username).tolist()
     topics = users_object.topics
 
 
@@ -119,7 +119,7 @@ def user_vector(username):
 
 @app.route('/user/mask/<username>')
 def user_mask(username):
-    mask = users_object.getUserMask(username).tolist()[0]
+    mask = users_object.getUserMask(username).tolist()
     topics = users_object.topics
 
     mask = [(topics[i],mask[i]) for i in range(len(mask))]
@@ -132,12 +132,12 @@ def user_mask(username):
 
 @app.route('/user/profile/<username>')
 def user_profile(username):
-    mask = users_object.getUserMask(username).tolist()[0]
+    mask = users_object.getUserMask(username).tolist()
     topics = users_object.topics
 
     mask = [(topics[i],mask[i]) for i in range(len(mask))]
 
-    vector = users_object.getUser(username).tolist()[0]
+    vector = users_object.getUser(username).tolist()
     topics = users_object.topics
 
     preferences = [(topics[i],vector[i]) for i in range(len(vector))]
