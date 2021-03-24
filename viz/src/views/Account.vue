@@ -14,7 +14,7 @@ import HomePage from "../components/HomePage.vue";
 export default {
   name: "account",
   created() {
-    localStorage.removeItem('user-auth');
+    localStorage.removeItem('auth');
   },
   components: {
     UserSettings,

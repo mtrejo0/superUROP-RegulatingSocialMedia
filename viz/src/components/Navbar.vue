@@ -52,12 +52,12 @@ export default {
   data() {
     return {
       selected: this.$route.name,
-      userName: this.$cookie.get('user-auth'),
+      userName: this.$cookie.get('auth'),
     }
   },
   computed: {
     isSignedIn() {
-      return localStorage.getItem('user-auth') !== null;
+      return localStorage.getItem('auth') !== null;
     } 
   },
   methods: {

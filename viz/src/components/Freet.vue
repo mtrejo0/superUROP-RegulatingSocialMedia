@@ -20,7 +20,7 @@
                 </div>
             </v-list-item-subtitle>
         </v-list-item-content>
-            <div v-if="author === this.$cookie.get('user-auth')">
+            <div v-if="author === this.$cookie.get('auth')">
                 <v-btn med icon
                 color="grey"
                 class="mx-2" 
@@ -32,7 +32,7 @@
                     </v-icon>
                 </v-btn>
             </div>
-            <div v-if="author === this.$cookie.get('user-auth')">
+            <div v-if="author === this.$cookie.get('auth')">
                 <v-btn med icon
                 class="mx-2" 
                 color="grey"
@@ -118,7 +118,7 @@ export default {
             })
       },
       toggleUpvote: function() {
-          if (this.upvotes.includes(this.$cookie.get('user-auth'))) {
+          if (this.upvotes.includes(this.$cookie.get('auth'))) {
               this.undoUpvoteFreet();
           } else {
               this.upvoteFreet();
@@ -195,14 +195,14 @@ export default {
   },
   computed: {
       upvoteColor() {
-          return this.upvotes.includes(this.$cookie.get('user-auth')) ? "primary" : "black";
+          return this.upvotes.includes(this.$cookie.get('auth')) ? "primary" : "black";
       },
       refreetColor() {
           let refreetAuthors = this.refreets.map(refreet => refreet.author);
-          return refreetAuthors.includes(this.$cookie.get('user-auth')) ? "primary" : "black";
+          return refreetAuthors.includes(this.$cookie.get('auth')) ? "primary" : "black";
       },
       checkUpvoted() {
-          return this.upvotes.includes(this.$cookie.get('user-auth')) ? false : true;
+          return this.upvotes.includes(this.$cookie.get('auth')) ? false : true;
       }
   },
   watch: {

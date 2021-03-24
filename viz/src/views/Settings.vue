@@ -72,8 +72,8 @@ export default {
           .then(() => {
             // handle success
             this.messages.push('Successfully changed username!')
-            this.$cookie.set('user-auth', this.username);
-            localStorage.setItem('user-auth', this.username);
+            this.$cookie.set('auth', this.username);
+            localStorage.setItem('auth', this.username);
           })
           .catch(err => {
             // handle error
@@ -87,8 +87,8 @@ export default {
           .then(() => {
             // handle success
             this.messages.push('Successfully changed password!')
-            this.$cookie.set('user-auth', this.password);
-            localStorage.setItem('user-auth', this.password);
+            this.$cookie.set('auth', this.password);
+            localStorage.setItem('auth', this.password);
           })
           .catch(err => {
             // handle error

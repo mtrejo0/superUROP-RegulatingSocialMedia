@@ -18,7 +18,7 @@ export default {
       axios.delete('api/users/auth')
         .then(() => {
           // handle success
-          localStorage.removeItem('user-auth');
+          localStorage.removeItem('auth');
           eventBus.$emit('signout-success', true);
           this.$router.push('/');
           localStorage.clear();

@@ -32,13 +32,13 @@ export default {
 
   created: function() {
     eventBus.$on("signin-success", (userName) => {
-      this.$cookie.set('user-auth', userName);
-      localStorage.setItem('user-auth', userName);
+      this.$cookie.set('auth', userName);
+      localStorage.setItem('auth', userName);
     });
     
     eventBus.$on("signout-success", () => {
-      this.$cookie.set('user-auth', '');
-      localStorage.removeItem('user-auth');
+      this.$cookie.set('auth', '');
+      localStorage.removeItem('auth');
       this.messages.push("You have been signed out!");
     });
 

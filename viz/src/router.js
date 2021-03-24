@@ -77,13 +77,13 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if(to.meta.requiresAuth) {
-    if (localStorage.getItem('user-auth') === null) {
+    if (localStorage.getItem('auth') === null) {
         next('/');
       } else {
         next();
     }
   } else {
-    if (localStorage.getItem('user-auth') !== null) {
+    if (localStorage.getItem('auth') !== null) {
       next('/feed')
     } else {
       next();
