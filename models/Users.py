@@ -24,7 +24,7 @@ class Users:
     def getUserMask(self, user):
         res = np.zeros((1, len(self.topics)))
         for i in range(len(self.user_mask_dict[user][0])):
-            if self.user_mask_dict[user][0][i] == 0:
+            if self.user_mask_dict[user][0][i] > 0:
               res[0][i] = 1
         return res
 
