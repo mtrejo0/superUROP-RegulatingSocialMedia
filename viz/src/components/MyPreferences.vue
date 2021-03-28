@@ -22,7 +22,9 @@
           <div class="item">
             Topic: <strong>{{m[0]}}</strong>
             <br/>
-            {{m[1]}}
+            {{m[1] == 1? "Seen" : "Not Seen"}}
+            <br/>
+            Times Seen: TBD
           </div>
         </div>
       </div>

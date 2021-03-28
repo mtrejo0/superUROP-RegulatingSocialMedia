@@ -142,11 +142,11 @@ def user_profile(username):
 
     preferences = [(topics[i],vector[i]) for i in range(len(vector))]
 
-    history = users_object.history[username]
+    recommend_history = users_object.recommend_history[username]
 
 
     data = []
-    for i, each in enumerate(history):
+    for i, each in enumerate(recommend_history):
         for j, topic in enumerate(topics):
             point = {}
             point['date'] = i
@@ -179,7 +179,7 @@ def recommend(username, N, k):
     user_index = users_object.userOrder.index(username)
     user_pref_vec = R_hat[user_index]
 
-    users_object.history[username].append(users_object.getUser(username).tolist()[0])
+    users_object.recommend_history[username].append(users_object.getUser(username).tolist()[0])
 
     # tweet_samples = model.sampleTweets(N)
     tweets = tweets_object.sampleTweets(N)

@@ -13,7 +13,7 @@ def nuclear_norm_solve(A, mask, mu=1.0):
 
     mask : m x n array
         matrix with entries zero (if missing) or one (if present)
-
+    
     mu : float
         hyperparameter controlling tradeoff between nuclear norm and square loss
 
