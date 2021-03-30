@@ -41,19 +41,21 @@ class Bandit():
         return np.random.normal(mean, self.var_proxy)
 
     def choose_arm(self, z_t):
-        
-        u_estimate = self.weighted_sample_count / 1 #TODO
 
+        if self.time_step == 0:
+            i = np.random.randint(0,z_t.shape[0])
+            return z_t[i:i+1,:].T
+
+        u_estimate = np.divide(self.cumulative_empirical_reward, self.weighted_sample_count)
 
         # Select action according to UCB-LI Criteria
         i = np.argmax(
-                np.dot(u_estimate.T, z_t) 
+                np.dot(z_t, u_estimate)
                 + np.sqrt(
                     ( 2 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
-                    np.dot(self.weighted_sample_count, z_t)
+                    np.dot(z_t, self.weighted_sample_count)
                 ))
-
-        z_chosen = z_t[i]
+        z_chosen = z_t[i:i+1,:].T
 
         return z_chosen
 
@@ -68,6 +70,8 @@ if __name__ == "__main__":
 
     # m x 1, 2 topics cats, dogs
     b = Bandit(2, np.array([[.5,.2]]).T)
+    for i in range(1000):
+        b.update(test_z_1)
 
     print("weighted_sample_count", b.weighted_sample_count)
     print("cumulative_empirical_reward", b.cumulative_empirical_reward)
