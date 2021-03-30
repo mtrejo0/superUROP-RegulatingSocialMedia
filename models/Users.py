@@ -5,7 +5,7 @@ class Users:
 
     def __init__(self, topics, half_life=np.inf, eps=.01):
         self.topics = topics
-        self.userOrder = []
+        self.users = []
         self.user_vect_dict = {}
         self.user_mask_dict = {}
         self.pref_history = {}
@@ -65,7 +65,7 @@ class Users:
             self.user_vect_dict[user] = []
             self.user_mask_dict[user] = []
             self.pref_history[user] = []
-            self.userOrder.append(user)
+            self.users.append(user)
             return
         print("User already exists!")
 
@@ -86,15 +86,15 @@ class Users:
             self.likeTweet(user, vector)
 
     def getRatingMatrix(self):
-        # returns the sparse rating matrix, where users are sorted by self.userOrder and topics are ordered by self.topics
-        names = self.userOrder
+        # returns the sparse rating matrix, where users are sorted by self.users and topics are ordered by self.topics
+        names = self.users
         res = np.stack(tuple([self.getUser(name) for name in names]))
         print(res.shape)
         return res
 
     def getMaskMatrix(self):
-        # returns the masking matrix, where users are sorted by self.userOrder and topics are ordered by self.topics
-        names = self.userOrder
+        # returns the masking matrix, where users are sorted by self.users and topics are ordered by self.topics
+        names = self.users
         return np.stack(tuple([self.getUserMask(name) for name in names]))
 
     def tweetToVector(self, tweet):

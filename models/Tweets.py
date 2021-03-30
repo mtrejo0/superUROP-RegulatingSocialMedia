@@ -1,6 +1,7 @@
 from datetime import datetime
 import json   
 import random
+import numpy as np
 
 class Tweets():
 
@@ -76,5 +77,9 @@ class Tweets():
         tweet['upvotes'] = [u for u in tweet['upvotes'] if not u == username]
         return tweet
 
-    # def retweetTweet(self, id, username):
+
+    def tweet_vector(self, tweet_id, topics):
+        tweet = self.getTweet(tweet_id)['text'].lower()
+        return np.array([1. if topic in tweet else 0 for topic in topics])
+
 
