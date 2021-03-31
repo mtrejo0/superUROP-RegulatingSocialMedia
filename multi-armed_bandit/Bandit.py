@@ -34,7 +34,6 @@ class Bandit():
         # reward
         x_t = self.reward(z_chosen)
 
-        print(x_t)
 
         # add element wise multiplication
         self.cumulative_empirical_reward += z_chosen * x_t
@@ -44,9 +43,7 @@ class Bandit():
         z_best = z_t[best_i:best_i+1,:].T
         best_reward = self.reward(z_best)
         regret = best_reward
-
         self.regret_vec = np.vstack([self.regret_vec, regret])
-
 
         self.time_step += 1
 
