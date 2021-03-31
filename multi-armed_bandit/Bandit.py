@@ -17,7 +17,7 @@ class Bandit():
         self.exploratory_parameter = 2.5
 
         # sigma swuared
-        self.var_proxy = 1
+        self.var_proxy = 0.001
 
         self.time_step = 0
 
@@ -34,16 +34,17 @@ class Bandit():
         self.weighted_sample_count += z_chosen
 
         # reward
-        # x_t = self.reward(z_chosen)
         x_t = X_t[i_chosen]
 
         # add element wise multiplication
         self.cumulative_empirical_reward += z_chosen * x_t
 
         best_i = np.argmax(np.dot(z_t, self.u))
-        z_best = z_t[best_i:best_i+1,:].T
-        # best_reward = np.dot(self.u.T, z_best) / self.m
-        best_reward = X_t[best_i]
+        z_best = z_t[best_i:best_i+1,:]
+        best_reward = np.dot(z_best, self.u)[0]
+        # print(best_reward)
+        # best_reward = X_t[best_i]
+        # print(best_reward)
         self.regret += best_reward - (x_t)
         self.regret_vec = np.vstack([self.regret_vec, self.regret])
 
@@ -51,15 +52,17 @@ class Bandit():
 
     def reward(self, z_t):
         # noisy reward
-        mean = np.dot(z_t, self.u) / self.m
-        return np.random.normal(mean, self.var_proxy)
+        mean = np.dot(z_t, self.u)
+        # print(mean.shape)
+        # for i in range(len(mean)):
+        #     mean[i][0] = np.random.normal(mean[i][0], self.var_proxy)
+        return mean
 
     def choose_arm(self, z_t):
 
         if self.time_step == 0:
             # pick an arm at random
             i = np.random.randint(0,z_t.shape[0])
-            # return z_t[i:i+1,:].T
             return i
 
         u_estimate = np.divide(self.cumulative_empirical_reward, self.weighted_sample_count)
@@ -71,7 +74,6 @@ class Bandit():
                     ( 2 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
                     np.dot(z_t, self.weighted_sample_count)
                 ))
-        # z_chosen = z_t[i:i+1,:].T
         return i
 
 
