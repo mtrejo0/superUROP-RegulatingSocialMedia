@@ -22,10 +22,16 @@ class Bandit():
     def reset(self):
         self.weighted_sample_count = np.zeros(self.m)
         self.cumulative_empirical_reward = np.zeros(self.m)
-        self.time_step = 1 # SARAH: Check if off by one
+        self.time_step = 1 
 
         self.regret = 0
         self.regret_vec = np.zeros(self.T)
+
+    def get_best_reward(self, Z):
+        best_row_ind = np.argmax(np.dot(Z, self.u))
+        z_best = Z[best_row_ind]
+        X_star = np.dot(z_best, self.u)
+        return X_star
 
     def update(self, Z_t):
 
@@ -36,20 +42,11 @@ class Bandit():
         self.weighted_sample_count += z_chosen
         self.cumulative_empirical_reward += z_chosen * X_t
 
-        # SARAH : add function
-        best_row_ind = np.argmax(np.dot(Z_t, self.u))
-        z_best = Z_t[best_row_ind]
-        X_star = np.dot(z_best, self.u)
-
-        # print(best_reward)
-        # best_reward = X_t[best_i]
-        # print(best_reward)
-
+        X_star = self.get_best_reward(Z_t)
         self.regret += X_star - X_t
         self.regret_vec[self.time_step - 1] = self.regret
 
         self.time_step += 1
-
 
     def sample_reward(self, z):
         return np.random.normal(np.dot(z, self.u), self.var_proxy)
@@ -77,7 +74,7 @@ if __name__ == "__main__":
 
     # System parameters
     time_horizon = 1000
-    num_simulations = 100
+    num_simulations = 10
 
     num_content = 5
     num_topics = 2
