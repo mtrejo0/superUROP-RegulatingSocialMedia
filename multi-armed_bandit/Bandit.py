@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class Bandit():
 
@@ -21,6 +22,8 @@ class Bandit():
 
         self.time_step = 0
 
+        self.regret_vec = np.zeros((0,1))
+
 
     def update(self, z_t):
 
@@ -31,18 +34,31 @@ class Bandit():
         # reward
         x_t = self.reward(z_chosen)
 
+        print(x_t)
+
         # add element wise multiplication
         self.cumulative_empirical_reward += z_chosen * x_t
+
+
+        best_i = np.argmax(np.dot(z_t, self.u))
+        z_best = z_t[best_i:best_i+1,:].T
+        best_reward = self.reward(z_best)
+        regret = best_reward
+
+        self.regret_vec = np.vstack([self.regret_vec, regret])
+
 
         self.time_step += 1
 
     def reward(self, z_chosen):
+        # noisy reward
         mean = np.dot(self.u.T, z_chosen) / self.m
         return np.random.normal(mean, self.var_proxy)
 
     def choose_arm(self, z_t):
 
         if self.time_step == 0:
+            # pick an arm at random
             i = np.random.randint(0,z_t.shape[0])
             return z_t[i:i+1,:].T
 
@@ -64,17 +80,38 @@ class Bandit():
 if __name__ == "__main__":
 
 
+    num_simulations = 100   
+
+    cumulative_regret = np.zeros((num_simulations, 1))
+
     # n x m, 3 by 2 , 3 items 2 topics
     test_z_1 = np.array([[1,0], [0,1], [0.5, 0.5]])
 
 
     # m x 1, 2 topics cats, dogs
     b = Bandit(2, np.array([[.5,.2]]).T)
-    for i in range(1000):
+
+    for i in range(num_simulations):
         b.update(test_z_1)
+
+    cumulative_regret += b.regret_vec
 
     print("weighted_sample_count", b.weighted_sample_count)
     print("cumulative_empirical_reward", b.cumulative_empirical_reward)
+
+    # Data for plotting
+    x = np.arange(0,num_simulations )
+    y = cumulative_regret/num_simulations
+
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+    
+    ax.set(xlabel='time step', ylabel='regret',
+        title='Bandit Regret')
+    ax.grid()
+
+    fig.savefig("regret.png")
+    plt.show()
 
 
 
