@@ -3,115 +3,109 @@ import matplotlib.pyplot as plt
 
 class Bandit():
 
-    def __init__(self, m, u):
+    def __init__(self, m, u, T):
         # number of topics
         self.m = m
+        self.T = T # time horizon
         
-        self.weighted_sample_count = np.zeros((m,1))
-        self.cumulative_empirical_reward = np.zeros((m,1))
-
-        # preferences
+        # true (unknown) preferences
         self.u = u
 
         # alpha
         self.exploratory_parameter = 2.5
 
-        # sigma swuared
-        self.var_proxy = 0.001
+        # variance proxy (sigma squared)
+        self.var_proxy = 1
+        self.reset()
+        
 
-        self.time_step = 0
+    def reset(self):
+        self.weighted_sample_count = np.zeros(self.m)
+        self.cumulative_empirical_reward = np.zeros(self.m)
+        self.time_step = 1 # SARAH: Check if off by one
 
-        self.regret = np.zeros((1,1))
-        self.regret_vec = np.zeros((0,1))
+        self.regret = 0
+        self.regret_vec = np.zeros(self.T)
 
+    def update(self, Z_t):
 
-    def update(self, z_t):
-
-        i_chosen = self.choose_arm(z_t)
-        X_t = self.reward(z_t)
-        z_chosen = z_t[i_chosen:i_chosen+1,:].T
+        row_ind_chosen = self.UCB_arm(Z_t)
+        z_chosen = Z_t[row_ind_chosen]
+        X_t = self.sample_reward(z_chosen) # reward
 
         self.weighted_sample_count += z_chosen
+        self.cumulative_empirical_reward += z_chosen * X_t
 
-        # reward
-        x_t = X_t[i_chosen]
+        # SARAH : add function
+        best_row_ind = np.argmax(np.dot(Z_t, self.u))
+        z_best = Z_t[best_row_ind]
+        X_star = np.dot(z_best, self.u)
 
-        # add element wise multiplication
-        self.cumulative_empirical_reward += z_chosen * x_t
-
-        best_i = np.argmax(np.dot(z_t, self.u))
-        z_best = z_t[best_i:best_i+1,:]
-        best_reward = np.dot(z_best, self.u)[0]
         # print(best_reward)
         # best_reward = X_t[best_i]
         # print(best_reward)
-        self.regret += best_reward - (x_t)
-        self.regret_vec = np.vstack([self.regret_vec, self.regret])
+
+        self.regret += X_star - X_t
+        self.regret_vec[self.time_step - 1] = self.regret
 
         self.time_step += 1
 
-    def reward(self, z_t):
-        # noisy reward
-        mean = np.dot(z_t, self.u)
-        # print(mean.shape)
-        # for i in range(len(mean)):
-        #     mean[i][0] = np.random.normal(mean[i][0], self.var_proxy)
-        return mean
 
-    def choose_arm(self, z_t):
+    def sample_reward(self, z):
+        return np.random.normal(np.dot(z, self.u), self.var_proxy)
 
-        if self.time_step == 0:
+    def UCB_arm(self, Z_t):
+        if self.time_step == 1:
             # pick an arm at random
-            i = np.random.randint(0,z_t.shape[0])
-            return i
+            return np.random.randint(0, Z_t.shape[0])
 
-        u_estimate = np.divide(self.cumulative_empirical_reward, self.weighted_sample_count)
+        empirical_means = np.divide(self.cumulative_empirical_reward, self.weighted_sample_count)
 
         # Select action according to UCB-LI Criteria
-        i = np.argmax(
-                np.dot(z_t, u_estimate)
-                + np.sqrt(
-                    ( 2 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
-                    np.dot(z_t, self.weighted_sample_count)
-                ))
+        content_value_estimates = np.dot(Z_t, empirical_means)
+        confidence_interval = np.sqrt(
+            ( 2.0 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
+                    np.dot(Z_t, self.weighted_sample_count) )
+        # print(content_value_estimates.shape)
+        # print(confidence_interval.shape)
+        i = np.argmax( content_value_estimates + confidence_interval )
         return i
 
 
         
 if __name__ == "__main__":
 
+    # System parameters
+    time_horizon = 1000
+    num_simulations = 100
 
-    num_simulations = 100000
+    num_content = 5
+    num_topics = 2
 
-    # n x m, 3 by 2 , 3 items 2 topics
-    test_z_1 = np.array([[1,0], [0,1], [0.5, 0.5]])
+    # Regret
+    sum_regret = np.zeros(time_horizon)
+
+    # Bandit
+    true_prefs = np.array([.5,.2])
+    b = Bandit(num_topics, true_prefs, time_horizon)
+
+    for simulation_index in range(0,num_simulations): 
+        for t in range(0, time_horizon):
+            Z_t = np.random.rand(num_content, num_topics)
+            b.update(Z_t)
+        sum_regret += b.regret_vec
+        b.reset()
 
 
-    # m x 1, 2 topics cats, dogs
-    b = Bandit(2, np.array([[.5,.2]]).T)
-
-    for i in range(num_simulations):
-        # test_z_1 = np.array([[np.random.uniform(0,1),np.random.uniform(0,1)], [np.random.uniform(0,1),np.random.uniform(0,1)], [np.random.uniform(0,1), np.random.uniform(0,1)]])
-        b.update(test_z_1)
-
-    print("weighted_sample_count", b.weighted_sample_count)
-    print("cumulative_empirical_reward", b.cumulative_empirical_reward)
-
-    # Data for plotting
-    x = np.arange(0,num_simulations )
-    y = b.regret_vec
-
+    # Plot regret
     fig, ax = plt.subplots()
-    ax.plot(x, y)
+    t_vec = np.arange(0, time_horizon)
+    ax.plot(t_vec, sum_regret/num_simulations)
+    print(sum_regret)
     
-    ax.set(xlabel='time step', ylabel='sum of regret',
+    ax.set(xlabel='time step', ylabel='average regret',
         title='Bandit Regret')
     ax.grid()
 
     fig.savefig("regret.png")
     plt.show()
-
-
-
-    
-
