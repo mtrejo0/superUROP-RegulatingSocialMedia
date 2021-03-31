@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 class Bandit():
 
-    def __init__(self, m, u, T):
+    def __init__(self, m, u, T, var_proxy=1, exploratory_parameter=2.5):
         # number of topics
         self.m = m
         self.T = T # time horizon
@@ -12,10 +12,10 @@ class Bandit():
         self.u = u
 
         # alpha
-        self.exploratory_parameter = 2.5
+        self.exploratory_parameter = exploratory_parameter
 
         # variance proxy (sigma squared)
-        self.var_proxy = 1
+        self.var_proxy = var_proxy
         self.reset()
         
 
@@ -63,8 +63,7 @@ class Bandit():
         confidence_interval = np.sqrt(
             ( 2.0 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
                     np.dot(Z_t, self.weighted_sample_count) )
-        # print(content_value_estimates.shape)
-        # print(confidence_interval.shape)
+
         i = np.argmax( content_value_estimates + confidence_interval )
         return i
 
