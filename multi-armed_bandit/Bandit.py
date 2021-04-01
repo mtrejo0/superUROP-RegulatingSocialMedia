@@ -21,6 +21,7 @@ class Bandit():
 
     def reset(self):
         self.weighted_sample_count = np.zeros(self.m)
+        self.sum_of_squared_sample_weights = np.zeros(self.m)
         self.cumulative_empirical_reward = np.zeros(self.m)
         self.time_step = 1 
 
@@ -30,8 +31,8 @@ class Bandit():
     def get_best_reward(self, Z):
         best_row_ind = np.argmax(np.dot(Z, self.u))
         z_best = Z[best_row_ind]
-        X_star = np.dot(z_best, self.u)
-        return X_star
+        mu_star = np.dot(z_best, self.u)
+        return mu_star
 
     def update(self, Z_t):
 
@@ -40,10 +41,11 @@ class Bandit():
         X_t = self.sample_reward(z_chosen) # reward
 
         self.weighted_sample_count += z_chosen
+        self.sum_of_squared_sample_weights += np.power(z_chosen , 2)
         self.cumulative_empirical_reward += z_chosen * X_t
 
-        X_star = self.get_best_reward(Z_t)
-        self.regret += X_star - X_t
+        mu_star = self.get_best_reward(Z_t)
+        self.regret += mu_star - X_t
         self.regret_vec[self.time_step - 1] = self.regret
 
         self.time_step += 1
@@ -51,21 +53,35 @@ class Bandit():
     def sample_reward(self, z):
         return np.random.normal(np.dot(z, self.u), self.var_proxy)
 
-    def UCB_arm(self, Z_t):
-        if self.time_step == 1:
-            # pick an arm at random
-            return np.random.randint(0, Z_t.shape[0])
+    def LinUCB_arm(self, Z_t):
+        # FILL IN HERE
+        return 0
 
-        empirical_means = np.divide(self.cumulative_empirical_reward, self.weighted_sample_count)
+    def UCB_arm(self, Z_t):
+        tmp_arr = np.copy(self.weighted_sample_count)
+        indices_no_samples = np.where(tmp_arr == 0)
+        tmp_arr[indices_no_samples] = 1
+
+        empirical_means = np.divide(self.cumulative_empirical_reward, tmp_arr)
+        empirical_means[indices_no_samples] = np.inf
 
         # Select action according to UCB-LI Criteria
         content_value_estimates = np.dot(Z_t, empirical_means)
-        confidence_interval = np.sqrt(
-            ( 2.0 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
-                    np.dot(Z_t, self.weighted_sample_count) )
+        # confidence_interval = np.sqrt(
+        #     ( 2.0 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step)) / 
+        #             np.dot(Z_t, self.weighted_sample_count) ) 
 
-        i = np.argmax( content_value_estimates + confidence_interval )
-        return i
+        tmp_weighted_count = np.maximum(1e-8 , np.power(self.weighted_sample_count , 2) )
+        term_under_sq_root = np.sum( 
+            np.power(Z_t , 2) \
+                * self.sum_of_squared_sample_weights \
+                / tmp_weighted_count , 1) \
+            / np.dot(Z_t, tmp_weighted_count )
+        confidence_interval = np.sqrt(
+            2 * self.exploratory_parameter * self.var_proxy * np.log(self.time_step) ) \
+                * np.sqrt(term_under_sq_root )
+
+        return np.argmax( content_value_estimates + confidence_interval )
 
 
         
@@ -73,7 +89,7 @@ if __name__ == "__main__":
 
     # System parameters
     time_horizon = 1000
-    num_simulations = 10
+    num_simulations = 100
 
     num_content = 5
     num_topics = 2
@@ -83,7 +99,7 @@ if __name__ == "__main__":
 
     # Bandit
     true_prefs = np.array([.5,.2])
-    b = Bandit(num_topics, true_prefs, time_horizon)
+    b = Bandit(num_topics, true_prefs, time_horizon, var_proxy=1)
 
     for simulation_index in range(0,num_simulations): 
         for t in range(0, time_horizon):
@@ -96,8 +112,7 @@ if __name__ == "__main__":
     # Plot regret
     fig, ax = plt.subplots()
     t_vec = np.arange(0, time_horizon)
-    ax.plot(t_vec, sum_regret/num_simulations)
-    print(sum_regret)
+    ax.plot(t_vec, sum_regret/num_simulations) # should scale \sqrt{T} - TODO: check growth rate
     
     ax.set(xlabel='time step', ylabel='average regret',
         title='Bandit Regret')
