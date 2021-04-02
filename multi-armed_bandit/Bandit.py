@@ -21,7 +21,6 @@ class Bandit():
 
         self.reset()
         
-
     def reset(self):
         self.time_step = 1 
 
@@ -38,6 +37,7 @@ class Bandit():
         return mu_star
 
     def update(self, Z_t):
+        Z_t = sklearn.preprocessing.normalize(Z_t, norm="l2") * self.max_L2_of_z**2
 
         if self.method == "LinUCB":
             row_ind_chosen, X_t = self.LinUCB_arm(Z_t)
@@ -77,6 +77,7 @@ class Bandit():
 
         return pull_arm , X
 
+# When using growth_rate, should be linear if growth rate is correct
 def plot_regret(sum_regret,num_simulations,time_horizon,growth_rate="lin"):
     fig, ax = plt.subplots()
     t_vec = np.arange(0, time_horizon)
@@ -103,7 +104,7 @@ if __name__ == "__main__":
 
     # System parameters
     time_horizon = 1000
-    num_simulations = 10
+    num_simulations = 100
     num_content = 5 # number of pieces of content per time step
     num_topics = 2 # number of features per content (e.g., number of topics)
     max_L2_of_z = 1 # upper bound on L2 norm of content vectors
@@ -111,7 +112,7 @@ if __name__ == "__main__":
     # Bandit
     true_prefs = np.array([.5,.2])
     user = Bandit(num_topics, true_prefs, time_horizon, \
-                    var_proxy=0.01, max_L2_of_z=1, method="LinUCB")
+                    var_proxy=0.5, max_L2_of_z=1, method="LinUCB")
 
     # Regret
     sum_regret = np.zeros(time_horizon)
@@ -120,8 +121,6 @@ if __name__ == "__main__":
     for simulation_index in range(0,num_simulations): 
         for t in range(0, time_horizon):
             Z_t = np.random.rand(num_content, num_topics)
-            Z_t = sklearn.preprocessing.normalize(Z_t, norm="l2") * max_L2_of_z**2
-
             user.update(Z_t)
 
         sum_regret += user.regret_vec
