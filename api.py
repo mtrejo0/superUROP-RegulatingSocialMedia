@@ -52,10 +52,9 @@ class API():
         tweet_vec = self.tweets.tweet_vector(tweet_id, self.topics)
         self.users.showTweet(username, tweet_vec)
 
-    def recommend(username, n, k):
+    def recommend(self,username, n, k, ranked = True):
         # sample n tweets, rank for username, return top k
 
-        ranked = True
 
         R = self.users.getRatingMatrix()
         mask = self.users.getMaskMatrix()
@@ -64,24 +63,23 @@ class API():
         mat_estimator.recommendNORM()
         R_hat = mat_estimator.R_hat
         
-        user_index = self.users.userOrder.index(username)
-        user_pref_vec = R_hat[user_index]
+        user_index = self.users.users.index(username)
+        estimated_topic_preferences = R_hat[user_index]
 
-        self.users.recommend_history[username].append(self.users.getUser(username).tolist()[0])
+        self.users.pref_history[username].append(self.users.getUser(username).tolist()[0])
+        
+        tweets = self.tweets.sampleTweets(n)
 
-        # tweet_samples = model.sampleTweets(N)
-        tweets = self.tweets.sampleTweets(N)
-        tweets_text= [t['text'] for t in tweets]
-
-        samples_mat = np.vstack([self.tweets.tweetToVector(i, self.topics) for i in tweets_text])
-        sample_pref_score_vec = samples_mat.dot(user_pref_vec)
+        tweets_topic_vector = np.vstack([self.tweets.tweet_vector(tweet['id'], self.topics) for tweet in tweets])
+        estimated_tweet_preferences = tweets_topic_vector.dot(estimated_topic_preferences)
 
         for i in range(len(tweets)):
-            tweets[i]['val'] = sample_pref_score_vec[i]
+            tweets[i]['val'] = estimated_tweet_preferences[i]
+            tweets[i]['vector'] = tweets_topic_vector[i].tolist()
 
         tweets.sort(key = lambda x : x['val'], reverse=True)
 
-        prob_dist = [x['val'] for x in tweets]
+        prob_dist = [tweet['val'] for tweet in tweets]
         prob_dist = prob_dist / sum(prob_dist)
 
         res = []
@@ -92,7 +90,6 @@ class API():
             vals = np.random.choice(N, k, p=prob_dist)
             res = [tweets[x] for x in vals]
 
-        
         for tweet in res:
             tweet['content'] = tweet['text'] 
             tweet['refreets'] = tweet['retweets']

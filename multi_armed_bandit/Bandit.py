@@ -85,6 +85,7 @@ if __name__ == "__main__":
     true_prefs = np.array([.5,.2])
     b = Bandit(num_topics, true_prefs, time_horizon)
 
+    
     for simulation_index in range(0,num_simulations): 
         for t in range(0, time_horizon):
             Z_t = np.random.rand(num_content, num_topics)

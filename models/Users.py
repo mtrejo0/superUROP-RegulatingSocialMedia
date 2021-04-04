@@ -89,7 +89,6 @@ class Users:
         # returns the sparse rating matrix, where users are sorted by self.users and topics are ordered by self.topics
         names = self.users
         res = np.stack(tuple([self.getUser(name) for name in names]))
-        print(res.shape)
         return res
 
     def getMaskMatrix(self):

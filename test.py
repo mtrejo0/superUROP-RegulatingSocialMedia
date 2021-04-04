@@ -1,5 +1,5 @@
 import time
-
+import json
 from api import *
 
 api = API()
@@ -33,6 +33,12 @@ assert api.get_user_vector(username) == [('fish', 0.0), ('dog', 1.0), ('cat', 1.
 api.show_tweet(username, 1)
 assert api.get_user_vector(username) == [('fish', 0.0), ('dog', .5), ('cat', 1.0)]
 
-# print(api.get_user_vector(username))
+tweets = api.recommend(username, 10, 3)
+
+print(tweets)
+
+json_formatted_str = json.dumps(tweets, indent=2)
+
+print(json_formatted_str)
 
 print("PASSED")
