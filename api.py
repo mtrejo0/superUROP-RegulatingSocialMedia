@@ -11,10 +11,10 @@ from models.Users import Users
 
 class API():
 
-    def __init__(self):
+    def __init__(self, num_topics=10):
 
         model = TopicModel("topic_modeling/tweets.csv")
-        model.getTopStopWords(10)
+        model.getTopStopWords(num_topics)
 
         self.topics = model.topStopwords
         self.users = Users(self.topics)

@@ -2,10 +2,9 @@ from api import *
 from multi_armed_bandit.Bandit import *
 import matplotlib.pyplot as plt
 
-api = API()
 
 time_horizon = 1000
-num_simulations = 10
+num_simulations = 1
 
 num_content = 5
 num_topics = 2
@@ -26,6 +25,7 @@ for i in range(10):
     user_data['sum_regret'] = np.zeros(time_horizon)
     
     data[username] = user_data
+
 
 
 for simulation_index in range(0,num_simulations): 
