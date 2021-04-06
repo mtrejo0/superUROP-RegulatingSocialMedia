@@ -122,7 +122,6 @@ def recommend(username, N, k):
     recommended_content = api.recommend(username, N, k, ranked)
     api.save_user_history(username)
 
-    print(recommended_content)
     return jsonify(recommended_content)
 
 if __name__ == "__main__":
