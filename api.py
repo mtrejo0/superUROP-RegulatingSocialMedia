@@ -77,7 +77,9 @@ class API():
         mask = self.users.get_mask_matrix()
 
         mat_estimator = RecommenderSystem(R, mask)
-        mat_estimator.recommendNORM()
+
+        # TODO find better k
+        mat_estimator.recommendALS(3)
         R_hat = mat_estimator.R_hat
         
         user_index = self.users.users.index(username)
@@ -99,7 +101,7 @@ class API():
 
         res = []
         if ranked:
-            res = [x for x in tweets[0:k]]
+            res = tweets[0:k]
         else:
             res = []
             vals = np.random.choice(N, k, p=prob_dist)
