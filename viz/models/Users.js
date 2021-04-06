@@ -185,9 +185,9 @@ function Users() {
    */
   that.updateName = (name, newName, sessionID) => {
     const freetsAssociatedWithOldName = Freets.findFreetsByAuthor(name);
-    freetsAssociatedWithOldName.forEach(freet => {
-      Freets._updateFreetAuthor(freet.id, newName);
-      Freets._updateFreetUpvotes(freet.id, name, newName);
+    freetsAssociatedWithOldName.forEach(tweet => {
+      Freets._updateFreetAuthor(tweet.id, newName);
+      Freets._updateFreetUpvotes(tweet.id, name, newName);
     });
     const user = that.findOne(name);
     data[newName] = Object.assign({}, data[user])
@@ -242,8 +242,8 @@ function Users() {
       }
     };
     const freetsAssociatedWithName = Freets.findFreetsByAuthor(name);
-    freetsAssociatedWithName.forEach(freet => {
-      Freets.deleteFreet(freet.id);
+    freetsAssociatedWithName.forEach(tweet => {
+      Freets.deleteFreet(tweet.id);
     });
 
     return name;

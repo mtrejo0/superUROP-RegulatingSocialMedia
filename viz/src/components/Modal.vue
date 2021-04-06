@@ -3,7 +3,7 @@
     <div class="modal">
         <v-card outlined style="height:100%;">
             <v-card-title>
-                Edit Freet
+                Edit Tweet
             </v-card-title>
 
             <div class="d-flex justify-center">
@@ -29,7 +29,7 @@
                 color="primary"
                 @click="submit"
                 >
-                    Update Freet
+                    Update Tweet
                 </v-btn>
 
             </v-card-actions>
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         submit() {
-            eventBus.$emit('modal-update-freet', this.freetId, this.$refs.modalTextBox.value);
+            eventBus.$emit('modal-update-tweet', this.freetId, this.$refs.modalTextBox.value);
         },
         close() {
             this.$emit('modal-close');

@@ -1,6 +1,6 @@
 import numpy as np
 
-def ALS(A, mask, k, lam, epsilon=1e-3, max_iterations=100):
+def ALS(A, mask, k, lam = 1e-3, epsilon=1e-3, max_iterations=100):
   # A - matrix users and item
   # mask - 1 if missing 0 if present
   # lam - hyper param to penalize the magnitude of U and V

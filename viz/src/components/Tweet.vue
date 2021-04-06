@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="freet-card"
+    class="tweet-card"
     outlined
   >
     <v-list-item three-line>
@@ -46,13 +46,13 @@
             </div>
     </v-list-item>
     <v-card-text class="card-text">
-        {{ content }}
+        {{ text }}
         <br/>
         <strong>{{ vector }}</strong>
     </v-card-text>
     <v-card-text style="padding: 0 16px 0 16px">
         {{ upvotes.length }} upvotes
-        {{ refreets.length }} refreets
+        {{ retweets.length }} retweets
     </v-card-text>
     <v-card-actions>
         <v-btn
@@ -89,8 +89,8 @@ import axios from "axios";
 import { eventBus } from "../main";
 
 export default {
-  name: "Freet",
-  props: ['id', 'content', 'author', 'og_author', 'time', 'upvotes', 'refreets', 'refreetAuthors'],
+  name: "Tweet",
+  props: ['id', 'text', 'author', 'og_author', 'time', 'upvotes', 'retweets', 'refreetAuthors'],
   data() {
     return {
         messages: [],
@@ -161,7 +161,7 @@ export default {
         axios
             .post("/api/freets/refreet/" + this.id, bodyContent)
             .then((res) => {
-                eventBus.$emit('refreet-success', res.data, this.id); // expected outcome <- full freet is passed
+                eventBus.$emit('refreet-success', res.data, this.id); // expected outcome <- full tweet is passed
             })
             .catch(err => {
                 this.errors.push(err.response.data.error);
@@ -175,7 +175,7 @@ export default {
         axios
             .delete("/api/freets/" + this.id, bodyContent)
             .then((res) => {
-                eventBus.$emit('delete-freet-success', res.data.id);
+                eventBus.$emit('delete-tweet-success', res.data.id);
             })
             .catch(err => {
                 this.errors.push(err.response.data.error)
@@ -190,7 +190,7 @@ export default {
         }, 5000);
       },
       showModal: function() {
-          eventBus.$emit('show-modal', this.id, this.content);
+          eventBus.$emit('show-modal', this.id, this.text);
       }
   },
   computed: {
@@ -198,7 +198,7 @@ export default {
           return this.upvotes.includes(this.$cookie.get('auth')) ? "primary" : "black";
       },
       refreetColor() {
-          let refreetAuthors = this.refreets.map(refreet => refreet.author);
+          let refreetAuthors = this.retweets.map(refreet => refreet.author);
           return refreetAuthors.includes(this.$cookie.get('auth')) ? "primary" : "black";
       },
       checkUpvoted() {
@@ -236,7 +236,7 @@ export default {
 .v-btn {
   flex-grow: 1;
 }
-#freet {
+#tweet {
     display: grid;
     grid-template-rows: 25% 60% 15%;
     height: 14rem;
@@ -245,14 +245,14 @@ export default {
     background-color: white;
     border-style: solid;
 }
-.freet-card {
+.tweet-card {
     margin: 1em 1em 0 0;
     min-height: 250px;
     width: 30rem;
     border: 1px solid rgba(54, 69, 79, .5);
 }
 
-#freet-button {
+#tweet-button {
     flex-grow: 1;
     text-align: center;
     border-style: solid;

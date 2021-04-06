@@ -127,7 +127,7 @@ class RecommenderSystem():
     k - latent factors
     lam - learning rate
     """
-    def recommendALS(self, k, lam):
+    def recommendALS(self, k, lam = 1e-3):
         self.R_hat = ALS(self.R, self.mask, k, lam)
 
     """

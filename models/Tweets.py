@@ -10,21 +10,22 @@ class Tweets():
         self.tweets = []
         self.counter = 0
     
-    def addTweets(self):
+    def add_tweets(self):
         with open("twitter/tweets.json") as f:
             data = json.load(f)
             for tweet in data:
-                self.addTweet(tweet['text'])
+                self.add_tweet(tweet['text'])
 
-    def sampleTweets(self, n):
+
+    def sample_tweets(self, n):
         tweets = []
-        for _ in range(n):
-            i = random.randint(0, len(self.tweets))
-            tweets.append(self.tweets[i])
+        for i in range(n):
+            index = random.randint(0, len(self.tweets)-1)
+            tweets.append(self.tweets[index])
         return tweets
 
 
-    def addTweet(self, text, author = None, og_author = None):
+    def add_tweet(self, text, author = None, og_author = None):
         id = self.counter
         time = datetime.now()
 
@@ -40,10 +41,11 @@ class Tweets():
         self.tweets.append(tweet)
         return tweet
 
-    def getTweet(self,id):
-        return [tweet for tweet in self.tweets if tweet['id'] == id][0]
+    def get_tweet(self,id):
+        tweets = [tweet for tweet in self.tweets if tweet['id'] == id]
+        return tweets[0]
 
-    def getAll(self):
+    def get_all(self):
         return self.tweets
 
     def findTweetsByFollowing(self, following):
@@ -53,12 +55,12 @@ class Tweets():
         return [tweet for tweet in self.tweets if author in tweet['upvotes']]
 
     def updateTweet(self, id, text):
-        tweet = self.getTweet(id)
+        tweet = self.get_tweet(id)
         tweet['text'] = text
         return tweet
 
     def deleteTweet(self, id):
-        delete = self.getTweet(id)
+        delete = self.get_tweet(id)
         self.tweets = [tweet for tweet in self.tweets if not tweet['id'] == delete['id']] 
 
         for tweet in self.tweets:
@@ -67,19 +69,20 @@ class Tweets():
         return delete 
 
     def upvoteTweet(self, id, username):
-        tweet = self.getTweet(id)
+        tweet = self.get_tweet(id)
         if not username in tweet['upvotes']:
             tweet['upvotes'].append(username)
         return tweet
     
     def undoUpvoteTweet(self, id, username):
-        tweet = self.getTweet(id)
+        tweet = self.get_tweet(id)
         tweet['upvotes'] = [u for u in tweet['upvotes'] if not u == username]
         return tweet
 
 
     def tweet_vector(self, tweet_id, topics):
-        tweet = self.getTweet(tweet_id)['text'].lower()
+        # TODO improve
+        tweet = self.get_tweet(tweet_id)['text'].lower()
         return np.array([1. if topic in tweet else 0 for topic in topics])
 
 

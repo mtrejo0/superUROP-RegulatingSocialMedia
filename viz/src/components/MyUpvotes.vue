@@ -1,17 +1,17 @@
 <template>
   <div class="inner-container">
     <div class="freets-container" v-if="freets.length">
-        <Freet
-          v-for="freet in orderedFreets"
-          v-bind:key="freet.id"
-          v-bind:id="freet.id"
-          v-bind:content="freet.content"
-          v-bind:author="freet.author"
-          v-bind:og_author="freet.og_author"
-          v-bind:time="freet.time"
-          v-bind:upvotes="freet.upvotes"
-          v-bind:refreets="freet.refreets"
-          v-bind:refreetAuthors="freet.refreets.map(refreet => refreet.author)"
+        <Tweet
+          v-for="tweet in orderedFreets"
+          v-bind:key="tweet.id"
+          v-bind:id="tweet.id"
+          v-bind:text="tweet.text"
+          v-bind:author="tweet.author"
+          v-bind:og_author="tweet.og_author"
+          v-bind:time="tweet.time"
+          v-bind:upvotes="tweet.upvotes"
+          v-bind:retweets="tweet.retweets"
+          v-bind:refreetAuthors="tweet.retweets.map(refreet => refreet.author)"
         />
       <Modal
         v-if="isModalVisible"
@@ -22,7 +22,7 @@
       <Snackbar />
     </div>
     <div v-else>
-        <EmptyPage text="There is nothing here yet! Once you or users you like a Freet, they will show up here" /> 
+        <EmptyPage text="There is nothing here yet! Once you or users you like a Tweet, they will show up here" /> 
     </div>
 </div>
 
@@ -31,7 +31,7 @@
 <script>
 import axios from "axios";
 import { eventBus } from "../main";
-import Freet from "./Freet.vue";
+import Tweet from "./Tweet.vue";
 import Navbar from "./Navbar.vue";
 import Titlebar from "./Titlebar.vue";
 import Modal from "./Modal.vue";
@@ -59,14 +59,14 @@ export default {
     this.freets = [];
     this.retriveFreets();
     eventBus.$on("upvote-success", (currId, currUpvotes) => {
-      let upvotedFreet = this.freets.filter(freet => freet.id == currId)
+      let upvotedFreet = this.freets.filter(tweet => tweet.id == currId)
       if (upvotedFreet.length) {
         upvotedFreet[0].upvotes = currUpvotes;
          
       }
     });
     eventBus.$on("undo-upvote-success", (currId, currUpvotes) => {
-      let upvotedFreet = this.freets.filter(freet => freet.id == currId);
+      let upvotedFreet = this.freets.filter(tweet => tweet.id == currId);
       if (upvotedFreet.length) {
         upvotedFreet[0].upvotes = currUpvotes;
          
@@ -74,24 +74,24 @@ export default {
     });
     eventBus.$on("refreet-success", (newFreet, currId) => {
       this.freets.push(newFreet);
-      let refreetedFreet = this.freets.filter(freet => freet.id == currId);
+      let refreetedFreet = this.freets.filter(tweet => tweet.id == currId);
       if (refreetedFreet.length) {
-        let refreetAuthors = refreetedFreet[0].refreets.map(refreet => refreet.author);
+        let refreetAuthors = refreetedFreet[0].retweets.map(refreet => refreet.author);
         if (!refreetAuthors.includes(newFreet.author)) {
-          refreetedFreet[0].refreets.push(newFreet);
+          refreetedFreet[0].retweets.push(newFreet);
         }
          
         const snackMsg = "Successfully refreeted";
         this.messages.push(snackMsg);
       }
     });
-    eventBus.$on("delete-freet-success", (currId) => {
-      // this.messages.push("Deleted Freet: " + currId);
-      this.freets = this.freets.filter(freet => freet.id != currId);
-      // we do not need to delete all refreets pertaining to the deleted freet
-      // this.freets.forEach(freet => freet.refreets = freet.refreets.filter(refreet => refreet.id != currId));
+    eventBus.$on("delete-tweet-success", (currId) => {
+      // this.messages.push("Deleted Tweet: " + currId);
+      this.freets = this.freets.filter(tweet => tweet.id != currId);
+      // we do not need to delete all retweets pertaining to the deleted tweet
+      // this.freets.forEach(tweet => tweet.retweets = tweet.retweets.filter(refreet => refreet.id != currId));
        
-      const snackMsg = "Freet deleted successfully.";
+      const snackMsg = "Tweet deleted successfully.";
       this.messages.push(snackMsg);
     });
     eventBus.$on("show-modal", (freetId, currContent) => {
@@ -99,7 +99,7 @@ export default {
       this.placeholderContent = currContent; 
       this.showModal();
     });
-    eventBus.$on("modal-update-freet", (freetId, newContent) => {
+    eventBus.$on("modal-update-tweet", (freetId, newContent) => {
       this.updateFreet(freetId, newContent);
        
     });
@@ -129,8 +129,8 @@ export default {
       axios
         .put("/api/freets/" + freetId, bodyContent)
         .then((res) => {
-          this.freets = this.freets.filter(freet => freet.id != res.data.id); // drop old Freet
-          this.freets.push(res.data); // add new copy of Freet
+          this.freets = this.freets.filter(tweet => tweet.id != res.data.id); // drop old Tweet
+          this.freets.push(res.data); // add new copy of Tweet
           this.closeModal();
           
         })
@@ -178,7 +178,7 @@ export default {
     }
   },
   components: {
-    Freet,
+    Tweet,
     Navbar,
     Titlebar,
     Snackbar,
@@ -196,7 +196,7 @@ textarea:focus {outline:none;}
     align-content: center;
     flex-wrap: wrap;
 }
-.create-freet-container {
+.create-tweet-container {
     display: flex;
     /* justify-content: flex-start; */
     justify-content: center;
@@ -204,7 +204,7 @@ textarea:focus {outline:none;}
     flex-wrap: wrap;
     padding: 1rem 1rem 2rem 1rem;
 }
-.freet-form {
+.tweet-form {
   width: 500px;
 }
 .freets-container {
@@ -216,7 +216,7 @@ textarea:focus {outline:none;}
     /* overflow-y:scroll; */
 }
 
-#inner-freet-form {
+#inner-tweet-form {
     border-radius: 6px;
     display: flex;
     flex-direction: column;
@@ -225,14 +225,14 @@ textarea:focus {outline:none;}
     border-color: black;
 }
 
-#freet-text-input {
+#tweet-text-input {
     width: 100%;
     height: 8vh;
     resize: none;
     border-color: white;
 }
 
-#new-freet-form {
+#new-tweet-form {
     display: flex;
     flex-direction: row;
     width: 60vw;

@@ -4,24 +4,13 @@ import pandas as pd
 import numpy as np
 from flask_cors import CORS 
 
-from topic_modeling.topic_modeling import TopicModel
-from matrix_estimation.recommender_system import RecommenderSystem
-from models.Tweets import Tweets
-from models.Users import Users
-
+from api import *
 
 app = Flask(__name__)
 CORS(app)
 
 
-model = TopicModel("topic_modeling/tweets.csv")
-model.getTopStopWords(10)
-
-users_object = Users(model.topStopwords)
-
-tweets_object = Tweets()
-tweets_object.addTweets()
-
+api = API()
 
 @app.route('/')
 def main():
@@ -35,7 +24,7 @@ def main():
 @app.route('/user')
 def get_users():
 
-    users  = users_object.userOrder
+    users  = api.get_users()
     response = {
         "users" : users
     }
@@ -43,7 +32,7 @@ def get_users():
 
 @app.route('/topics')
 def get_topics():
-    topics = users_object.topics
+    topics = api.get_topics()
     response = {
         "topics" : topics
 
@@ -52,12 +41,8 @@ def get_topics():
 
 @app.route('/tweet/vec/<tweet_id>')
 def get_tweetToVector(tweet_id):
-    tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = users_object.tweetToVector(tweet).tolist()
-    topics = users_object.topics
-    vector = [(topics[i],tweet_vec[i]) for i in range(len(tweet_vec))]
-
-    # TODO maybe change the tweet vec into a list if the numpy array has trouble being put in json
+    tweet_id = int(tweet_id)
+    vector = api.get_tweet_vector(tweet_id)
     response = {
         "vector" : vector
     }
@@ -66,7 +51,7 @@ def get_tweetToVector(tweet_id):
 
 @app.route('/user/add/<username>')
 def add_user(username):
-    users_object.addUser(username)
+    api.add_user(username)
     response = {
         "message" : "\"{}\" was added!".format(username)
     }
@@ -74,47 +59,36 @@ def add_user(username):
 
 @app.route('/user/like/<username>/<tweet_id>')
 def like_user(username, tweet_id):
-    tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = users_object.tweetToVector(tweet)
-    users_object.likeTweet(username, tweet_vec)
+    tweet_id = int(tweet_id)
+    api.like_tweet(username, tweet_id)
     response = {
-        "message" : "\"{}\" liked tweet #{}".format(username, tweet_id),
-        "tweet" : tweet
+        "message" : "\"{}\" liked tweet #{}".format(username, tweet_id)
     }
     return jsonify(response)
 
 @app.route('/user/show/<username>/<tweet_id>')
 def show_tweet(username, tweet_id):
-    tweet = tweets_object.getTweet(int(tweet_id))['text']
-    tweet_vec = users_object.tweetToVector(tweet)
-    users_object.showTweet(username, tweet_vec)
+    tweet_id = int(tweet_id)
+    api.show_tweet(username, tweet_id)
     response = {
         "message" : "\"{}\" saw tweet #{}".format(username, tweet_id),
-        "tweet" : tweet
     }
     return jsonify(response)
 
 @app.route('/user/vec/<username>')
 def user_vector(username):
 
-    vector = users_object.getUser(username).tolist()
-    topics = users_object.topics
-
-
-    preferences = [(topics[i],vector[i]) for i in range(len(vector))]
+    vector = api.get_user_vector(username)
 
     response = {
         "user" : username,
-        "preferences" : preferences,
+        "vector" : vector,
     }
     return jsonify(response)
 
 @app.route('/user/mask/<username>')
 def user_mask(username):
-    mask = users_object.getUserMask(username).tolist()
-    topics = users_object.topics
-
-    mask = [(topics[i],mask[i]) for i in range(len(mask))]
+    mask = api.get_user_mask(username)
 
     response = {
         "user" : username,
@@ -124,86 +98,32 @@ def user_mask(username):
 
 @app.route('/user/profile/<username>')
 def user_profile(username):
-    mask = users_object.getUserMask(username).tolist()
-    topics = users_object.topics
 
-    mask = [(topics[i],mask[i]) for i in range(len(mask))]
+    vector = api.get_user_vector(username)
+    mask = api.get_user_mask(username)
+    history = api.get_user_history(username)
 
-    vector = users_object.getUser(username).tolist()
-    topics = users_object.topics
-
-    preferences = [(topics[i],vector[i]) for i in range(len(vector))]
-
-    recommend_history = users_object.recommend_history[username]
-
-
-    data = []
-    for i, each in enumerate(recommend_history):
-        for j, topic in enumerate(topics):
-            point = {}
-            point['date'] = i
-            point['topic'] = topic
-            point['value'] = each[j]
-            data.append(point)
-
+    
     response = {
         "user" : username,
         "mask" : mask,
-        "preferences" : preferences,
-        "history": data
+        "vector" : vector,
+        "history": history
     }
     return jsonify(response)
 
 @app.route('/user/recommend/<username>/<N>/<k>') # if ranked: its ranked; else prob distribution
 def recommend(username, N, k):
-    ranked = True
+
     N = int(N)
     k = int(k)
-    ranked = bool(ranked)
+    ranked = True
 
-    R = users_object.getRatingMatrix()
-    mask = users_object.getMaskMatrix()
+    recommended_content = api.recommend(username, N, k, ranked)
+    api.save_user_history(username)
 
-    mat_estimator = RecommenderSystem(R, mask)
-    mat_estimator.recommendNORM()
-    R_hat = mat_estimator.R_hat
-
-    user_index = users_object.userOrder.index(username)
-    user_pref_vec = R_hat[user_index]
-
-    users_object.recommend_history[username].append(users_object.getUser(username).tolist()[0])
-
-    # tweet_samples = model.sampleTweets(N)
-    tweets = tweets_object.sampleTweets(N)
-    tweets_text= [t['text'] for t in tweets]
-
-    samples_mat = np.vstack([users_object.tweetToVector(i) for i in tweets_text])
-    sample_pref_score_vec = samples_mat.dot(user_pref_vec)
-
-    for i in range(len(tweets)):
-        tweets[i]['val'] = sample_pref_score_vec[i]
-
-    tweets.sort(key = lambda x : x['val'], reverse=True)
-
-    prob_dist = [x['val'] for x in tweets]
-    prob_dist = prob_dist / sum(prob_dist)
-
-    res = []
-    if ranked:
-        res = [x for x in tweets[0:k]]
-    else:
-        res = []
-        vals = np.random.choice(N, k, p=prob_dist)
-        res = [tweets[x] for x in vals]
-
-    
-    for tweet in res:
-        tweet['content'] = tweet['text'] 
-        tweet['refreets'] = tweet['retweets']
-
-    return jsonify(res)
-
-
+    print(recommended_content)
+    return jsonify(recommended_content)
 
 if __name__ == "__main__":
     app.run(debug=True)

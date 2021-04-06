@@ -20,7 +20,7 @@ class API():
         self.users = Users(self.topics)
         self.tweets = Tweets()
 
-        self.tweets.addTweets()
+        self.tweets.add_tweets()
 
 
     def get_users(self):
@@ -30,34 +30,51 @@ class API():
         return self.topics
 
     def get_tweet_vector(self, tweet_id):
-        tweet_vector = self.tweets.tweet_vector(tweet_id, self.topics)
+        tweet_vector = self.tweets.tweet_vector(tweet_id, self.topics).tolist()
         return [(self.topics[i],tweet_vector[i]) for i in range(len(tweet_vector))]
 
     def get_user_vector(self, username):
-        user_vector = self.users.getUser(username).tolist()
+        user_vector = self.users.get_user_vector(username).tolist()
         return [(self.topics[i],user_vector[i]) for i in range(len(user_vector))]
 
     def get_user_mask(self, username):
-        user_mask = self.users.getUserMask(username).tolist()
+        user_mask = self.users.get_user_mask(username).tolist()
         return [(self.topics[i],user_mask[i]) for i in range(len(user_mask))]
 
+    def get_user_history(self, username):
+        user_history = self.users.get_user_history(username)
+        topics = self.get_topics()
+        
+        history = []
+        for i, each in enumerate(user_history):
+            for j, topic in enumerate(topics):
+                point = {}
+                point['date'] = i
+                point['topic'] = topic
+                point['value'] = each[j]
+                history.append(point)
+        
+        return history
+
+    def save_user_history(self, username):
+        self.users.save_user_history(username)
+
     def add_user(self, username):
-        self.users.addUser(username)
+        self.users.add_user(username)
 
     def like_tweet(self, username, tweet_id):
         tweet_vec = self.tweets.tweet_vector(tweet_id, self.topics)
-        self.users.likeTweet(username, tweet_vec)
+        self.users.like_tweet(username, tweet_vec)
 
     def show_tweet(self, username, tweet_id):
         tweet_vec = self.tweets.tweet_vector(tweet_id, self.topics)
-        self.users.showTweet(username, tweet_vec)
+        self.users.show_tweet(username, tweet_vec)
 
     def recommend(self,username, n, k, ranked = True):
         # sample n tweets, rank for username, return top k
 
-
-        R = self.users.getRatingMatrix()
-        mask = self.users.getMaskMatrix()
+        R = self.users.get_rating_matrix()
+        mask = self.users.get_mask_matrix()
 
         mat_estimator = RecommenderSystem(R, mask)
         mat_estimator.recommendNORM()
@@ -66,9 +83,7 @@ class API():
         user_index = self.users.users.index(username)
         estimated_topic_preferences = R_hat[user_index]
 
-        self.users.pref_history[username].append(self.users.getUser(username).tolist()[0])
-        
-        tweets = self.tweets.sampleTweets(n)
+        tweets = self.tweets.sample_tweets(n)
 
         tweets_topic_vector = np.vstack([self.tweets.tweet_vector(tweet['id'], self.topics) for tweet in tweets])
         estimated_tweet_preferences = tweets_topic_vector.dot(estimated_topic_preferences)
@@ -91,7 +106,6 @@ class API():
             res = [tweets[x] for x in vals]
 
         for tweet in res:
-            tweet['content'] = tweet['text'] 
-            tweet['refreets'] = tweet['retweets']
+            self.show_tweet(username, tweet['id'])
 
         return res

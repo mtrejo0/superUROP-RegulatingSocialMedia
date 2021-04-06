@@ -22,9 +22,9 @@
           <div class="item">
             Topic: <strong>{{m[0]}}</strong>
             <br/>
-            {{m[1] == 1? "Seen" : "Not Seen"}}
+            {{m[1] == 0? "Not Seen" : "Seen"}}
             <br/>
-            Times Seen: TBD
+            Times Seen: {{m[1]}}
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ export default {
       axios
         .get(`http://localhost:5000/user/profile/${this.userName}`, {})
         .then((res) => {
-          this.preferences = res.data.preferences
+          this.preferences = res.data.vector
           this.mask = res.data.mask
           this.history = res.data.history
         })

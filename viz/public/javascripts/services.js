@@ -186,7 +186,7 @@ function createFreet(fields) {
         .post("/api/freets", fields)
         .then(showResponse)
         .then(function() {
-            const createForm = document.getElementById("create-freet");
+            const createForm = document.getElementById("create-tweet");
             createForm.reset();
         })
         .catch(showResponse);
@@ -197,7 +197,7 @@ function editFreet(fields) {
         .put("/api/freets/" + fields.id, fields)
         .then(showResponse)
         .then(function() {
-            const editForm = document.getElementById("edit-freet");
+            const editForm = document.getElementById("edit-tweet");
             editForm.reset();
         })
         .catch(showResponse);
@@ -208,7 +208,7 @@ function deleteFreet(fields) {
         .delete("/api/freets/" + fields.id, fields)
         .then(showResponse)
         .then(function() {
-            const deleteForm = document.getElementById("delete-freet");
+            const deleteForm = document.getElementById("delete-tweet");
             deleteForm.reset();
         })
         .catch(showResponse);
@@ -219,7 +219,7 @@ function upvoteFreet(fields) {
         .post("/api/freets/upvote/" + fields.id, fields)
         .then(showResponse)
         .then(function() {
-            const upvoteForm = document.getElementById("upvote-freet");
+            const upvoteForm = document.getElementById("upvote-tweet");
             upvoteForm.reset();
         })
         .catch(showResponse);
@@ -230,7 +230,7 @@ function undoFreetUpvote(fields) {
         .delete("/api/freets/upvote/" + fields.id, fields)
         .then(showResponse)
         .then(function() {
-            const undoUpvoteForm = document.getElementById("undo-freet-upvote");
+            const undoUpvoteForm = document.getElementById("undo-tweet-upvote");
             undoUpvoteForm.reset();
         })
         .catch(showResponse);   
@@ -241,7 +241,7 @@ function refreetFreet(fields) {
         .post("/api/freets/refreet/" + fields.id, fields)
         .then(showResponse)
         .then(function() {
-            const refreetForm = document.getElementById("refreet-freet");
+            const refreetForm = document.getElementById("refreet-tweet");
             refreetForm.reset();
         })
         .catch(showResponse);
@@ -265,12 +265,12 @@ const formsAndHandlers = {
     "reject-pending-request": confirmPendingRequest,
     "view-all-freets": viewAllFreets,
     "view-freets-by-author": viewFreetsByAuthor,
-    "create-freet": createFreet,
-    "edit-freet": editFreet,
-    "delete-freet": deleteFreet,
-    "upvote-freet": upvoteFreet,
-    "undo-freet-upvote": undoFreetUpvote,
-    "refreet-freet": refreetFreet,
+    "create-tweet": createFreet,
+    "edit-tweet": editFreet,
+    "delete-tweet": deleteFreet,
+    "upvote-tweet": upvoteFreet,
+    "undo-tweet-upvote": undoFreetUpvote,
+    "refreet-tweet": refreetFreet,
 };
 
 // attach handlers to forms

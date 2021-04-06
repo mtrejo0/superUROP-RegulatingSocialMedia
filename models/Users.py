@@ -3,101 +3,95 @@ import time
 
 class Users:
 
-    def __init__(self, topics, half_life=np.inf, eps=.01):
+    def __init__(self, topics, half_life=np.inf, epsilon=.01):
         self.topics = topics
         self.users = []
-        self.user_vect_dict = {}
-        self.user_mask_dict = {}
-        self.pref_history = {}
-        self.HL = half_life
-        self.eps = eps
+        self.user_vectors = {}
+        self.user_masks = {}
+        self.user_history = {}
+        self.half_life = half_life
+        self.epsilon = epsilon
 
-    def getDimension(self):
-        return (len(self.topics), len(self.user_vect_dict.keys()))
+    def get_dimension(self):
+        return (len(self.topics), len(self.user_vectors.keys()))
 
     def prune(self, username):
-        # deletes old entries where weight is < eps
+        # deletes old entries where weight is < epsilon
         new_user_vect = []
         new_user_mask = []
-        for entry in self.user_vect_dict[username]:
+        for entry in self.user_vectors[username]:
             weight = self.decay(entry[1])
-            if weight > self.eps:
+            if weight > self.epsilon:
                 new_user_vect.append(entry)
-        for entry in self.user_mask_dict[username]:
+        for entry in self.user_masks[username]:
             weight = self.decay(entry[1])
-            if weight > self.eps:
+            if weight > self.epsilon:
                 new_user_mask.append(entry)
-        self.user_vect_dict[username] = new_user_vect
-        self.user_mask_dict[username] = new_user_mask
+        self.user_vectors[username] = new_user_vect
+        self.user_masks[username] = new_user_mask
 
     def decay(self, ts):
         # decays both values and arrays based on time
-        return np.exp((np.log(0.5))/self.HL * (time.time() - ts)) #TODO figure out how we want to measure time
+        return np.exp((np.log(0.5))/self.half_life * (time.time() - ts)) #TODO figure out how we want to measure time
 
-    def getUser(self, user):
+    def get_user_vector(self, username):
         # retrieves the preference vector for a user
-        self.prune(user)
+        self.prune(username)
         top = np.zeros(len(self.topics))
         bot = np.zeros(len(self.topics))
-        for entry in self.user_vect_dict[user]:
+        for entry in self.user_vectors[username]:
             top += entry[0] * self.decay(entry[1])
-        for entry in self.user_mask_dict[user]:
+        for entry in self.user_masks[username]:
             bot += entry[0] * self.decay(entry[1])
         for i in range(len(bot)):
             if bot[i] == 0:
                 bot[i] = 1
         return np.divide(top, bot)
 
-    def getUserMask(self, user):
+    def get_user_mask(self, username):
         # retreives the mask vector for a user
-        self.prune(user)
+        self.prune(username)
         res = np.zeros(len(self.topics))
-        for entry in self.user_mask_dict[user]:
+        for entry in self.user_masks[username]:
             res += entry[0]
         for elem in res:
             if elem > 0:
                 elem = 1
         return res
 
-    def addUser(self, user):
+    def get_user_history(self, username):
+        return self.user_history[username]
+    
+    def save_user_history(self, username):
+        current_vector = self.get_user_vector(username)
+        self.user_history[username].append(current_vector)
+
+    def add_user(self, username):
         # adds a user
-        if user not in self.user_vect_dict.keys():
-            self.user_vect_dict[user] = []
-            self.user_mask_dict[user] = []
-            self.pref_history[user] = []
-            self.users.append(user)
+        if username not in self.user_vectors:
+            self.user_vectors[username] = []
+            self.user_masks[username] = []
+            self.user_history[username] = []
+            self.users.append(username)
             return
         print("User already exists!")
 
-    def likeTweet(self, user, vector):
+    def like_tweet(self, username, vector):
         # updates preferences when a tweet is liked
         timestamp = time.time() #TODO figure out how we want to measure time
-        self.user_vect_dict[user].append((vector, timestamp))
+        self.user_vectors[username].append((vector, timestamp))
 
-    def showTweet(self, user, vector):
+    def show_tweet(self, username, vector):
         # updates mask when a tweet is seen
         timestamp = time.time() #TODO figure out how we want to measure time
-        self.user_mask_dict[user].append((vector, timestamp))
+        self.user_masks[username].append((vector, timestamp))
 
-    def updateUser(self, user, vector, liked=True):
-        # enables easier sampling in command-line pipeline
-        self.showTweet(user, vector)
-        if liked:
-            self.likeTweet(user, vector)
-
-    def getRatingMatrix(self):
+    def get_rating_matrix(self):
         # returns the sparse rating matrix, where users are sorted by self.users and topics are ordered by self.topics
-        names = self.users
-        res = np.stack(tuple([self.getUser(name) for name in names]))
-        return res
+        return np.stack(tuple([self.get_user_vector(username) for username in self.users]))
 
-    def getMaskMatrix(self):
+
+    def get_mask_matrix(self):
         # returns the masking matrix, where users are sorted by self.users and topics are ordered by self.topics
-        names = self.users
-        return np.stack(tuple([self.getUserMask(name) for name in names]))
-
-    def tweetToVector(self, tweet):
-        tweet = tweet.lower()
-        return np.array([1. if topic in tweet else 0 for topic in self.topics])
-
+        return np.stack(tuple([self.get_user_mask(username) for username in self.users]))
 
