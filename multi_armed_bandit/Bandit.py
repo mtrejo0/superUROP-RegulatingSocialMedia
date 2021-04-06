@@ -52,6 +52,8 @@ class Bandit():
 
         self.time_step += 1
 
+        return row_ind_chosen
+
     def sample_reward(self, z):
         return np.maximum(-self.rew_bound , 
                     np.minimum(self.rew_bound , 

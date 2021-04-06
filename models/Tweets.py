@@ -19,9 +19,9 @@ class Tweets():
 
     def sample_tweets(self, n):
         tweets = []
-        for i in range(n):
-            index = random.randint(0, len(self.tweets)-1)
-            tweets.append(self.tweets[index])
+        for _ in range(n):
+            i = random.randint(0, len(self.tweets)-1)
+            tweets.append(self.tweets[i])
         return tweets
 
 

@@ -54,9 +54,9 @@ class Users:
         res = np.zeros(len(self.topics))
         for entry in self.user_masks[username]:
             res += entry[0]
-        for elem in res:
-            if elem > 0:
-                elem = 1
+        for i in range(len(res)):
+            if res[i] > 0:
+                res[i] = 1
         return res
 
     def get_user_history(self, username):
