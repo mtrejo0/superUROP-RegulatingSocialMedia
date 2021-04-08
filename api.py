@@ -22,6 +22,8 @@ class API():
 
         self.tweets.add_tweets()
 
+        self.recommender = RecommenderSystem()
+
 
     def get_users(self):
         return self.users.users
@@ -76,11 +78,11 @@ class API():
         R = self.users.get_rating_matrix()
         mask = self.users.get_mask_matrix()
 
-        mat_estimator = RecommenderSystem(R, mask)
+        self.recommender.R = R
+        self.recommender.mask = mask
 
         # TODO find better k
-        mat_estimator.recommendALS(3)
-        R_hat = mat_estimator.R_hat
+        R_hat = self.recommender.recommendALS(3)
         
         user_index = self.users.users.index(username)
         estimated_topic_preferences = R_hat[user_index]

@@ -5,16 +5,20 @@ from .nuclear_norm import nuclear_norm_solve
 class RecommenderSystem():
 
 
+    
     """
     Initialize empty Recommender System 
 
     """
-    def __init__(self, R, mask):
+    def __init__(self):
         self.R = np.array([[]])
         self.mask = np.array([[]])
         self.R_hat = None
         self.n = 0
         self.m = 0
+        
+        self.U = None
+        self.V = None
 
         self.figure = 0
 
@@ -27,16 +31,16 @@ class RecommenderSystem():
         0 - recorded rating
     
     """
-    def __init__(self, R, mask):
-        self.R = R
-        self.mask = mask
-        self.R_hat = None
+    # def __init__(self, R, mask):
+    #     self.R = R
+    #     self.mask = mask
+    #     self.R_hat = None
 
-        shape = self.R.shape
-        self.m = shape[0]
-        self.n = shape[1]
+    #     shape = self.R.shape
+    #     self.m = shape[0]
+    #     self.n = shape[1]
 
-        self.figure = 0
+    #     self.figure = 0
 
     """
     Initialize Recommender System and generate a random rating matrix
@@ -127,14 +131,16 @@ class RecommenderSystem():
     k - latent factors
     lam - learning rate
     """
-    def recommendALS(self, k, lam = 1e-3):
-        self.R_hat = ALS(self.R, self.mask, k, lam)
+    def recommendALS(self, k):
+        self.R_hat, self.U, self.V = ALS(self.R, self.mask, k, self.U, self.V)
+        return self.R_hat
 
     """
     mu - learning rate
     """
     def recommendNORM(self, mu=1.0):
         self.R_hat = nuclear_norm_solve(self.R, mu)
+        return self.R_hat
 
     """
     Return Root Mean Square Error between R and R_hat

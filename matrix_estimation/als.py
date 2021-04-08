@@ -1,6 +1,6 @@
 import numpy as np
 
-def ALS(A, mask, k, lam = 1e-3, epsilon=1e-3, max_iterations=100):
+def ALS(A, mask, k, U = None, V = None, lam = 1e-3, epsilon=1e-3, max_iterations=100):
   # A - matrix users and item
   # mask - 1 if missing 0 if present
   # lam - hyper param to penalize the magnitude of U and V
@@ -10,8 +10,11 @@ def ALS(A, mask, k, lam = 1e-3, epsilon=1e-3, max_iterations=100):
 
   m, n = A.shape
 
-  U = np.random.randn(m, k)
-  V = np.random.randn(n, k)
+  if U is None:
+    U = np.random.randn(m, k)
+  
+  if V is None:
+    V = np.random.randn(n, k)
 
   # turn each row into diagonal matrix
   C_u = [np.diag(row) for row in mask]
@@ -54,5 +57,5 @@ def ALS(A, mask, k, lam = 1e-3, epsilon=1e-3, max_iterations=100):
         break
     prev_X = X
 
-  return X
+  return X, U, V
 
