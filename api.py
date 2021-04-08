@@ -8,6 +8,9 @@ from matrix_estimation.recommender_system import RecommenderSystem
 from models.Tweets import Tweets
 from models.Users import Users
 
+import time
+
+
 
 class API():
 
@@ -75,14 +78,22 @@ class API():
     def recommend(self,username, n, k, ranked = True):
         # sample n tweets, rank for username, return top k
 
+
+        start_time = time.time()
         R = self.users.get_rating_matrix()
         mask = self.users.get_mask_matrix()
+
+        print("Building --- %s seconds ---" % (time.time() - start_time))
+
 
         self.recommender.R = R
         self.recommender.mask = mask
 
+        start_time = time.time()
         # TODO find better k
         R_hat = self.recommender.recommendALS(3)
+
+        print("Recommend --- %s seconds ---" % (time.time() - start_time))
         
         user_index = self.users.users.index(username)
         estimated_topic_preferences = R_hat[user_index]
@@ -98,14 +109,14 @@ class API():
 
         tweets.sort(key = lambda x : x['val'], reverse=True)
 
-        prob_dist = [tweet['val'] for tweet in tweets]
-        prob_dist = prob_dist / sum(prob_dist)
-
+        
         res = []
         if ranked:
             res = tweets[0:k]
         else:
             res = []
+            prob_dist = [tweet['val'] for tweet in tweets]
+            prob_dist = prob_dist / sum(prob_dist)
             vals = np.random.choice(N, k, p=prob_dist)
             res = [tweets[x] for x in vals]
 
