@@ -6,6 +6,8 @@ from flask_cors import CORS
 from topic_modeling.topic_modeling import TopicModel
 from matrix_estimation.recommender_system import RecommenderSystem
 from models.Tweets import Tweets
+from models.UsersEverLiked import Users as UsersEL
+from models.UsersRatio import Users as UsersR
 from models.Users import Users
 
 import time
@@ -14,13 +16,20 @@ import time
 
 class API():
 
-    def __init__(self, num_topics=10):
+    def __init__(self, num_topics=10, type="R"):
 
         model = TopicModel("topic_modeling/tweets.csv")
         model.getTopStopWords(num_topics)
 
         self.topics = model.topStopwords
-        self.users = Users(self.topics)
+
+        if type == "EL":
+            self.users = UsersEL(self.topics)
+        elif type == "R":
+            self.users = UsersR(self.topics)
+        else:
+            self.users = Users(self.topics)
+
         self.tweets = Tweets()
 
         self.tweets.add_tweets()
@@ -75,7 +84,7 @@ class API():
         tweet_vec = self.tweets.tweet_vector(tweet_id, self.topics)
         self.users.show_tweet(username, tweet_vec)
 
-    def recommend(self,username, n, k, ranked = True):
+    def recommend(self,username, n, k, ranked = True, isALS=True):
         # sample n tweets, rank for username, return top k
 
 
@@ -83,7 +92,10 @@ class API():
         R = self.users.get_rating_matrix()
         mask = self.users.get_mask_matrix()
 
-        print("Building --- %s seconds ---" % (time.time() - start_time))
+        # print("Building --- %s seconds ---" % (time.time() - start_time))
+        #todo Moises flip the mask for ALS
+        if isALS:
+            mask = np.abs(mask - 1)
 
 
         self.recommender.R = R
@@ -93,7 +105,7 @@ class API():
         # TODO find better k
         R_hat = self.recommender.recommendALS(3)
 
-        print("Recommend --- %s seconds ---" % (time.time() - start_time))
+        # print("Recommend --- %s seconds ---" % (time.time() - start_time))
         
         user_index = self.users.users.index(username)
         estimated_topic_preferences = R_hat[user_index]

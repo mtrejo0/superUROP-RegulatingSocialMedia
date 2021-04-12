@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 time_horizon = 1000
-num_simulations = 1
+num_simulations = 100
 
 num_content = 5
 num_topics = 2
@@ -14,7 +14,7 @@ sum_regret = np.zeros(time_horizon)
 
 data = {}
 
-api = API(num_topics=num_topics)
+api = API(num_topics=num_topics, type="R")
 for i in range(10):
     username = "user_{}".format(i)
 
@@ -29,8 +29,8 @@ for i in range(10):
     data[username] = user_data
 
 for simulation_index in range(0,num_simulations):
+    print("sim: " + str(simulation_index))
     for t in range(0, time_horizon):
-        print("t: " + str(t))
         for username in data:
             user = data[username]['user']
 
@@ -56,21 +56,28 @@ for simulation_index in range(0,num_simulations):
 
 
 # plot regret
-fig, ax = plt.subplots()
-t_vec = np.arange(0, time_horizon)
+# fig, ax = plt.subplots()
+# t_vec = np.arange(0, time_horizon)
 
+# for i in range(10):
+#     username = "user_{}".format(i)
+#     sum_regret = data[username]['sum_regret']
+#     ax.plot(t_vec, sum_regret/num_simulations, label = username)
+#
+#
+# ax.set(xlabel='time step', ylabel='average regret',
+#     title='Bandit Regret')
+# ax.grid()
+#
+# plt.legend()
+# fig.savefig("regret_random.png")
+# plt.show()
+
+#average plot among all 10 people
+sum_regret = 0
 for i in range(10):
     username = "user_{}".format(i)
-    sum_regret = data[username]['sum_regret']
+    sum_regret += data[username]['sum_regret']
 
-    ax.plot(t_vec, sum_regret/num_simulations, label = username)
-
-
-ax.set(xlabel='time step', ylabel='average regret',
-    title='Bandit Regret')
-ax.grid()
-  
-plt.legend()
-fig.savefig("regret_random.png")
-plt.show()
-
+sum_regret = sum_regret / 10
+plot_regret(sum_regret,num_simulations,time_horizon)

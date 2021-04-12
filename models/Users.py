@@ -9,12 +9,13 @@ class Users:
         self.user_vectors = {}
         self.user_masks = {}
         self.user_history = {}
-        self.half_life = half_life
+        self.half_life = 2
         self.epsilon = epsilon
 
     def get_dimension(self):
         return (len(self.topics), len(self.user_vectors.keys()))
 
+    # prune not used with
     def prune(self, username):
         # deletes old entries where weight is < epsilon
         new_user_vect = []
