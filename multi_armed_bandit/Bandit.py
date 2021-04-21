@@ -4,7 +4,7 @@ import sklearn.preprocessing
 
 class Bandit():
 
-    def __init__(self, m, u, T, var_proxy=1, exploratory_parameter=2.5, \
+    def __init__(self, m, u, T, var_proxy=1, exploratory_parameter=2.5,
             regularizer_weight=1, method="LinUCB", max_L2_of_z=1, rew_factor_bound=20):
         self.m = m # number of topics
         self.T = T # time horizon
@@ -25,6 +25,8 @@ class Bandit():
         self.time_step = 1 
 
         self.regret = 0
+        self.ideal_regret = 0
+        self.ideal_regret_vec = np.zeros(self.T)
         self.regret_vec = np.zeros(self.T)
 
         self.A = self.regularizer_weight * np.eye(self.m)
@@ -47,8 +49,15 @@ class Bandit():
         z_chosen = Z_t[row_ind_chosen]
 
         mu_star = self.get_best_reward(Z_t)
-        self.regret += mu_star - X_t
+        # print(mu_star)
+        # print(self.u)
+
+        # self.regret += mu_star - X_t
+        self.regret += mu_star - np.dot(Z_t[row_ind_chosen], self.u)
         self.regret_vec[self.time_step - 1] = self.regret
+
+        self.ideal_regret += np.dot(np.ones(self.m), self.u) - np.dot(Z_t[row_ind_chosen], self.u)
+        self.ideal_regret_vec[self.time_step - 1] = self.ideal_regret
 
         self.time_step += 1
 
@@ -80,7 +89,7 @@ class Bandit():
         return pull_arm , X
 
 # When using growth_rate, should be linear if growth rate is correct
-def plot_regret(sum_regret,num_simulations,time_horizon,growth_rate="lin"):
+def plot_regret(sum_regret,num_simulations,time_horizon,growth_rate="lin",label=""):
     fig, ax = plt.subplots()
     t_vec = np.arange(0, time_horizon)
 
@@ -93,8 +102,8 @@ def plot_regret(sum_regret,num_simulations,time_horizon,growth_rate="lin"):
 
     ax.plot(t_vec, sum_regret/num_simulations) # should scale \sqrt{T} - TODO: check growth rate
     
-    ax.set(xlabel='time step', ylabel='average regret',
-        title='Bandit Regret')
+    ax.set(xlabel='time step (scale:' + growth_rate + ")", ylabel='average regret',
+        title='Bandit Regret: '+label)
     ax.grid()
 
     fig.savefig("regret.png")
@@ -118,6 +127,7 @@ if __name__ == "__main__":
 
     # Regret
     sum_regret = np.zeros(time_horizon)
+    sum_ideal_regret = np.zeros(time_horizon)
 
     # SIMULATE: Run simulations and keep track of regret
     for simulation_index in range(0,num_simulations): 
@@ -126,8 +136,10 @@ if __name__ == "__main__":
             user.update(Z_t)
 
         sum_regret += user.regret_vec
+        sum_ideal_regret += user.ideal_regret_vec
         user.reset()
 
     # Plot regret
     plot_regret(sum_regret,num_simulations,time_horizon,growth_rate="sqrt")
+    plot_regret(sum_ideal_regret,num_simulations,time_horizon,growth_rate="sqrt")
     
