@@ -106,7 +106,7 @@ def plot_regret(sum_regret,num_simulations,time_horizon,growth_rate="lin",label=
         title='Bandit Regret: '+label)
     ax.grid()
 
-    fig.savefig("regret.png")
+    fig.savefig("regret_"+label+"_"+growth_rate+".png")
     plt.show()
 
     return fig,ax

@@ -8,6 +8,7 @@ from matrix_estimation.recommender_system import RecommenderSystem
 from models.Tweets import Tweets
 from models.UsersEverLiked import Users as UsersEL
 from models.UsersRatio import Users as UsersR
+from models.UsersSigmoid import Users as UsersS
 from models.Users import Users
 
 import time
@@ -16,7 +17,7 @@ import time
 
 class API():
 
-    def __init__(self, num_topics=10, type="R"):
+    def __init__(self, num_topics=10, type="R", sigval=0):
 
         model = TopicModel("topic_modeling/tweets.csv")
         model.getTopStopWords(num_topics)
@@ -27,6 +28,8 @@ class API():
             self.users = UsersEL(self.topics)
         elif type == "R":
             self.users = UsersR(self.topics)
+        elif type == "S":
+            self.users = UsersS(self.topics, sigval=sigval)
         else:
             self.users = Users(self.topics)
 

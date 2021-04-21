@@ -1,16 +1,19 @@
 from api import *
 from multi_armed_bandit.Bandit import *
 import matplotlib.pyplot as plt
+import random
 
 np.random.seed(123)
+random.seed(123)
 time_horizon = 1000
 num_simulations = 100
 num_content = 5
 num_topics = 2
+type = "R"
 
 # Regret
 def init_structures():
-    api = API(num_topics=num_topics, type="R")
+    api = API(num_topics=num_topics, type=type)
     data = {}
     for i in range(10):
         username = "user_{}".format(i)
@@ -60,9 +63,17 @@ sum_ideal_regret = sum(ideal_regret_sums.values())/10
 print(sum_ideal_regret)
 print(sum_regret)
 
-plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="lin", label="Raw Ratio")
-plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="sqrt", label="Raw Ratio")
-plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="log", label="Raw Ratio")
+if type == "EL":
+    label = "Ever Liked"
+elif type == "R":
+    label = "Raw ratio"
+elif type == "S":
+    label = "Sigmoid"
+else:
+    label = ""
+plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="lin", label=label)
+plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="sqrt", label=label)
+plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="log", label=label)
 # plot_regret(ideal_regret_sums,num_simulations,time_horizon, growth_rate="lin", label="Ever Liked (ideal)")
 # plot_regret(ideal_regret_sums,num_simulations,time_horizon, growth_rate="sqrt", label="Ever Liked (ideal)")
 # plot_regret(ideal_regret_sums,num_simulations,time_horizon, growth_rate="log", label="Ever Liked (ideal)")

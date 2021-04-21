@@ -1,8 +1,10 @@
 from api import *
 from multi_armed_bandit.Bandit import *
 import matplotlib.pyplot as plt
+import random
 
 np.random.seed(123)
+random.seed(123)
 time_horizon = 1000
 num_simulations = 100
 num_content = 5
