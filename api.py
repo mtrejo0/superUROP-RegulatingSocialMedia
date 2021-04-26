@@ -6,9 +6,6 @@ from flask_cors import CORS
 from topic_modeling.topic_modeling import TopicModel
 from matrix_estimation.recommender_system import RecommenderSystem
 from models.Tweets import Tweets
-from models.UsersEverLiked import Users as UsersEL
-from models.UsersRatio import Users as UsersR
-from models.UsersSigmoid import Users as UsersS
 from models.Users import Users
 
 import time
@@ -24,14 +21,7 @@ class API():
 
         self.topics = model.topStopwords
 
-        if type == "EL":
-            self.users = UsersEL(self.topics)
-        elif type == "R":
-            self.users = UsersR(self.topics)
-        elif type == "S":
-            self.users = UsersS(self.topics, sigval=sigval)
-        else:
-            self.users = Users(self.topics)
+        self.users = Users(self.topics, type, sigval)
 
         self.tweets = Tweets()
 

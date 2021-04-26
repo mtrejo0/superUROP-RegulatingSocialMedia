@@ -6,7 +6,7 @@ import random
 np.random.seed(123)
 random.seed(123)
 time_horizon = 1000
-num_simulations = 100
+num_simulations = 1
 num_content = 5
 num_topics = 2
 type = "R"

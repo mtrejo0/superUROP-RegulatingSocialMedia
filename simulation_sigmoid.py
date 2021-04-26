@@ -3,11 +3,11 @@ from multi_armed_bandit.Bandit import *
 import matplotlib.pyplot as plt
 import random
 
-time_horizon = 1000
-num_simulations = 10
+time_horizon = 10
+num_simulations = 1
 num_content = 5
 num_topics = 2
-sigvals = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+sigvals = [1250]
 
 # Regret
 def init_structures(sigval):
