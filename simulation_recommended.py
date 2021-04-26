@@ -8,12 +8,13 @@ random.seed(123)
 time_horizon = 1000
 num_simulations = 1
 num_content = 5
-num_topics = 2
-type = "R"
+num_topics = 10
+type = "EL" #EL = ever liked, R = raw ratio, S = sigmoid
+profit = False # profit maximizing function
 
 # Regret
 def init_structures():
-    api = API(num_topics=num_topics, type=type)
+    api = API(num_topics=num_topics, type=type, is_profit=profit)
     data = {}
     for i in range(10):
         username = "user_{}".format(i)
@@ -50,6 +51,8 @@ for simulation_index in range(0,num_simulations):
             row_ind_chose = user.update(Z_t)
             tweet_id = tweets[row_ind_chose]['id']
             api.like_tweet(username, tweet_id)
+            # if sum(i[1] for i in api.get_user_mask(username)) == num_topics:
+            #     print(t)
 
     for username in data:
         user = data[username]['user']
@@ -60,20 +63,10 @@ for simulation_index in range(0,num_simulations):
 #average plot among all 10 people
 sum_regret = sum(regret_sums.values())/10
 sum_ideal_regret = sum(ideal_regret_sums.values())/10
-print(sum_ideal_regret)
-print(sum_regret)
 
-if type == "EL":
-    label = "Ever Liked"
-elif type == "R":
-    label = "Raw ratio"
-elif type == "S":
-    label = "Sigmoid"
-else:
-    label = ""
-plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="lin", label=label)
-plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="sqrt", label=label)
-plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="log", label=label)
+plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="lin", label=type)
+plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="sqrt", label=type)
+plot_regret(sum_regret,num_simulations,time_horizon, growth_rate="log", label=type)
 # plot_regret(ideal_regret_sums,num_simulations,time_horizon, growth_rate="lin", label="Ever Liked (ideal)")
 # plot_regret(ideal_regret_sums,num_simulations,time_horizon, growth_rate="sqrt", label="Ever Liked (ideal)")
 # plot_regret(ideal_regret_sums,num_simulations,time_horizon, growth_rate="log", label="Ever Liked (ideal)")

@@ -3,20 +3,28 @@ import numpy as np
 
 class Users:
 
-    def __init__(self, topics, type="EL",sigval=0):
+    def __init__(self, topics, type="EL",sigval=0, explore_val=0):
         self.topics = topics
         self.users = []
         self.user_vectors = {}
         self.user_masks = {}
         self.user_history = {}
-        self.type = type
-        self.sigval = sigval
+        self.type = type # experiment changes
+        self.sigval = sigval # b for sigmoid function
+        self.explore_val = explore_val # how much we raise the value of unexplored options
 
     def get_dimension(self):
         return (len(self.topics), len(self.users))
 
     def get_user_vector(self, username):
         # retrieves the preference vector for a user
+        res = self.get_user_vector_helper(username)
+        for i in self.user_masks[username]:
+            if i == 0:
+                res[i] += self.explore_val
+        return res
+
+    def get_user_vector_helper(self, username):
         top = np.array([i for i in self.user_vectors[username]])
         if self.type == "EL":
             for i in range(len(top)):

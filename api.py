@@ -14,9 +14,9 @@ import time
 
 class API():
 
-    def __init__(self, num_topics=10, type="R", sigval=0):
+    def __init__(self, num_topics=10, type="R", sigval=0, is_profit=False):
 
-        model = TopicModel("topic_modeling/tweets.csv")
+        model = TopicModel("topic_modeling/climate_tweets.csv")
         model.getTopStopWords(num_topics)
 
         self.topics = model.topStopwords
@@ -29,6 +29,15 @@ class API():
 
         self.recommender = RecommenderSystem()
 
+        if is_profit:
+            self.profit = np.random.random(num_topics)
+        else:
+            self.profit = np.ones(num_topics)
+
+    def add_preferences_to_R(self, R, method="linear"):
+        revenue_per_click = self.profit.copy()
+        res = R * revenue_per_click
+        return res
 
     def get_users(self):
         return self.users.users
@@ -91,7 +100,7 @@ class API():
             mask = np.abs(mask - 1)
 
 
-        self.recommender.R = R
+        self.recommender.R = self.add_preferences_to_R(R)
         self.recommender.mask = mask
 
         start_time = time.time()
@@ -125,7 +134,5 @@ class API():
             vals = np.random.choice(N, k, p=prob_dist)
             res = [tweets[x] for x in vals]
 
-        for tweet in res:
-            self.show_tweet(username, tweet['id'])
 
         return res
