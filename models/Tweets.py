@@ -11,7 +11,7 @@ class Tweets():
         self.counter = 0
     
     def add_tweets(self):
-        with open("twitter/climate_tweets.json") as f:
+        with open("twitter/tweets.json") as f:
             data = json.load(f)
             for tweet in data:
                 self.add_tweet(tweet['text'])

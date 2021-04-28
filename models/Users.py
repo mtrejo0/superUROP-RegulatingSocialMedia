@@ -3,7 +3,7 @@ import numpy as np
 
 class Users:
 
-    def __init__(self, topics, type="EL",sigval=0, explore_val=0):
+    def __init__(self, topics, type="EL",sigval=1250, explore_val=0):
         self.topics = topics
         self.users = []
         self.user_vectors = {}
@@ -19,8 +19,8 @@ class Users:
     def get_user_vector(self, username):
         # retrieves the preference vector for a user
         res = self.get_user_vector_helper(username)
-        for i in self.user_masks[username]:
-            if i == 0:
+        for i in range(len(self.user_masks[username])):
+            if self.user_masks[username][i] == 0:
                 res[i] += self.explore_val
         return res
 
@@ -30,6 +30,7 @@ class Users:
             for i in range(len(top)):
                 if top[i] > 0:
                     top[i] = 1
+            # print("EL")
             return top
         bot = np.array([i for i in self.user_masks[username]])
         for i in range(len(bot)):
@@ -37,9 +38,11 @@ class Users:
                 bot[i] = 1
         ratio = np.divide(top, bot)
         if self.type == "R":
+            # print("R")
             return ratio
         sigmoid = 1./ (1. + np.e**(self.sigval*(-ratio + 0.5)))
         if self.type == "S":
+            # print("S")
             return sigmoid
 
     def get_user_mask(self, username):

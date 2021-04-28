@@ -5,16 +5,19 @@ import random
 
 np.random.seed(123)
 random.seed(123)
-time_horizon = 1000
+time_horizon = 100
 num_simulations = 1
-num_content = 5
-num_topics = 10
-type = "EL" #EL = ever liked, R = raw ratio, S = sigmoid
+num_content_to_chose_from = 10
+num_content = 2
+num_topics = 3
+expval = 0 # exploratory value
+sigval = 1200 # sigmoid value for b
+type = "S" #EL = ever liked, R = raw ratio, S = sigmoid
 profit = False # profit maximizing function
 
 # Regret
 def init_structures():
-    api = API(num_topics=num_topics, type=type, is_profit=profit)
+    api = API(num_topics=num_topics, type=type, is_profit=profit, explore_val=expval, sigval=sigval)
     data = {}
     for i in range(10):
         username = "user_{}".format(i)
@@ -38,21 +41,18 @@ for simulation_index in range(0,num_simulations):
         for username in data:
             user = data[username]['user']
 
-            n = 10
+            n = num_content_to_chose_from
             k = num_content
             # Get recommended tweets
             tweets = api.recommend(username, n, k)
             for tweet in tweets: 
                 api.show_tweet(username, tweet['id'])
 
-            # Z_t = np.random.rand(num_content, num_topics)
             Z_t = np.vstack([tweet['vector'] for tweet in tweets])
 
             row_ind_chose = user.update(Z_t)
             tweet_id = tweets[row_ind_chose]['id']
             api.like_tweet(username, tweet_id)
-            # if sum(i[1] for i in api.get_user_mask(username)) == num_topics:
-            #     print(t)
 
     for username in data:
         user = data[username]['user']

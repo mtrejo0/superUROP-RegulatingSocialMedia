@@ -14,14 +14,14 @@ import time
 
 class API():
 
-    def __init__(self, num_topics=10, type="R", sigval=0, is_profit=False):
+    def __init__(self, num_topics, type="R", is_profit=False, explore_val=0, sigval=0):
 
-        model = TopicModel("topic_modeling/climate_tweets.csv")
+        model = TopicModel("topic_modeling/tweets.csv")
         model.getTopStopWords(num_topics)
 
         self.topics = model.topStopwords
 
-        self.users = Users(self.topics, type, sigval)
+        self.users = Users(self.topics, type, sigval, explore_val)
 
         self.tweets = Tweets()
 
@@ -29,8 +29,9 @@ class API():
 
         self.recommender = RecommenderSystem()
 
+        profits = np.random.random(num_topics)
         if is_profit:
-            self.profit = np.random.random(num_topics)
+            self.profit = profits
         else:
             self.profit = np.ones(num_topics)
 

@@ -59,3 +59,15 @@ def ALS(A, mask, k, U = None, V = None, lam = 1e-3, epsilon=1e-3, max_iterations
 
   return X, U, V
 
+if __name__ == "__main__":
+  for i in range(10):
+    n = 10
+    matrix = np.random.random((n,n)) -.5
+    # mask = np.random.randint(2, size=(n,n))
+    mask = np.ones((n,n))
+    mask[0][8] = 0
+    inv_mask = np.abs(mask - 1)
+    obsmat = matrix * mask
+    x,u,v = ALS(obsmat, mask, k=10)
+    rmse = np.sum((x - matrix)**2 * inv_mask)/np.sum(inv_mask)
+    print(rmse)
