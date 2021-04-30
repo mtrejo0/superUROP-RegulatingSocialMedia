@@ -14,7 +14,7 @@ import time
 
 class API():
 
-    def __init__(self, num_topics, type="R", is_profit=False, explore_val=0, sigval=0):
+    def __init__(self, num_topics, type="R", explore_val=0, sigval=0, is_profit=False):
 
         model = TopicModel("topic_modeling/tweets.csv")
         model.getTopStopWords(num_topics)
@@ -96,9 +96,6 @@ class API():
         mask = self.users.get_mask_matrix()
 
         # print("Building --- %s seconds ---" % (time.time() - start_time))
-        #todo Moises flip the mask for ALS
-        if isALS:
-            mask = np.abs(mask - 1)
 
 
         self.recommender.R = self.add_preferences_to_R(R)
@@ -106,7 +103,10 @@ class API():
 
         start_time = time.time()
         # TODO find better k
-        R_hat = self.recommender.recommendALS(3)
+        if isALS:
+            R_hat = self.recommender.recommendALS(10)
+        else:
+            R_hat = self.recommender.recommendNORM()
 
         # print("Recommend --- %s seconds ---" % (time.time() - start_time))
         

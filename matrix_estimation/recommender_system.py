@@ -1,5 +1,5 @@
 from .util import *
-from .als import ALS
+from .als import ALS, ExplicitMF
 from .nuclear_norm import nuclear_norm_solve
 
 class RecommenderSystem():
@@ -132,7 +132,9 @@ class RecommenderSystem():
     lam - learning rate
     """
     def recommendALS(self, k):
-        self.R_hat, self.U, self.V = ALS(self.R, self.mask, k, self.U, self.V)
+        # self.R_hat, self.U, self.V = ALS(self.R, self.mask, k, self.U, self.V)
+        als = ExplicitMF(n_iters = 100, n_factors = k, reg = 0.01)
+        self.R_hat = als.fit(self.R * self.mask)
         return self.R_hat
 
     """

@@ -40,7 +40,7 @@ class Users:
         if self.type == "R":
             # print("R")
             return ratio
-        sigmoid = 1./ (1. + np.e**(self.sigval*(-ratio + 0.5)))
+        sigmoid = 1./ (1. + np.e**(self.sigval*(-ratio + .5)))
         if self.type == "S":
             # print("S")
             return sigmoid

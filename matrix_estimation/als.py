@@ -1,4 +1,6 @@
 import numpy as np
+from sklearn.metrics import mean_squared_error
+
 
 def ALS(A, mask, k, U = None, V = None, lam = 1e-3, epsilon=1e-3, max_iterations=100):
   # A - matrix users and item
@@ -128,7 +130,9 @@ if __name__ == "__main__":
 
   als = ExplicitMF(n_iters = 100, n_factors = 10, reg = 0.01)
 
-  for i in range(10):
+  summ = 0
+  times = 1000
+  for i in range(times):
     n = 10
     matrix = np.random.random((n,n)) -.5
     mask = np.random.randint(2, size=(n,n))
@@ -142,7 +146,8 @@ if __name__ == "__main__":
     x = als.fit(obsmat)
     rmse_2 = np.sum((x - matrix)**2 * inv_mask)/np.sum(inv_mask)
 
-    print(rmse_1, rmse_2)
+    summ += (rmse_2 - rmse_1)
+  print((summ/times))
 
     
 
