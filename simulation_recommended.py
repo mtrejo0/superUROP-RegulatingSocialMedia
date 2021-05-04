@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import random
 
 TIME_HORIZON = 1000 # number of timesteps per simulations
-NUM_SIMULATIONS = 1 # number of simulations
+NUM_SIMULATIONS = 10 # number of simulations
 NUM_USERS = 10 # number of users
 NUM_CONTENT_SAMPLED = 10 # number of initial content for recommender to recommend from
 NUM_CONTENT_FOR_USER = 3 # number of content chosen to recommend (user will choose one of these)
@@ -13,11 +13,11 @@ NUM_TOPICS = 3 # number of topics
 # CHANGE WITH THESE VALUES FOR THE EXPERIMENTS
 EXPERIMENT_TYPE = "S" # EL = ever liked, R = raw ratio, S = sigmoid
 EXPLORE_VALUE = .2 # exploratory value, sets unseen content preference to this value
-SEEN_THRESHOLD = [.25, 0] # exploratory mask threshold
+SEEN_THRESHOLD = [i/10 for i in range(10)] # exploratory mask threshold
 SIGMOID_VAL_B = 1000 # when running sigmoid, affects the b parameter
 SIGMOID_VAL_A = 0.5 # when running sigmoid, affects the a parameter
 IS_PROFIT = False # bool for if we are running profit incentive experiment
-GRAPH_TITLE = "testing_thing"
+GRAPH_TITLE = "Exploration values"
 
 def init_structures(num_topics, type, explore_val, seen_threshold, sigval_b, is_profit):
     api = API(num_topics, type, explore_val, seen_threshold, sigval_b, is_profit)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
             sum_regret, sum_ideal_regret = run_simulation(EXPERIMENT_TYPE, EXPLORE_VALUE, val, SIGMOID_VAL_B, IS_PROFIT)
             sum_regrets.append(sum_regret)
             labels.append(val)
-            print(sum_regrets[0] - sum_regrets[1])
+    print(sum_regrets[0] - sum_regrets[1])
     plot_regrets(sum_regrets, NUM_SIMULATIONS, TIME_HORIZON, growth_rate="lin", title=GRAPH_TITLE, labels=labels)
     plot_regrets(sum_regrets, NUM_SIMULATIONS, TIME_HORIZON, growth_rate="sqrt", title=GRAPH_TITLE, labels=labels)
     plot_regrets(sum_regrets, NUM_SIMULATIONS, TIME_HORIZON, growth_rate="log", title=GRAPH_TITLE, labels=labels)

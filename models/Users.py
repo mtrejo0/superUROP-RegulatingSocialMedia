@@ -21,8 +21,9 @@ class Users:
     def get_user_vector(self, username):
         # retrieves the preference vector for a user
         res = self.get_user_vector_helper(username) # gets current estimated preferences of user
-        for i in range(len(self.user_masks[username])):
-            res[i] = max(res[i], self.seen_threshold)
+        for i in range(len(res)):
+            if self.user_masks[username][i]/ self.time_step <= self.seen_threshold:
+                res[i] = max(res[i], self.seen_threshold)
         return res
 
     def set_time(self, username, time):

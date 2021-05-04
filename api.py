@@ -21,7 +21,7 @@ class API():
 
         self.topics = model.topStopwords
 
-        self.users = Users(self.topics, type, explore_val=explore_val, seen_threshold=0, sigval_b=sigval_b)
+        self.users = Users(self.topics, type, explore_val=explore_val, seen_threshold=seen_threshold, sigval_b=sigval_b)
 
         self.tweets = Tweets()
 
