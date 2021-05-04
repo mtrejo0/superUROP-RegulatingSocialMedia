@@ -14,14 +14,14 @@ import time
 
 class API():
 
-    def __init__(self, num_topics, type="R", explore_val=0, sigval=0, is_profit=False):
+    def __init__(self, num_topics, type="R", explore_val=0, seen_threshold=0, sigval_b=0, is_profit=False):
 
         model = TopicModel("topic_modeling/tweets.csv")
         model.getTopStopWords(num_topics)
 
         self.topics = model.topStopwords
 
-        self.users = Users(self.topics, type, sigval, explore_val)
+        self.users = Users(self.topics, type, explore_val=explore_val, seen_threshold=0, sigval_b=sigval_b)
 
         self.tweets = Tweets()
 
@@ -87,9 +87,9 @@ class API():
         tweet_vec = self.tweets.tweet_vector(tweet_id, self.topics)
         self.users.show_tweet(username, tweet_vec)
 
-    def recommend(self,username, n, k, ranked = True, isALS=True):
+    def recommend(self,username, n, k, t=0, ranked = True, isALS=True):
         # sample n tweets, rank for username, return top k
-
+        self.users.set_time(username, t)
 
         start_time = time.time()
         R = self.users.get_rating_matrix()

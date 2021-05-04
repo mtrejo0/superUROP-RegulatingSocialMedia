@@ -12,13 +12,15 @@ NUM_TOPICS = 3 # number of topics
 
 # CHANGE WITH THESE VALUES FOR THE EXPERIMENTS
 EXPERIMENT_TYPE = "S" # EL = ever liked, R = raw ratio, S = sigmoid
-EXPLORE_VALUE = 0 # exploratory value, sets unseen content preference to this value
+EXPLORE_VALUE = .2 # exploratory value, sets unseen content preference to this value
+SEEN_THRESHOLD = [.25, 0] # exploratory mask threshold
 SIGMOID_VAL_B = 1000 # when running sigmoid, affects the b parameter
-IS_PROFIT = [True, False] # bool for if we are running profit incentive experiment
-GRAPH_TITLE = "profit"
+SIGMOID_VAL_A = 0.5 # when running sigmoid, affects the a parameter
+IS_PROFIT = False # bool for if we are running profit incentive experiment
+GRAPH_TITLE = "testing_thing"
 
-def init_structures(num_topics, type, explore_val, sigval, is_profit):
-    api = API(num_topics, type, explore_val, sigval, is_profit)
+def init_structures(num_topics, type, explore_val, seen_threshold, sigval_b, is_profit):
+    api = API(num_topics, type, explore_val, seen_threshold, sigval_b, is_profit)
     data = {}
     for i in range(10):
         username = "user_{}".format(i)
@@ -29,7 +31,7 @@ def init_structures(num_topics, type, explore_val, sigval, is_profit):
         data[username] = user_data
     return data, api
 
-def run_simulation(experiment_type, explore_value, sigmoid_val_b, is_profit):
+def run_simulation(experiment_type, explore_value, seen_threshold, sigmoid_val_b, is_profit):
     np.random.seed(123)
     random.seed(123)
     regret_sums = {}
@@ -41,7 +43,7 @@ def run_simulation(experiment_type, explore_value, sigmoid_val_b, is_profit):
 
     for simulation_index in range(0, NUM_SIMULATIONS):
         print("sim: " + str(simulation_index))
-        data, api = init_structures(NUM_TOPICS, experiment_type, explore_value, sigmoid_val_b, is_profit)
+        data, api = init_structures(NUM_TOPICS, experiment_type, explore_value, seen_threshold, sigmoid_val_b, is_profit)
         for t in range(0, TIME_HORIZON):
             for username in data:
                 user = data[username]['user']
@@ -49,7 +51,7 @@ def run_simulation(experiment_type, explore_value, sigmoid_val_b, is_profit):
                 n = NUM_CONTENT_SAMPLED
                 k = NUM_CONTENT_FOR_USER
                 # Get recommended tweets
-                tweets = api.recommend(username, n, k, isALS=True)
+                tweets = api.recommend(username, n, k, t=t+1, isALS=True)
                 for tweet in tweets:
                     api.show_tweet(username, tweet['id'])
 
@@ -98,10 +100,11 @@ def plot_regrets(sum_regrets,num_simulations,time_horizon,growth_rate="lin",titl
 if __name__ == "__main__":
     sum_regrets = []
     labels = []
-    for val in IS_PROFIT:
-        sum_regret, sum_ideal_regret = run_simulation(EXPERIMENT_TYPE, EXPLORE_VALUE, SIGMOID_VAL_B, val)
-        sum_regrets.append(sum_regret)
-        labels.append(val)
+    for val in SEEN_THRESHOLD:
+            sum_regret, sum_ideal_regret = run_simulation(EXPERIMENT_TYPE, EXPLORE_VALUE, val, SIGMOID_VAL_B, IS_PROFIT)
+            sum_regrets.append(sum_regret)
+            labels.append(val)
+            print(sum_regrets[0] - sum_regrets[1])
     plot_regrets(sum_regrets, NUM_SIMULATIONS, TIME_HORIZON, growth_rate="lin", title=GRAPH_TITLE, labels=labels)
     plot_regrets(sum_regrets, NUM_SIMULATIONS, TIME_HORIZON, growth_rate="sqrt", title=GRAPH_TITLE, labels=labels)
     plot_regrets(sum_regrets, NUM_SIMULATIONS, TIME_HORIZON, growth_rate="log", title=GRAPH_TITLE, labels=labels)

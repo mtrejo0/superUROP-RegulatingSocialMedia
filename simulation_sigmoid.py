@@ -11,7 +11,7 @@ sigvals = [1250]
 
 # Regret
 def init_structures(sigval):
-    api = API(num_topics=num_topics, type="S", sigval=sigval)
+    api = API(num_topics=num_topics, type="S", sigval_b=sigval)
     data = {}
     for i in range(10):
         username = "user_{}".format(i)

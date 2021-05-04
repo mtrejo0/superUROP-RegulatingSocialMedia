@@ -3,26 +3,30 @@ import numpy as np
 
 class Users:
 
-    def __init__(self, topics, type="EL",sigval=1250, explore_val=0):
+    def __init__(self, topics, type="EL", explore_val=0, seen_threshold=0, sigval_b=1250):
         self.topics = topics
         self.users = []
         self.user_vectors = {}
         self.user_masks = {}
         self.user_history = {}
         self.type = type # experiment changes
-        self.sigval = sigval # b for sigmoid function
+        self.sigval_b = sigval_b # b for sigmoid function
         self.explore_val = explore_val # how much we raise the value of unexplored options
+        self.seen_threshold = seen_threshold
+        self.time_step = 0
 
     def get_dimension(self):
         return (len(self.topics), len(self.users))
 
     def get_user_vector(self, username):
         # retrieves the preference vector for a user
-        res = self.get_user_vector_helper(username)
+        res = self.get_user_vector_helper(username) # gets current estimated preferences of user
         for i in range(len(self.user_masks[username])):
-            if self.user_masks[username][i] == 0:
-                res[i] += self.explore_val
+            res[i] = max(res[i], self.seen_threshold)
         return res
+
+    def set_time(self, username, time):
+        self.time_step = time
 
     def get_user_vector_helper(self, username):
         top = np.array([i for i in self.user_vectors[username]])
@@ -40,7 +44,7 @@ class Users:
         if self.type == "R":
             # print("R")
             return ratio
-        sigmoid = 1./ (1. + np.e**(self.sigval*(-ratio + .5)))
+        sigmoid = 1./ (1. + np.e ** (self.sigval_b * (-ratio + .5)))
         if self.type == "S":
             # print("S")
             return sigmoid
