@@ -18,11 +18,20 @@ https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/ge
 
 """
 
+
+
 tags = ["dog", "cat", "fish"]
 # number per tag
 n = 100
 
-data = []
+# data = []
+
+with open('tweets.json') as f:
+  data = json.load(f)
+
+
+past = len(data)
+print(past)
 
 for tag in tags:
 
@@ -39,8 +48,14 @@ for tag in tags:
 
     #Display the returned Tweet JSON.
     parsed = json.loads(response.text)
-    data += parsed['data']
 
+    for tweet in parsed['data']:
+        if not any(t['id'] == tweet['id'] for t in data):
+            data.append(tweet)
+
+now = len(data)
+print(now)
+print(now - past)
 
 
 with open('tweets.json', 'w') as f:
